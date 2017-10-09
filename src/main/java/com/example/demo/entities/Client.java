@@ -40,4 +40,12 @@ public class Client {
         this.order = order;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", order=" + order +
+                '}';
+    }
 }

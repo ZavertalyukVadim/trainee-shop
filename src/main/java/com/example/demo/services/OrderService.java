@@ -33,7 +33,6 @@ public class OrderService {
         Order newOrder = orderDao.findOne(id);
         newOrder.setClient(order.getClient());
         newOrder.setName(order.getName());
-        newOrder.setOrderItems(order.getOrderItems());
         return orderDao.save(newOrder);
     }
 

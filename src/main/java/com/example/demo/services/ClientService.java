@@ -2,7 +2,6 @@ package com.example.demo.services;
 
 import com.example.demo.dao.ClientDao;
 import com.example.demo.dao.OrderDao;
-import com.example.demo.dao.OrderItemDao;
 import com.example.demo.entities.Client;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.OrderItem;
@@ -16,21 +15,16 @@ import java.util.Set;
 @Service
 public class ClientService {
     private final ClientDao clientDao;
-    private final OrderItemDao orderItemDao;
     private final OrderDao orderDao;
 
 
     @Autowired
-    public ClientService(ClientDao clientDao, OrderItemDao orderItemDao, OrderDao orderDao) {
+    public ClientService(ClientDao clientDao,  OrderDao orderDao) {
         this.clientDao = clientDao;
-        this.orderItemDao = orderItemDao;
         this.orderDao = orderDao;
     }
 
     public List<Client> getAllClients(){
-        if(clientDao.findAll().isEmpty()){
-            test();
-        }
         return clientDao.findAll();
     }
 
@@ -39,7 +33,8 @@ public class ClientService {
     }
 
     public Integer createClient(Client client){
-        return clientDao.save(client).getId();
+        Client newClient = clientDao.save(client);
+        return newClient.getId();
     }
 
     public Client updateClient(Integer id,Client client){
@@ -58,21 +53,33 @@ public class ClientService {
         }
     }
 
-    private void test() {
+    public void test() {
+
         Set<OrderItem> orderItems = new HashSet<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setCount(5);
-        OrderItem orderItem1 = orderItemDao.save(orderItem);
-        orderItems.add(orderItem1);
-        Order order = new Order();
-        order.setName("name of order");
-        order.setOrderItems(orderItems);
-        Order newOrder = orderDao.save(order);
-        orderItem1.setOrder(newOrder);
+        orderItems.add(orderItem);
+
+
+        Order newOrder = createOrder(orderItems);
+
+        Client client = createClient(newOrder);
+        System.out.println(client);
+        newOrder.setClient(client);
+        orderDao.save(newOrder);
+    }
+
+    private Client createClient(Order newOrder) {
         Client client = new Client();
         client.setName("Name of client");
         client.setOrder(newOrder);
-        newOrder.setClient(clientDao.save(client));
-        orderDao.save(newOrder);
+        return clientDao.save(client);
+    }
+
+    private Order createOrder(Set<OrderItem> orderItems) {
+        Order order = new Order();
+        order.setName("name of order");
+        order.setOrderItems(orderItems);
+        return orderDao.save(order);
     }
 }

@@ -27,7 +27,7 @@ public class ClientController {
         return clientService.getClientById(id);
     }
 
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public Integer createClient(@RequestBody Client client){
         return clientService.createClient(client);
     }
