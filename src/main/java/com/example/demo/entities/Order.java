@@ -1,5 +1,7 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +16,11 @@ public class Order {
     @Column(name = "name")
     private String name;
 
+    @JsonBackReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems = new HashSet<>();
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
     private Client client;
