@@ -34,20 +34,45 @@ public class ClientService {
         return clientDao.findAll();
     }
 
+    public Client getClientById(Integer id){
+        return clientDao.findOne(id);
+    }
+
+    public Integer createClient(Client client){
+        return clientDao.save(client).getId();
+    }
+
+    public Client updateClient(Client client){
+        Client newClient = clientDao.findOne(client.getId());
+        newClient.setName(client.getName());
+        newClient.setOrder(client.getOrder());
+        return clientDao.save(newClient);
+    }
+
+    public boolean deleteClientById(Integer id){
+        try {
+            clientDao.delete(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     private void test() {
         Set<OrderItem> orderItems = new HashSet<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setCount(5);
-        orderItems.add(orderItemDao.save(orderItem));
+        OrderItem orderItem1 = orderItemDao.save(orderItem);
+        orderItems.add(orderItem1);
         Order order = new Order();
         order.setName("name of order");
         order.setOrderItems(orderItems);
         Order newOrder = orderDao.save(order);
+        orderItem1.setOrder(newOrder);
         Client client = new Client();
         client.setName("Name of client");
         client.setOrder(newOrder);
-        clientDao.save(client);
+        newOrder.setClient(clientDao.save(client));
+        orderDao.save(newOrder);
     }
-
-
 }
