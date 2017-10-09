@@ -32,9 +32,9 @@ public class VendorController {
         return vendorService.createVendor(vendor);
     }
 
-    @PutMapping
-    public Vendor updateVendor(@RequestBody Vendor vendor){
-        return vendorService.updateVendor(vendor);
+    @PutMapping(value = "/{id}")
+    public Vendor updateVendor(@PathVariable("id") Integer id,@RequestBody Vendor vendor){
+        return vendorService.updateVendor(id,vendor);
     }
 
     @DeleteMapping(value = "/{id}")

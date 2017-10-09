@@ -32,9 +32,9 @@ public class ClientController {
         return clientService.createClient(client);
     }
 
-    @PutMapping
-    public Client updateClient(@RequestBody Client client){
-        return clientService.updateClient(client);
+    @PutMapping(value = "/{id}")
+    public Client updateClient(@PathVariable("id") Integer id,@RequestBody Client client){
+        return clientService.updateClient(id,client);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -29,8 +29,8 @@ public class OrderService {
         return orderDao.save(order).getId();
     }
 
-    public Order updateOrder(Order order){
-        Order newOrder = orderDao.findOne(order.getId());
+    public Order updateOrder(Integer id,Order order){
+        Order newOrder = orderDao.findOne(id);
         newOrder.setClient(order.getClient());
         newOrder.setName(order.getName());
         newOrder.setOrderItems(order.getOrderItems());

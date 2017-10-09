@@ -29,8 +29,8 @@ public class VendorService {
         return vendorDao.save(vendor).getId();
     }
 
-    public Vendor updateVendor(Vendor vendor){
-        Vendor newVendor = vendorDao.findOne(vendor.getId());
+    public Vendor updateVendor(Integer id,Vendor vendor){
+        Vendor newVendor = vendorDao.findOne(id);
         newVendor.setGoods(vendor.getGoods());
         newVendor.setName(vendor.getName());
         return vendorDao.save(newVendor);

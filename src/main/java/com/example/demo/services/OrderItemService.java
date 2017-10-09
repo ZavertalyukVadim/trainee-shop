@@ -28,8 +28,8 @@ public class OrderItemService {
         return orderItemDao.save(orderItem).getId();
     }
 
-    public OrderItem updateOrderItem(OrderItem orderItem){
-        OrderItem newOrderItem = orderItemDao.findOne(orderItem.getId());
+    public OrderItem updateOrderItem(Integer id,OrderItem orderItem){
+        OrderItem newOrderItem = orderItemDao.findOne(id);
         newOrderItem.setOrder(orderItem.getOrder());
         newOrderItem.setCount(orderItem.getCount());
         return orderItemDao.save(newOrderItem);

@@ -30,8 +30,8 @@ public class GoodsService {
         return goodsDao.save(goods).getId();
     }
 
-    public Goods updateGoods(Goods goods){
-        Goods newGoods = goodsDao.findOne(goods.getId());
+    public Goods updateGoods(Integer id,Goods goods){
+        Goods newGoods = goodsDao.findOne(id);
         newGoods.setName(goods.getName());
         newGoods.setType(goods.getType());
         newGoods.setVendors(goods.getVendors());

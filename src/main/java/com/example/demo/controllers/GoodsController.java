@@ -31,9 +31,9 @@ public class GoodsController {
         return goodsService.createGoods(goods);
     }
 
-    @PutMapping
-    public Goods updateGoods(@RequestBody Goods goods){
-        return goodsService.updateGoods(goods);
+    @PutMapping(value = "/{id}")
+    public Goods updateGoods(@PathVariable("id") Integer id,@RequestBody Goods goods){
+        return goodsService.updateGoods(id,goods);
     }
 
     @DeleteMapping(value = "/{id}")

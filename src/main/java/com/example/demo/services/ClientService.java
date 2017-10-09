@@ -42,8 +42,8 @@ public class ClientService {
         return clientDao.save(client).getId();
     }
 
-    public Client updateClient(Client client){
-        Client newClient = clientDao.findOne(client.getId());
+    public Client updateClient(Integer id,Client client){
+        Client newClient = clientDao.findOne(id);
         newClient.setName(client.getName());
         newClient.setOrder(client.getOrder());
         return clientDao.save(newClient);
