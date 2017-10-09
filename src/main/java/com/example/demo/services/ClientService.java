@@ -2,84 +2,95 @@ package com.example.demo.services;
 
 import com.example.demo.dao.ClientDao;
 import com.example.demo.dao.OrderDao;
+import com.example.demo.dao.OrderItemDao;
 import com.example.demo.entities.Client;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ClientService {
     private final ClientDao clientDao;
     private final OrderDao orderDao;
+    private final OrderItemDao orderItemDao;
 
 
     @Autowired
-    public ClientService(ClientDao clientDao,  OrderDao orderDao) {
+    public ClientService(ClientDao clientDao, OrderDao orderDao, OrderItemDao orderItemDao) {
         this.clientDao = clientDao;
         this.orderDao = orderDao;
+        this.orderItemDao = orderItemDao;
     }
 
-    public List<Client> getAllClients(){
+    public List<Client> getAllClients() {
         return clientDao.findAll();
     }
 
-    public Client getClientById(Integer id){
+    public Client getClientById(Integer id) {
         return clientDao.findOne(id);
     }
 
-    public Integer createClient(Client client){
+    public Integer createClient(Client client) {
         Client newClient = clientDao.save(client);
         return newClient.getId();
     }
 
-    public Client updateClient(Integer id,Client client){
+    public Client updateClient(Integer id, Client client) {
         Client newClient = clientDao.findOne(id);
         newClient.setName(client.getName());
         newClient.setOrder(client.getOrder());
         return clientDao.save(newClient);
     }
 
-    public boolean deleteClientById(Integer id){
+    public boolean deleteClientById(Integer id) {
         try {
             clientDao.delete(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
     public void test() {
 
-        Set<OrderItem> orderItems = new HashSet<>();
+        List<OrderItem> orderItems = new ArrayList<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setCount(5);
-        orderItems.add(orderItem);
 
+        orderItems.add(orderItemDao.save(orderItem));
 
-        Order newOrder = createOrder(orderItems);
+        Order order = new Order();
+        order.setOrderItems(orderItems);
+        order.setName("order name");
 
-        Client client = createClient(newOrder);
-        System.out.println(client);
+        Order order1 = orderDao.save(order);
+        for (OrderItem orderItem1 : orderItems) {
+            orderItem1.setOrder(order1);
+            orderItemDao.save(orderItem1);
+        }
+
+//        orderItem.setOrder(order1);
+
+//        Client client =new Client();
+//        client.setName("client");
+//        client.setOrder(order1);
+//        clientDao.save(client);
+    }
+
+    private void getaVoid(Order newOrder, Client client) {
         newOrder.setClient(client);
         orderDao.save(newOrder);
     }
 
-    private Client createClient(Order newOrder) {
+    private Client createClient() {
         Client client = new Client();
         client.setName("Name of client");
-        client.setOrder(newOrder);
         return clientDao.save(client);
     }
 
-    private Order createOrder(Set<OrderItem> orderItems) {
-        Order order = new Order();
-        order.setName("name of order");
-        order.setOrderItems(orderItems);
-        return orderDao.save(order);
-    }
+
 }

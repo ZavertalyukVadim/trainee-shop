@@ -15,7 +15,6 @@ public class Client {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
     private Order order;
 
-
     public Integer getId() {
         return id;
     }

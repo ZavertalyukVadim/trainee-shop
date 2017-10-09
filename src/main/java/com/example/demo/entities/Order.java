@@ -1,11 +1,8 @@
 package com.example.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -19,12 +16,12 @@ public class Order {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<OrderItem> orderItems = new HashSet<>();
+//    @JsonManagedReference
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
-    @JsonBackReference
+//    @JsonBackReference
     private Client client;
 
     public Integer getId() {
@@ -43,11 +40,11 @@ public class Order {
         this.name = name;
     }
 
-    public Set<OrderItem> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(Set<OrderItem> orderItems) {
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
