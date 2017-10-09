@@ -2,6 +2,8 @@ package com.example.demo.entities;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "clients")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,7 +12,7 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
     private Order order;
 
 

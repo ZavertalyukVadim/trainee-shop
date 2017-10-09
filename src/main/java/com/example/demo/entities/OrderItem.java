@@ -2,16 +2,19 @@ package com.example.demo.entities;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "orderItems")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "order_orderItems", joinColumns = {
-            @JoinColumn(name = "order_id")},
-            inverseJoinColumns = {@JoinColumn(name = "orderItems_id")})
+    @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private Order order;
+
+    @Column(name = "count")
+    private Integer count;
 
     public Integer getId() {
         return id;
@@ -19,6 +22,14 @@ public class OrderItem {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public Order getOrder() {

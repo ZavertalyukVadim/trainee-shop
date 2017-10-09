@@ -17,7 +17,8 @@ public class Order {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
     private Client client;
 
     public Integer getId() {
