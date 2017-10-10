@@ -17,7 +17,5 @@ public class HomeController {
 
     @GetMapping(value = "/")
     public void test(){
-        if(clientService.getAllClients().isEmpty())
-        clientService.test();
     }
 }
