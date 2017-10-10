@@ -56,43 +56,6 @@ public class ClientService {
         }
     }
 
-    public void test() {
-
-//        List<OrderItem> orderItems = new ArrayList<>();
-//        OrderItem orderItem = new OrderItem();
-//        orderItem.setCount(5);
-//        orderItemDao.save(orderItem);
-//        orderItems.add(orderItem);
-//
-//        Order order = new Order();
-//        order.setOrderItems(orderItems);
-//        order.setName("order name");
-//
-//        orderDao.save(order);
-//        for (OrderItem order1 : orderItems) {
-//            order.setOrder(order1);
-//            orderItemDao.save(order1);
-//        }
-
-//        orderItem.setOrder(order1);
-
-//        Client client =new Client();
-//        client.setName("client");
-//        client.setOrder(order1);
-//        clientDao.save(client);
-    }
-
-    private void getaVoid(Order newOrder, Client client) {
-        newOrder.setClient(client);
-        orderDao.save(newOrder);
-    }
-
-    private Client createClient() {
-        Client client = new Client();
-        client.setName("Name of client");
-        return clientDao.save(client);
-    }
-
     private void test1() {
         Client client = new Client("name");
         clientDao.save(client);

@@ -43,7 +43,6 @@ public class OrderController {
     @PutMapping(value = "/{id}")
     public void updateOrder(@PathVariable("id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response,BindingResult result) {
         if (result.hasErrors()) {
-            System.out.println("There are errors");
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         if ((orderService.updateOrder(id, order))) {
