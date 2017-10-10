@@ -3,8 +3,11 @@ package com.example.demo.controllers;
 import com.example.demo.entities.OrderItem;
 import com.example.demo.services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -19,27 +22,36 @@ public class OrderItemController {
     }
 
     @GetMapping
-    public List<OrderItem> getAllOrderItems() {
-        return orderItemService.getAllOrderItems();
+    public ResponseEntity<List<OrderItem>> getAllOrderItems() {
+        return new ResponseEntity<>(orderItemService.getAllOrderItems(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public OrderItem getOrderItemById(@PathVariable("id") Integer id) {
-        return orderItemService.getOrderItemById(id);
+    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(orderItemService.getOrderItemById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public Integer createOrderItem(@RequestBody OrderItem orderItem) {
-        return orderItemService.createOrderItem(orderItem);
+    public ResponseEntity<Integer> createOrderItem(@RequestBody OrderItem orderItem) {
+        return (orderItemService.createOrderItem(orderItem) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/{id}")
-    public OrderItem updateOrderItem(@PathVariable("id") Integer id, @RequestBody OrderItem orderItem) {
-        return orderItemService.updateOrderItem(id, orderItem);
+    public void updateOrderItem(@PathVariable("id") Integer id, @RequestBody OrderItem orderItem, HttpServletResponse response) {
+        if (orderItemService.updateOrderItem(id, orderItem)) {
+            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
-    public boolean deleteOrderItemById(@PathVariable("id") Integer id) {
-        return orderItemService.deleteOrderItemById(id);
+    public void deleteOrderItemById(@PathVariable("id") Integer id, HttpServletResponse response) {
+        if (orderItemService.deleteOrderItemById(id)) {
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 }

@@ -30,12 +30,17 @@ public class GoodsService {
         return goodsDao.save(goods).getId();
     }
 
-    public Goods updateGoods(Integer id,Goods goods){
-        Goods newGoods = goodsDao.findOne(id);
-        newGoods.setName(goods.getName());
-        newGoods.setType(goods.getType());
-        newGoods.setVendors(goods.getVendors());
-        return goodsDao.save(newGoods);
+    public boolean updateGoods(Integer id,Goods goods){
+        try {
+            Goods newGoods = goodsDao.findOne(id);
+            newGoods.setName(goods.getName());
+            newGoods.setType(goods.getType());
+            newGoods.setVendors(goods.getVendors());
+            goodsDao.save(newGoods);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public boolean deleteGoodsById(Integer id){

@@ -16,31 +16,36 @@ public class VendorService {
         this.vendorDao = vendorDao;
     }
 
-    public List<Vendor> getAllVendors(){
+    public List<Vendor> getAllVendors() {
 
         return vendorDao.findAll();
     }
 
-    public Vendor getVendorById(Integer id){
+    public Vendor getVendorById(Integer id) {
         return vendorDao.findOne(id);
     }
 
-    public Integer createVendor(Vendor vendor){
+    public Integer createVendor(Vendor vendor) {
         return vendorDao.save(vendor).getId();
     }
 
-    public Vendor updateVendor(Integer id,Vendor vendor){
-        Vendor newVendor = vendorDao.findOne(id);
-        newVendor.setGoods(vendor.getGoods());
-        newVendor.setName(vendor.getName());
-        return vendorDao.save(newVendor);
+    public boolean updateVendor(Integer id, Vendor vendor) {
+        try {
+            Vendor newVendor = vendorDao.findOne(id);
+            newVendor.setGoods(vendor.getGoods());
+            newVendor.setName(vendor.getName());
+            vendorDao.save(newVendor);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean deleteVendorById(Integer id){
+    public boolean deleteVendorById(Integer id) {
         try {
             vendorDao.delete(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }

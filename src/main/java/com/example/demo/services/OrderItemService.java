@@ -16,30 +16,36 @@ public class OrderItemService {
         this.orderItemDao = orderItemDao;
     }
 
-    public List<OrderItem> getAllOrderItems(){
+    public List<OrderItem> getAllOrderItems() {
         return orderItemDao.findAll();
     }
 
-    public OrderItem getOrderItemById(Integer id){
+    public OrderItem getOrderItemById(Integer id) {
         return orderItemDao.findOne(id);
     }
 
-    public Integer createOrderItem(OrderItem orderItem){
+    public Integer createOrderItem(OrderItem orderItem) {
         return orderItemDao.save(orderItem).getId();
     }
 
-    public OrderItem updateOrderItem(Integer id,OrderItem orderItem){
-        OrderItem newOrderItem = orderItemDao.findOne(id);
-        newOrderItem.setOrder(orderItem.getOrder());
-        newOrderItem.setCount(orderItem.getCount());
-        return orderItemDao.save(newOrderItem);
+    public boolean updateOrderItem(Integer id, OrderItem orderItem) {
+        try {
+
+            OrderItem newOrderItem = orderItemDao.findOne(id);
+            newOrderItem.setOrder(orderItem.getOrder());
+            newOrderItem.setCount(orderItem.getCount());
+            orderItemDao.save(newOrderItem);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public boolean deleteOrderItemById(Integer id){
+    public boolean deleteOrderItemById(Integer id) {
         try {
             orderItemDao.delete(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
