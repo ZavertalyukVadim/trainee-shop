@@ -96,6 +96,7 @@ public class ClientService {
 
     private void test1(){
         Order order=new Order();
+        order.setName("order");
         order.setOrderItems(Arrays.asList(
                 new OrderItem(order,5),
                 new OrderItem(order,5)
