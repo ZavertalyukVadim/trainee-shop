@@ -1,8 +1,8 @@
 package com.example.demo.entities;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vendor")
@@ -15,7 +15,7 @@ public class Vendor {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendors", cascade = CascadeType.ALL)
-    private Set<Goods> goods = new HashSet<>();
+    private List<Goods> goods = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class Vendor {
         this.name = name;
     }
 
-    public Set<Goods> getGoods() {
+    public List<Goods> getGoods() {
         return goods;
     }
 
-    public void setGoods(Set<Goods> goods) {
+    public void setGoods(List<Goods> goods) {
         this.goods = goods;
     }
 }

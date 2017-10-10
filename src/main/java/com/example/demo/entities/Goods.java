@@ -1,5 +1,7 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "goods_vendors", joinColumns = {
             @JoinColumn(name = "goods_id", nullable = false)},

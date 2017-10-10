@@ -26,6 +26,11 @@ public class OrderItem {
         this.count = count;
     }
 
+    public OrderItem(Goods goods, Integer count) {
+        this.goods = goods;
+        this.count = count;
+    }
+
     public Integer getId() {
         return id;
     }
