@@ -1,6 +1,6 @@
 package com.example.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 
@@ -11,10 +11,10 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Order order;
+    @OneToOne
+    @JsonManagedReference
+    @JoinColumn(name = "goods_id")
+    private Goods goods;
 
     @Column(name = "count")
     private Integer count;
@@ -22,8 +22,7 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Order order, Integer count) {
-        this.order = order;
+    public OrderItem(Integer count) {
         this.count = count;
     }
 
@@ -43,11 +42,11 @@ public class OrderItem {
         this.count = count;
     }
 
-    public Order getOrder() {
-        return order;
+    public Goods getGoods() {
+        return goods;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 }

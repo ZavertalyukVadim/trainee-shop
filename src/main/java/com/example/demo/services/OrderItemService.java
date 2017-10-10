@@ -32,7 +32,6 @@ public class OrderItemService {
         try {
 
             OrderItem newOrderItem = orderItemDao.findOne(id);
-            newOrderItem.setOrder(orderItem.getOrder());
             newOrderItem.setCount(orderItem.getCount());
             orderItemDao.save(newOrderItem);
             return true;
