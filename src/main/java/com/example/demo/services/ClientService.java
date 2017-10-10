@@ -9,7 +9,6 @@ import com.example.demo.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,17 +58,17 @@ public class ClientService {
 
     public void test() {
 
-        List<OrderItem> orderItems = new ArrayList<>();
-        OrderItem orderItem = new OrderItem();
-        orderItem.setCount(5);
-        orderItemDao.save(orderItem);
-        orderItems.add(orderItem);
-
-        Order order = new Order();
-        order.setOrderItems(orderItems);
-        order.setName("order name");
-
-        orderDao.save(order);
+//        List<OrderItem> orderItems = new ArrayList<>();
+//        OrderItem orderItem = new OrderItem();
+//        orderItem.setCount(5);
+//        orderItemDao.save(orderItem);
+//        orderItems.add(orderItem);
+//
+//        Order order = new Order();
+//        order.setOrderItems(orderItems);
+//        order.setName("order name");
+//
+//        orderDao.save(order);
 //        for (OrderItem order1 : orderItems) {
 //            order.setOrder(order1);
 //            orderItemDao.save(order1);
@@ -95,12 +94,17 @@ public class ClientService {
     }
 
     private void test1(){
+        Client client = new Client("name");
+        clientDao.save(client);
         Order order=new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
                 new OrderItem(order,5),
                 new OrderItem(order,5)
         ));
+        order.setClient(
+                client
+        );
         orderDao.save(order);
     }
 
