@@ -11,13 +11,21 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", insertable = false, updatable = false)
+    @JsonBackReference
     private Order order;
 
     @Column(name = "count")
     private Integer count;
+
+    public OrderItem() {
+    }
+
+    public OrderItem(Order order, Integer count) {
+        this.order = order;
+        this.count = count;
+    }
 
     public Integer getId() {
         return id;

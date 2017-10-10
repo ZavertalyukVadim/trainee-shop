@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -24,6 +25,7 @@ public class ClientService {
         this.clientDao = clientDao;
         this.orderDao = orderDao;
         this.orderItemDao = orderItemDao;
+        test1();
     }
 
     public List<Client> getAllClients() {
@@ -60,18 +62,18 @@ public class ClientService {
         List<OrderItem> orderItems = new ArrayList<>();
         OrderItem orderItem = new OrderItem();
         orderItem.setCount(5);
-
-        orderItems.add(orderItemDao.save(orderItem));
+        orderItemDao.save(orderItem);
+        orderItems.add(orderItem);
 
         Order order = new Order();
         order.setOrderItems(orderItems);
         order.setName("order name");
 
-        Order order1 = orderDao.save(order);
-        for (OrderItem orderItem1 : orderItems) {
-            orderItem1.setOrder(order1);
-            orderItemDao.save(orderItem1);
-        }
+        orderDao.save(order);
+//        for (OrderItem order1 : orderItems) {
+//            order.setOrder(order1);
+//            orderItemDao.save(order1);
+//        }
 
 //        orderItem.setOrder(order1);
 
@@ -90,6 +92,15 @@ public class ClientService {
         Client client = new Client();
         client.setName("Name of client");
         return clientDao.save(client);
+    }
+
+    private void test1(){
+        Order order=new Order();
+        order.setOrderItems(Arrays.asList(
+                new OrderItem(order,5),
+                new OrderItem(order,5)
+        ));
+        orderDao.save(order);
     }
 
 
