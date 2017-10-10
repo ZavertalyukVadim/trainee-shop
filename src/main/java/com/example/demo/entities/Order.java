@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer id;
 
     @Column(name = "name")
@@ -27,6 +27,15 @@ public class Order {
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
     @JsonBackReference
     private Client client;
+
+    public Order() {
+    }
+
+    public Order(String name, List<OrderItem> orderItems, Client client) {
+        this.name = name;
+        this.orderItems = orderItems;
+        this.client = client;
+    }
 
     public Integer getId() {
         return id;

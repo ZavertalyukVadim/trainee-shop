@@ -16,31 +16,37 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
 
         return orderDao.findAll();
     }
 
-    public Order getOrderById(Integer id){
+    public Order getOrderById(Integer id) {
         return orderDao.findOne(id);
     }
 
-    public Integer createOrder(Order order){
-        return orderDao.save(order).getId();
+    public Integer createOrder(Order order) {
+        try {
+
+            return orderDao.save(order).getId();
+        } catch (Exception e) {
+            return 0;
+        }
+
     }
 
-    public Order updateOrder(Integer id,Order order){
+    public Order updateOrder(Integer id, Order order) {
         Order newOrder = orderDao.findOne(id);
         newOrder.setClient(order.getClient());
         newOrder.setName(order.getName());
         return orderDao.save(newOrder);
     }
 
-    public boolean deleteOrderById(Integer id){
+    public boolean deleteOrderById(Integer id) {
         try {
             orderDao.delete(id);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
