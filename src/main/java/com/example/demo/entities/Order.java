@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +12,12 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     @Column(name = "name")
     private String name;
-
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference

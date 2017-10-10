@@ -5,9 +5,11 @@ import com.example.demo.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,14 +41,16 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateOrder(@PathVariable("id") Integer id, @RequestBody Order order, HttpServletResponse response) {
+    public void updateOrder(@PathVariable("id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response,BindingResult result) {
+        if (result.hasErrors()) {
+            System.out.println("There are errors");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
         if ((orderService.updateOrder(id, order))) {
             response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
         } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
-
-//        return new ResponseEntity<>(orderService.updateOrder(id, order), HttpStatus.RESET_CONTENT);
     }
 
     @DeleteMapping(value = "/{id}")

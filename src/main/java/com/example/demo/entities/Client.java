@@ -8,12 +8,11 @@ import javax.persistence.*;
 @Table(name = "clients")
 public class Client {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
     private String name;
-
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "client")
     @JsonManagedReference

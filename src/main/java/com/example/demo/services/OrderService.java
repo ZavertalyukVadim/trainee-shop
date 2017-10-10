@@ -4,10 +4,12 @@ import com.example.demo.dao.OrderDao;
 import com.example.demo.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderService {
     private final OrderDao orderDao;
 
@@ -17,7 +19,6 @@ public class OrderService {
     }
 
     public List<Order> getAllOrders() {
-
         return orderDao.findAll();
     }
 
@@ -27,7 +28,6 @@ public class OrderService {
 
     public Integer createOrder(Order order) {
         try {
-
             return orderDao.save(order).getId();
         } catch (Exception e) {
             return 0;
@@ -35,14 +35,13 @@ public class OrderService {
 
     }
 
+    @Transactional
     public boolean updateOrder(Integer id, Order order) {
         try {
-            Order newOrder = orderDao.findOne(id);
-            newOrder.setClient(order.getClient());
-            orderDao.save(newOrder);
+                order.setId(id);
+                orderDao.save(order);
             return true;
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
