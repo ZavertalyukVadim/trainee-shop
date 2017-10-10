@@ -3,8 +3,11 @@ package com.example.demo.controllers;
 import com.example.demo.entities.Client;
 import com.example.demo.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -18,28 +21,37 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getAllClients(){
-        return clientService.getAllClients();
+    public ResponseEntity<List<Client>> getAllClients() {
+        return new ResponseEntity<>(clientService.getAllClients(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public Client getClientById(@PathVariable("id") Integer id){
-        return clientService.getClientById(id);
+    public ResponseEntity<Client> getClientById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public Integer createClient(@RequestBody Client client){
-        return clientService.createClient(client);
+    @PostMapping
+    public ResponseEntity<Integer> createClient(@RequestBody Client client) {
+        return (clientService.createClient(client) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/{id}")
-    public Client updateClient(@PathVariable("id") Integer id,@RequestBody Client client){
-        return clientService.updateClient(id,client);
+    public void updateClient(@PathVariable("id") Integer id, @RequestBody Client client, HttpServletResponse response) {
+        if (clientService.updateClient(id, client)) {
+            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
-    public boolean deleteClientById(@PathVariable("id") Integer id){
-        return clientService.deleteClientById(id);
+    public void deleteClientById(@PathVariable("id") Integer id, HttpServletResponse response) {
+        if (clientService.deleteClientById(id)) {
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
 }

@@ -40,11 +40,17 @@ public class ClientService {
         return newClient.getId();
     }
 
-    public Client updateClient(Integer id, Client client) {
-        Client newClient = clientDao.findOne(id);
-        newClient.setName(client.getName());
-        newClient.setOrder(client.getOrder());
-        return clientDao.save(newClient);
+    public boolean updateClient(Integer id, Client client) {
+        try {
+            Client newClient = clientDao.findOne(id);
+            newClient.setId(id);
+            newClient.setName(client.getName());
+            newClient.setOrder(client.getOrder());
+            clientDao.save(newClient);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean deleteClientById(Integer id) {
