@@ -93,19 +93,21 @@ public class ClientService {
         return clientDao.save(client);
     }
 
-    private void test1(){
+    private void test1() {
         Client client = new Client("name");
         clientDao.save(client);
-        Order order=new Order();
+        Order order = new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
-                new OrderItem(order,5),
-                new OrderItem(order,5)
+                new OrderItem(order, 5),
+                new OrderItem(order, 5)
         ));
         order.setClient(
                 client
         );
         orderDao.save(order);
+        client.setOrder(order);
+        clientDao.save(client);
     }
 
 
