@@ -35,11 +35,17 @@ public class OrderService {
 
     }
 
-    public Order updateOrder(Integer id, Order order) {
-        Order newOrder = orderDao.findOne(id);
-        newOrder.setClient(order.getClient());
-        newOrder.setName(order.getName());
-        return orderDao.save(newOrder);
+    public boolean updateOrder(Integer id, Order order) {
+        try {
+            Order newOrder = orderDao.findOne(id);
+            newOrder.setClient(order.getClient());
+            orderDao.save(newOrder);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
+
     }
 
     public boolean deleteOrderById(Integer id) {

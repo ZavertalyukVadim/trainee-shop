@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -38,8 +39,14 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable("id") Integer id, @RequestBody Order order) {
-        return new ResponseEntity<>(orderService.updateOrder(id, order), HttpStatus.RESET_CONTENT);
+    public void updateOrder(@PathVariable("id") Integer id, @RequestBody Order order, HttpServletResponse response) {
+        if ((orderService.updateOrder(id, order))) {
+            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+
+//        return new ResponseEntity<>(orderService.updateOrder(id, order), HttpStatus.RESET_CONTENT);
     }
 
     @DeleteMapping(value = "/{id}")
