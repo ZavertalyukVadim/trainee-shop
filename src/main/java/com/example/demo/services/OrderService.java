@@ -38,8 +38,12 @@ public class OrderService {
     @Transactional
     public boolean updateOrder(Integer id, Order order) {
         try {
-                order.setId(id);
-                orderDao.save(order);
+            Order order1 = orderDao.findOne(id);
+            order1.setId(id);
+            order1.setName(order.getName());
+            order1.setOrderItems(order.getOrderItems());
+            order1.setClient(order.getClient());
+            orderDao.save(order1);
             return true;
         } catch (Exception e) {
             return false;
