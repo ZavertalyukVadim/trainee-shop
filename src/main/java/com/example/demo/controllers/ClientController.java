@@ -27,7 +27,11 @@ public class ClientController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+        if (clientService.getClientById(id) != null) {
+            return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
