@@ -68,21 +68,20 @@ public class ClientService {
     }
 
     private void test1() {
-
         Client client = new Client("name");
         logger.debug("saved object client: " + clientDao.save(client));
         Vendor vendor = new Vendor();
         vendor.setName("vendor");
-        logger.debug("saved object vendor" + vendorDao.save(vendor));
+        logger.debug("saved object vendor: " + vendorDao.save(vendor));
         Goods goods = new Goods();
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
-        logger.debug("saved object goods with vendor" + goodsDao.save(goods));
+        logger.debug("saved object goods with vendor: " + goodsDao.save(goods));
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
         vendor.setGoods(goodsList);
-        logger.debug("saved object vendor with goods" + vendorDao.save(vendor));
+        logger.debug("saved object vendor with goods: " + vendorDao.save(vendor));
         Order order = new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
@@ -92,9 +91,9 @@ public class ClientService {
         order.setClient(
                 client
         );
-        logger.debug("saved object order with orderItem and client" + orderDao.save(order));
+        logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
         client.setOrder(order);
-        logger.debug("saved object client with order" + clientDao.save(client));
+        logger.debug("saved object client with order: " + clientDao.save(client));
         logger.info("completed insert test data");
     }
 }

@@ -43,6 +43,8 @@ public class Vendor {
         this.goods = goods;
     }
 
+
+
     @Override
     public String toString() {
         return "Vendor{" +

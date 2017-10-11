@@ -59,11 +59,18 @@ public class Goods {
 
     @Override
     public String toString() {
+        if (this.vendor != null){
         return "Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
-
+                ", vendor= {...}" +
+                '}';}
+        else return "Goods{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", vendor= {}" +
                 '}';
     }
 }
