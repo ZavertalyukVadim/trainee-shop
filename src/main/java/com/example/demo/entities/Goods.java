@@ -63,7 +63,7 @@ public class Goods {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +
-                ", vendor=" + vendor +
+
                 '}';
     }
 }

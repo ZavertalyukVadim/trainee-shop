@@ -70,41 +70,31 @@ public class ClientService {
     private void test1() {
 
         Client client = new Client("name");
-//        logger.debug(String.valueOf(clientDao.save(client)));
-        clientDao.save(client);
+        logger.debug("saved object client: " + clientDao.save(client));
         Vendor vendor = new Vendor();
         vendor.setName("vendor");
-        vendorDao.save(vendor);
-
+        logger.debug("saved object vendor" + vendorDao.save(vendor));
         Goods goods = new Goods();
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
-        logger.trace("This is a trace message");
-        logger.debug("This is a debug message");
-        logger.info("This is a info message");
-//        goodsDao.save(goods);
-        logger.debug(String.valueOf(goodsDao.save(goods)));
+        logger.debug("saved object goods with vendor" + goodsDao.save(goods));
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
-
         vendor.setGoods(goodsList);
-        vendorDao.save(vendor);
-
+        logger.debug("saved object vendor with goods" + vendorDao.save(vendor));
         Order order = new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
-                new OrderItem( goods,5),
-                new OrderItem( 5)
+                new OrderItem(goods, 5),
+                new OrderItem(5)
         ));
         order.setClient(
                 client
         );
-        orderDao.save(order);
+        logger.debug("saved object order with orderItem and client" + orderDao.save(order));
         client.setOrder(order);
-        clientDao.save(client);
-
+        logger.debug("saved object client with order" + clientDao.save(client));
+        logger.info("completed insert test data");
     }
-
-
 }

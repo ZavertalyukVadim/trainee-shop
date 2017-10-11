@@ -76,7 +76,7 @@ public class Order {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", orderItems=" + orderItems +
-                ", client=" + client +
+                ", client=" + client.getId() +
                 '}';
     }
 }
