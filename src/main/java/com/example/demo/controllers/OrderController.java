@@ -41,7 +41,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateOrder(@PathVariable("id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response,BindingResult result) {
+    public void updateOrder(@PathVariable("id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response, BindingResult result) {
         if (result.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -53,8 +53,11 @@ public class OrderController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Order> deleteOrderById(@PathVariable("id") Integer id) {
-        return (orderService.deleteOrderById(id)) ? new ResponseEntity<>(HttpStatus.ACCEPTED) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public void deleteOrderById(@PathVariable("id") Integer id) {
+        if (orderService.deleteOrderById(id)) {
+            new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } else {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

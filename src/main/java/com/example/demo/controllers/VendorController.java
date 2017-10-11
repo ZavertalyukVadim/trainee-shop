@@ -48,7 +48,7 @@ public class VendorController {
     @DeleteMapping(value = "/{id}")
     public void deleteVendorById(@PathVariable("id") Integer id,HttpServletResponse response) {
         if (vendorService.deleteVendorById(id)){
-            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+            response.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
