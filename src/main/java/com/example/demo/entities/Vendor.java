@@ -17,7 +17,7 @@ public class Vendor {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     private List<Goods> goods;
 
     public Integer getId() {

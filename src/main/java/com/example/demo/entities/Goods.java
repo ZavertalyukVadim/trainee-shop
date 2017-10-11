@@ -18,7 +18,7 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @ManyToOne
     @JoinTable(name = "goods_vendors", joinColumns = {
             @JoinColumn(name = "goods_id", nullable = false)},

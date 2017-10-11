@@ -16,7 +16,7 @@ public class Client {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "client")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     private Order order;
 
     public Client() {

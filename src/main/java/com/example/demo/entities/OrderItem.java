@@ -13,7 +13,7 @@ public class OrderItem {
     private Integer id;
 
     @OneToOne
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
