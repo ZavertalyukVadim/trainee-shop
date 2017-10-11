@@ -19,25 +19,30 @@ public class GoodsController {
     public GoodsController(GoodsService goodsService) {
         this.goodsService = goodsService;
     }
+
     @GetMapping
-    public ResponseEntity<List<Goods>> getAllGoods(){
+    public ResponseEntity<List<Goods>> getAllGoods() {
         return new ResponseEntity<>(goodsService.getAllGoods(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Goods >getGoodsById(@PathVariable("id") Integer id){
-        return new ResponseEntity<>(goodsService.getGoodsById(id),HttpStatus.OK);
+    public ResponseEntity<Goods> getGoodsById(@PathVariable("id") Integer id) {
+        if (goodsService.getGoodsById(id) != null) {
+            return new ResponseEntity<>(goodsService.getGoodsById(id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(goodsService.getGoodsById(id), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<Integer >createGoods(@RequestBody Goods goods){
-        return (goodsService.createGoods(goods)>=1)? new ResponseEntity<>(HttpStatus.CREATED) :
-        new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Integer> createGoods(@RequestBody Goods goods) {
+        return (goodsService.createGoods(goods) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/{id}")
-    public void updateGoods(@PathVariable("id") Integer id,@RequestBody Goods goods,HttpServletResponse response){
-        if (goodsService.updateGoods(id,goods)){
+    public void updateGoods(@PathVariable("id") Integer id, @RequestBody Goods goods, HttpServletResponse response) {
+        if (goodsService.updateGoods(id, goods)) {
             response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -45,8 +50,8 @@ public class GoodsController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteGoodsById(@PathVariable("id") Integer id,HttpServletResponse response){
-        if (goodsService.deleteGoodsById(id)){
+    public void deleteGoodsById(@PathVariable("id") Integer id, HttpServletResponse response) {
+        if (goodsService.deleteGoodsById(id)) {
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
