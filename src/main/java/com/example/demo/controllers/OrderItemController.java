@@ -28,7 +28,11 @@ public class OrderItemController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<OrderItem> getOrderItemById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderItemService.getOrderItemById(id), HttpStatus.OK);
+        if (orderItemService.getOrderItemById(id) != null) {
+            return new ResponseEntity<>(orderItemService.getOrderItemById(id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
