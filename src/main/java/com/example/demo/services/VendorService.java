@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.dao.VendorDao;
 import com.example.demo.entities.Vendor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.util.List;
 @Service
 public class VendorService {
     private final VendorDao vendorDao;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public VendorService(VendorDao vendorDao) {
@@ -30,13 +33,15 @@ public class VendorService {
     }
 
     public boolean updateVendor(Integer id, Vendor vendor) {
-        try {
-            Vendor newVendor = vendorDao.findOne(id);
-            newVendor.setGoods(vendor.getGoods());
-            newVendor.setName(vendor.getName());
-            vendorDao.save(newVendor);
+        Vendor newVendor = vendorDao.findOne(id);
+        logger.debug("check if vendor with id " + id + " exists in database");
+        if (newVendor != null) {
+            logger.debug("Update vendor with input id = " + id);
+            vendor.setId(id);
+            vendorDao.save(vendor);
             return true;
-        } catch (Exception e) {
+        } else {
+            logger.debug("attempt to update vendor with nonexistent id = " + id);
             return false;
         }
     }
