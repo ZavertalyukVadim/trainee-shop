@@ -53,7 +53,7 @@ public class ClientService {
             clientDao.save(client);
             return true;
         } else {
-            logger.debug("attempt to update user with nonexistent id = " + id);
+            logger.debug("attempt to update client with nonexistent id = " + id);
             return false;
         }
     }
