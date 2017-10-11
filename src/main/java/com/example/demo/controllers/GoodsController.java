@@ -30,7 +30,7 @@ public class GoodsController {
         if (goodsService.getGoodsById(id) != null) {
             return new ResponseEntity<>(goodsService.getGoodsById(id), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(goodsService.getGoodsById(id), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

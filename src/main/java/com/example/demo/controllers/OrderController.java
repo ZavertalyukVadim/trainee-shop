@@ -31,7 +31,11 @@ public class OrderController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
+        if (orderService.getOrderById(id) != null) {
+            return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
