@@ -27,7 +27,11 @@ public class VendorController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Vendor> getVendorById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(vendorService.getVendorById(id), HttpStatus.OK);
+        if (vendorService.getVendorById(id) != null) {
+            return new ResponseEntity<>(vendorService.getVendorById(id), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
@@ -37,17 +41,17 @@ public class VendorController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateVendor(@PathVariable("id") Integer id, @RequestBody Vendor vendor,HttpServletResponse response) {
-         if (vendorService.updateVendor(id, vendor)){
-             response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
-         } else {
-             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-         }
+    public void updateVendor(@PathVariable("id") Integer id, @RequestBody Vendor vendor, HttpServletResponse response) {
+        if (vendorService.updateVendor(id, vendor)) {
+            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteVendorById(@PathVariable("id") Integer id,HttpServletResponse response) {
-        if (vendorService.deleteVendorById(id)){
+    public void deleteVendorById(@PathVariable("id") Integer id, HttpServletResponse response) {
+        if (vendorService.deleteVendorById(id)) {
             response.setStatus(HttpServletResponse.SC_ACCEPTED);
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
