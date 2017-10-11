@@ -22,14 +22,17 @@ public class OrderService {
     }
 
     public List<Order> getAllOrders() {
+        logger.info("attempt to get all orders");
         return orderDao.findAll();
     }
 
     public Order getOrderById(Integer id) {
+        logger.info("attempt to get order with id = "+ id);
         return orderDao.findOne(id);
     }
 
     public Integer createOrder(Order order) {
+        logger.info("attempt to create order");
         try {
             return orderDao.save(order).getId();
         } catch (Exception e) {
@@ -39,6 +42,7 @@ public class OrderService {
     }
 
     public boolean updateOrder(Integer id, Order order) {
+        logger.info("attempt to update order with id = "+ id);
         Order order1 = orderDao.findOne(id);
         logger.debug("check if order with id " + id + " exists in database");
         if (order1 != null) {
@@ -55,6 +59,7 @@ public class OrderService {
     }
 
     public boolean deleteOrderById(Integer id) {
+        logger.info("attempt to delete order with id = "+ id);
         try {
             orderDao.delete(id);
             return true;
