@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import com.example.demo.dao.OrderDao;
 import com.example.demo.entities.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import java.util.List;
 @Transactional
 public class OrderService {
     private final OrderDao orderDao;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public OrderService(OrderDao orderDao) {
@@ -35,19 +38,19 @@ public class OrderService {
 
     }
 
-    @Transactional
     public boolean updateOrder(Integer id, Order order) {
-        try {
-            Order order1 = orderDao.findOne(id);
-            order1.setId(id);
-            order1.setName(order.getName());
-            order1.setOrderItems(order.getOrderItems());
-            order1.setClient(order.getClient());
-            orderDao.save(order1);
+        Order order1 = orderDao.findOne(id);
+        logger.debug("check if order with id " + id + " exists in database");
+        if (order1 != null) {
+            logger.debug("Update order with input id = " + id);
+            order.setId(id);
+            orderDao.save(order);
             return true;
-        } catch (Exception e) {
+        } else {
+            logger.debug("attempt to update order with nonexistent id = " + id);
             return false;
         }
+
 
     }
 
