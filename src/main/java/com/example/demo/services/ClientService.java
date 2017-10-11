@@ -41,8 +41,7 @@ public class ClientService {
     }
 
     public Integer createClient(Client client) {
-        Client newClient = clientDao.save(client);
-        return newClient.getId();
+        return clientDao.save(client).getId();
     }
 
     public boolean updateClient(Integer id, Client client) {
