@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -15,20 +16,16 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "client")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-    private Order order;
+    @JoinColumn(name = "order_id")
+    private List<Order > orders;
 
     public Client() {
     }
 
     public Client(String name) {
         this.name = name;
-    }
-
-    public Client(String name, Order order) {
-        this.name = name;
-        this.order = order;
     }
 
     public Integer getId() {
@@ -47,12 +44,12 @@ public class Client {
         this.name = name;
     }
 
-    public Order getOrder() {
-        return order;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -60,8 +57,7 @@ public class Client {
         return "Client{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", order=" + order +
+                ", orders=" + orders +
                 '}';
     }
-
 }

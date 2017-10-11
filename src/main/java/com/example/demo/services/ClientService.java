@@ -92,7 +92,7 @@ public class ClientService {
                 client
         );
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
-        client.setOrder(order);
+        client.setOrders(Arrays.asList(order));
         logger.debug("saved object client with order: " + clientDao.save(client));
         logger.info("completed insert test data");
     }
