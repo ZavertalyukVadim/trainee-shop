@@ -38,18 +38,21 @@ public class ClientService {
     }
 
     public Client getClientById(Integer id) {
-        logger.info("attempt to get client with id = "+ id);
+        logger.info("attempt to get client with id = " + id);
         return clientDao.findOne(id);
     }
 
     public Integer createClient(Client client) {
         logger.info("attempt to create client");
-        clientDao.save(client);
-        return 1;
+        try {
+            return clientDao.save(client).getId();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public boolean updateClient(Integer id, Client client) {
-        logger.info("attempt to update client with id = "+ id);
+        logger.info("attempt to update client with id = " + id);
         Client newClient = clientDao.findOne(id);
         logger.debug("check if client with id " + id + " exists in database");
         if (newClient != null) {
@@ -64,7 +67,7 @@ public class ClientService {
     }
 
     public boolean deleteClientById(Integer id) {
-        logger.info("attempt to delete client with id = "+ id);
+        logger.info("attempt to delete client with id = " + id);
         try {
             clientDao.delete(id);
             return true;

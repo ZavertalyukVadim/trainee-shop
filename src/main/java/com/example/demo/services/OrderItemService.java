@@ -25,17 +25,21 @@ public class OrderItemService {
     }
 
     public OrderItem getOrderItemById(Integer id) {
-        logger.info("attempt to get orderItem with id = "+ id);
+        logger.info("attempt to get orderItem with id = " + id);
         return orderItemDao.findOne(id);
     }
 
     public Integer createOrderItem(OrderItem orderItem) {
         logger.info("attempt to create orderItem");
-        return orderItemDao.save(orderItem).getId();
+        try {
+            return orderItemDao.save(orderItem).getId();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public boolean updateOrderItem(Integer id, OrderItem orderItem) {
-        logger.info("attempt to update orderItem with id = "+ id);
+        logger.info("attempt to update orderItem with id = " + id);
         OrderItem newOrderItem = orderItemDao.findOne(id);
         logger.debug("check if orderItem with id " + id + " exists in database");
         if (newOrderItem != null) {
@@ -51,7 +55,7 @@ public class OrderItemService {
     }
 
     public boolean deleteOrderItemById(Integer id) {
-        logger.info("attempt to delete orderItem with id = "+ id);
+        logger.info("attempt to delete orderItem with id = " + id);
         try {
             orderItemDao.delete(id);
             return true;

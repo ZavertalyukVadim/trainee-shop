@@ -25,17 +25,21 @@ public class VendorService {
     }
 
     public Vendor getVendorById(Integer id) {
-        logger.info("attempt to get client with id = "+ id);
+        logger.info("attempt to get client with id = " + id);
         return vendorDao.findOne(id);
     }
 
     public Integer createVendor(Vendor vendor) {
         logger.info("attempt to create client");
-        return vendorDao.save(vendor).getId();
+        try {
+            return vendorDao.save(vendor).getId();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public boolean updateVendor(Integer id, Vendor vendor) {
-        logger.info("attempt to update client with id = "+ id);
+        logger.info("attempt to update client with id = " + id);
         Vendor newVendor = vendorDao.findOne(id);
         logger.debug("check if vendor with id " + id + " exists in database");
         if (newVendor != null) {
@@ -50,7 +54,7 @@ public class VendorService {
     }
 
     public boolean deleteVendorById(Integer id) {
-        logger.info("attempt to delete client with id = "+ id);
+        logger.info("attempt to delete client with id = " + id);
         try {
             vendorDao.delete(id);
             return true;

@@ -26,17 +26,21 @@ public class GoodsService {
     }
 
     public Goods getGoodsById(Integer id) {
-        logger.info("attempt to get goods with id = "+ id);
+        logger.info("attempt to get goods with id = " + id);
         return goodsDao.findOne(id);
     }
 
     public Integer createGoods(Goods goods) {
         logger.info("attempt to create goods");
-        return goodsDao.save(goods).getId();
+        try {
+            return goodsDao.save(goods).getId();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public boolean updateGoods(Integer id, Goods goods) {
-        logger.info("attempt to update goods with id = "+ id);
+        logger.info("attempt to update goods with id = " + id);
         Goods newGoods = goodsDao.findOne(id);
         logger.debug("check if goods with id " + id + " exists in database");
         if (newGoods != null) {
@@ -52,7 +56,7 @@ public class GoodsService {
     }
 
     public boolean deleteGoodsById(Integer id) {
-        logger.info("attempt to delete goods with id = "+ id);
+        logger.info("attempt to delete goods with id = " + id);
         try {
             goodsDao.delete(id);
             return true;
