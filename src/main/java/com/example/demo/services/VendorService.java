@@ -20,19 +20,22 @@ public class VendorService {
     }
 
     public List<Vendor> getAllVendors() {
-
+        logger.info("attempt to get all clients");
         return vendorDao.findAll();
     }
 
     public Vendor getVendorById(Integer id) {
+        logger.info("attempt to get client with id = "+ id);
         return vendorDao.findOne(id);
     }
 
     public Integer createVendor(Vendor vendor) {
+        logger.info("attempt to create client");
         return vendorDao.save(vendor).getId();
     }
 
     public boolean updateVendor(Integer id, Vendor vendor) {
+        logger.info("attempt to update client with id = "+ id);
         Vendor newVendor = vendorDao.findOne(id);
         logger.debug("check if vendor with id " + id + " exists in database");
         if (newVendor != null) {
@@ -47,6 +50,7 @@ public class VendorService {
     }
 
     public boolean deleteVendorById(Integer id) {
+        logger.info("attempt to delete client with id = "+ id);
         try {
             vendorDao.delete(id);
             return true;
