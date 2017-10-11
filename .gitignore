@@ -27,3 +27,6 @@ nbdist/
 mvnw
 mvnw.cmd
 
+/myApplication.log
+.DS_Store
+myApplication.log
