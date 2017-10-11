@@ -45,14 +45,15 @@ public class ClientService {
     }
 
     public boolean updateClient(Integer id, Client client) {
-        try {
-            Client newClient = clientDao.findOne(id);
-            newClient.setId(id);
-            newClient.setName(client.getName());
-            newClient.setOrder(client.getOrder());
-            clientDao.save(newClient);
+        Client newClient = clientDao.findOne(id);
+        logger.debug("check if client with id " + id + " exists in database");
+        if (newClient != null) {
+            logger.debug("Update Client with input id = " + id);
+            client.setId(id);
+            clientDao.save(client);
             return true;
-        } catch (Exception e) {
+        } else {
+            logger.debug("attempt to update user with nonexistent id = " + id);
             return false;
         }
     }
