@@ -23,7 +23,12 @@ public class Goods {
             @JoinColumn(name = "goods_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "vendor_id",
                     nullable = false)})
-    private Vendor vendors;
+    private Vendor vendor;
+
+//    @JsonManagedReference
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "vendor_id")
+//    private List<Vendor> vendors;
 
     public Integer getId() {
         return id;
@@ -49,11 +54,11 @@ public class Goods {
         this.type = type;
     }
 
-    public Vendor getVendors() {
-        return vendors;
+    public Vendor getVendor() {
+        return vendor;
     }
 
-    public void setVendors(Vendor vendors) {
-        this.vendors = vendors;
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
     }
 }

@@ -35,7 +35,7 @@ public class GoodsService {
             Goods newGoods = goodsDao.findOne(id);
             newGoods.setName(goods.getName());
             newGoods.setType(goods.getType());
-            newGoods.setVendors(goods.getVendors());
+            newGoods.setVendor(goods.getVendor());
             goodsDao.save(newGoods);
             return true;
         }catch (Exception e){

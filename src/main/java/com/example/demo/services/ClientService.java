@@ -1,6 +1,9 @@
 package com.example.demo.services;
 
-import com.example.demo.dao.*;
+import com.example.demo.dao.ClientDao;
+import com.example.demo.dao.GoodsDao;
+import com.example.demo.dao.OrderDao;
+import com.example.demo.dao.VendorDao;
 import com.example.demo.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +16,14 @@ import java.util.List;
 public class ClientService {
     private final ClientDao clientDao;
     private final OrderDao orderDao;
-    private final OrderItemDao orderItemDao;
     private final VendorDao vendorDao;
     private final GoodsDao goodsDao;
 
 
     @Autowired
-    public ClientService(ClientDao clientDao, OrderDao orderDao, OrderItemDao orderItemDao, VendorDao vendorDao, GoodsDao goodsDao) {
+    public ClientService(ClientDao clientDao, OrderDao orderDao, VendorDao vendorDao, GoodsDao goodsDao) {
         this.clientDao = clientDao;
         this.orderDao = orderDao;
-        this.orderItemDao = orderItemDao;
         this.vendorDao = vendorDao;
         this.goodsDao = goodsDao;
         test1();
@@ -74,11 +75,11 @@ public class ClientService {
         Goods goods = new Goods();
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
-        goods.setVendors(vendor);
+        goods.setVendor(vendor);
         goodsDao.save(goods);
-
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
+
         vendor.setGoods(goodsList);
         vendorDao.save(vendor);
 

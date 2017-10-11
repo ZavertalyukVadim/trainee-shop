@@ -1,7 +1,8 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,8 +15,9 @@ public class Vendor {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vendors", cascade = CascadeType.ALL)
-    private List<Goods> goods = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Goods> goods;
 
     public Integer getId() {
         return id;
