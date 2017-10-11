@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -17,8 +18,8 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+    @ManyToOne
     @JoinTable(name = "goods_vendors", joinColumns = {
             @JoinColumn(name = "goods_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "vendor_id",

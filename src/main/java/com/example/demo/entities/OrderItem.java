@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -12,7 +13,7 @@ public class OrderItem {
     private Integer id;
 
     @OneToOne
-    @JsonManagedReference
+    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
