@@ -25,11 +25,6 @@ public class Goods {
                     nullable = false)})
     private Vendor vendor;
 
-//    @JsonManagedReference
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "vendor_id")
-//    private List<Vendor> vendors;
-
     public Integer getId() {
         return id;
     }
@@ -60,5 +55,15 @@ public class Goods {
 
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", vendor=" + vendor +
+                '}';
     }
 }

@@ -5,6 +5,8 @@ import com.example.demo.dao.GoodsDao;
 import com.example.demo.dao.OrderDao;
 import com.example.demo.dao.VendorDao;
 import com.example.demo.entities.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class ClientService {
     private final OrderDao orderDao;
     private final VendorDao vendorDao;
     private final GoodsDao goodsDao;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
@@ -65,9 +68,10 @@ public class ClientService {
     }
 
     private void test1() {
-        Client client = new Client("name");
-        clientDao.save(client);
 
+        Client client = new Client("name");
+//        logger.debug(String.valueOf(clientDao.save(client)));
+        clientDao.save(client);
         Vendor vendor = new Vendor();
         vendor.setName("vendor");
         vendorDao.save(vendor);
@@ -76,7 +80,11 @@ public class ClientService {
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
-        goodsDao.save(goods);
+        logger.trace("This is a trace message");
+        logger.debug("This is a debug message");
+        logger.info("This is a info message");
+//        goodsDao.save(goods);
+        logger.debug(String.valueOf(goodsDao.save(goods)));
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
 

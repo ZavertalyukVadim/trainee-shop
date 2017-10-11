@@ -42,4 +42,13 @@ public class Vendor {
     public void setGoods(List<Goods> goods) {
         this.goods = goods;
     }
+
+    @Override
+    public String toString() {
+        return "Vendor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", goods=" + goods +
+                '}';
+    }
 }
