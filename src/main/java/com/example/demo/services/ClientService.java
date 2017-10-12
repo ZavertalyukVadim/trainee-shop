@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,13 +85,13 @@ public class ClientService {
         vendor.setName("vendor");
         logger.debug("saved object vendor: " + vendorDao.save(vendor));
         Goods goods = new Goods();
-        goods.setPrice(1000);
+        goods.setPrice(BigDecimal.valueOf(1000));
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
         logger.debug("saved object goods with vendor: " + goodsDao.save(goods));
         Goods goods1 = new Goods();
-        goods1.setPrice(1000);
+        goods1.setPrice(BigDecimal.valueOf(1000));
         goods1.setName("goods1 name");
         goods1.setType(Type.COMPUTER);
         goods1.setVendor(vendor);
@@ -116,17 +117,19 @@ public class ClientService {
         logger.info("completed insert test data");
     }
 
-    private float priceCalculation(List<OrderItem> orderItems, Integer discount) {
-        float sum = 0;
-        float totalPrice = 0;
+    private BigDecimal priceCalculation(List<OrderItem> orderItems, Integer discount) {
+        System.out.println(discount);
+        BigDecimal sum = BigDecimal.valueOf(0);
+        BigDecimal totalPrice = null;
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getGoods() != null) {
-                sum = sum + (orderItem.getGoods().getPrice()* orderItem.getCount());
+                BigDecimal underSum = orderItem.getGoods().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount()));
+                sum = sum.add(underSum);
             }
         }
-        if (sum != 0 && discount != 0) {
-            float sale = ((float) discount) / 100;
-            totalPrice = sum - (sum * (sale));
+        if (sum != null && discount != 0) {
+            BigDecimal sale = BigDecimal.valueOf( discount).divide(BigDecimal.valueOf(100));
+            totalPrice = sum.subtract(sum.multiply(sale));
         }
         System.out.println(totalPrice);
         return totalPrice;

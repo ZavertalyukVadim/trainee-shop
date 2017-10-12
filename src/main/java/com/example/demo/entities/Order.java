@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +21,16 @@ public class Order {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems = new ArrayList<>();
+
     //общяя цена
-    private float totalPrice;
+    private BigDecimal totalPrice;
 
     @OneToOne
     @JoinColumn(name = "client_id")
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private Client client;
 
     public Order() {
@@ -72,11 +74,11 @@ public class Order {
         this.client = client;
     }
 
-    public float getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

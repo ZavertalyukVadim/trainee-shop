@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "goods")
@@ -18,7 +19,7 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
-    private float price;
+    private BigDecimal price;
     //посмотреть тип данных дял цены
 
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
@@ -61,11 +62,11 @@ public class Goods {
         this.vendor = vendor;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
