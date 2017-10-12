@@ -96,16 +96,26 @@ public class ClientService {
         goods1.setType(Type.COMPUTER);
         goods1.setVendor(vendor);
         logger.debug("saved object goods with vendor: " + goodsDao.save(goods1));
+
+        Goods goods2 = new Goods();
+        goods2.setPrice(BigDecimal.valueOf(500));
+        goods2.setName("goods1 name");
+        goods2.setType(Type.COMPUTER);
+        goods2.setVendor(vendor);
+        logger.debug("saved object goods with vendor: " + goodsDao.save(goods2));
+
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
         goodsList.add(goods1);
+        goodsList.add(goods2);
         vendor.setGoods(goodsList);
         logger.debug("saved object vendor with goods: " + vendorDao.save(vendor));
         Order order = new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
-                new OrderItem(goods1, 5)
+                new OrderItem(goods1, 5),
+                new OrderItem(goods2,10)
         ));
         order.setClient(
                 client
