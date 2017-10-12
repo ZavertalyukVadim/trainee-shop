@@ -8,7 +8,6 @@ import java.util.List;
 
 public class Calculator {
     public static BigDecimal priceCalculation(List<OrderItem> orderItems, Integer discount) {
-        System.out.println(discount);
         BigDecimal sum = BigDecimal.valueOf(0);
         BigDecimal totalPrice = null;
         for (OrderItem orderItem : orderItems) {
