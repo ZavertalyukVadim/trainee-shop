@@ -60,4 +60,16 @@ public class Client {
                 ", orders=" + orders +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        if (id != null ? !id.equals(client.id) : client.id != null) return false;
+        if (name != null ? !name.equals(client.name) : client.name != null) return false;
+        return orders != null ? orders.equals(client.orders) : client.orders == null;
+    }
 }
