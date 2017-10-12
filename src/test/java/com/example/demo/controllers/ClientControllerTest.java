@@ -2,41 +2,60 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Client;
 import com.example.demo.services.ClientService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-import static org.mockito.BDDMockito.given;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(ClientController.class)
-@RestClientTest
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
+@DataJpaTest
+@WebAppConfiguration
 public class ClientControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     @MockBean
     private ClientService clientService;
 
-
-    @Test
-    public void testExample() throws Exception {
-        given(this.clientService.getClientById(1))
-                .willReturn(new Client("first"));
-
-        this.mvc.perform(get("/client/1").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()).andExpect(content().string("Honda Civic"));
+    @Before
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     }
 
+    @Autowired
+    private WebApplicationContext wac;
+
+
+    @Test
+    public void findAll_TodosFound_ShouldReturnFoundTodoEntries() throws Exception {
+        List<Client> clients = new ArrayList<>();
+
+        when(clientService.getAllClients()).thenReturn(clients);
+
+
+        this.mockMvc.perform(get("/client")
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"));
+    }
 
 }
+
