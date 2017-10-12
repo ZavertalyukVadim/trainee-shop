@@ -89,15 +89,22 @@ public class ClientService {
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
         logger.debug("saved object goods with vendor: " + goodsDao.save(goods));
+        Goods goods1 = new Goods();
+        goods1.setPrice(1000);
+        goods1.setName("goods1 name");
+        goods1.setType(Type.COMPUTER);
+        goods1.setVendor(vendor);
+        logger.debug("saved object goods with vendor: " + goodsDao.save(goods1));
         List<Goods> goodsList = new ArrayList<>();
         goodsList.add(goods);
+        goodsList.add(goods1);
         vendor.setGoods(goodsList);
         logger.debug("saved object vendor with goods: " + vendorDao.save(vendor));
         Order order = new Order();
         order.setName("order");
         order.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
-                new OrderItem(5)
+                new OrderItem(goods1, 5)
         ));
         order.setClient(
                 client
@@ -114,13 +121,14 @@ public class ClientService {
         float totalPrice = 0;
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getGoods() != null) {
-                sum += orderItem.getGoods().getPrice();
+                sum = sum + (orderItem.getGoods().getPrice()* orderItem.getCount());
             }
         }
         if (sum != 0 && discount != 0) {
             float sale = ((float) discount) / 100;
             totalPrice = sum - (sum * (sale));
         }
+        System.out.println(totalPrice);
         return totalPrice;
     }
 }
