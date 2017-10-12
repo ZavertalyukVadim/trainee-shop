@@ -18,7 +18,7 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
-    private Integer price;
+    private float price;
     //посмотреть тип данных дял цены
 
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
@@ -61,11 +61,11 @@ public class Goods {
         this.vendor = vendor;
     }
 
-    public Integer getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

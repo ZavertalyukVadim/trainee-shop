@@ -24,8 +24,7 @@ public class Order {
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems = new ArrayList<>();
     //общяя цена
-
-    private Integer totalPrice;
+    private float totalPrice;
 
     @OneToOne
     @JoinColumn(name = "client_id")
@@ -73,11 +72,11 @@ public class Order {
         this.client = client;
     }
 
-    public Integer getTotalPrice() {
+    public float getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(float totalPrice) {
         this.totalPrice = totalPrice;
     }
 

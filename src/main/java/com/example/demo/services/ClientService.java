@@ -78,11 +78,13 @@ public class ClientService {
 
     private void test1() {
         Client client = new Client("name");
+        client.setDiscount(10);
         logger.debug("saved object client: " + clientDao.save(client));
         Vendor vendor = new Vendor();
         vendor.setName("vendor");
         logger.debug("saved object vendor: " + vendorDao.save(vendor));
         Goods goods = new Goods();
+        goods.setPrice(1000);
         goods.setName("goods name");
         goods.setType(Type.COMPUTER);
         goods.setVendor(vendor);
@@ -100,9 +102,25 @@ public class ClientService {
         order.setClient(
                 client
         );
+        order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
         client.setOrders(Arrays.asList(order));
         logger.debug("saved object client with order: " + clientDao.save(client));
         logger.info("completed insert test data");
+    }
+
+    private float priceCalculation(List<OrderItem> orderItems, Integer discount) {
+        float sum = 0;
+        float totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            if (orderItem.getGoods() != null) {
+                sum += orderItem.getGoods().getPrice();
+            }
+        }
+        if (sum != 0 && discount != 0) {
+            float sale = ((float) discount) / 100;
+            totalPrice = sum - (sum * (sale));
+        }
+        return totalPrice;
     }
 }
