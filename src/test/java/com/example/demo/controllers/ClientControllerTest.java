@@ -53,8 +53,8 @@ public class ClientControllerTest {
                 .accept(MediaType.parseMediaType("application/json;charset=UTF-8"))
                 .content("application/json;charset=UTF-8"))
                 .andReturn();
-
-        assertThat(mapper.readValue(mvcResult.getResponse().getContentAsString(),Client.class).getId(), is(client.getId()));
+        Client client1 = mapper.readValue(mvcResult.getResponse().getContentAsString(),Client.class);
+        assertThat(client1.toString(), is(client.toString()));
     }
 
     @Test
