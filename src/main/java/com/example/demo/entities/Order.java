@@ -23,6 +23,9 @@ public class Order {
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems = new ArrayList<>();
+    //общяя цена
+
+    private Integer totalPrice;
 
     @OneToOne
     @JoinColumn(name = "client_id")
@@ -70,6 +73,14 @@ public class Order {
         this.client = client;
     }
 
+    public Integer getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Integer totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -79,4 +90,6 @@ public class Order {
                 ", client=" + client.getId() +
                 '}';
     }
+
+
 }

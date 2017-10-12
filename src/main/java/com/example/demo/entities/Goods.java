@@ -18,6 +18,9 @@ public class Goods {
     @Column(name = "type")
     private Type type;
 
+    private Integer price;
+    //посмотреть тип данных дял цены
+
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @ManyToOne
     @JoinTable(name = "goods_vendors", joinColumns = {
@@ -56,6 +59,14 @@ public class Goods {
 
     public void setVendor(Vendor vendor) {
         this.vendor = vendor;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     @Override

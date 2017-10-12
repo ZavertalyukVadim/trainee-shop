@@ -21,6 +21,8 @@ public class Client {
     @JoinColumn(name = "order_id")
     private List<Order > orders;
 
+    private Integer discount;
+
     public Client() {
     }
 
@@ -52,6 +54,14 @@ public class Client {
         this.orders = orders;
     }
 
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
@@ -59,5 +69,15 @@ public class Client {
                 ", name='" + name + '\'' +
                 ", orders=" + orders +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client client = (Client) o;
+
+        return (id != null ? id.equals(client.id) : client.id == null) && (name != null ? name.equals(client.name) : client.name == null) && (orders != null ? orders.equals(client.orders) : client.orders == null);
     }
 }
