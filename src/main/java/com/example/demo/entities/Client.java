@@ -68,8 +68,6 @@ public class Client {
 
         Client client = (Client) o;
 
-        if (id != null ? !id.equals(client.id) : client.id != null) return false;
-        if (name != null ? !name.equals(client.name) : client.name != null) return false;
-        return orders != null ? orders.equals(client.orders) : client.orders == null;
+        return (id != null ? id.equals(client.id) : client.id == null) && (name != null ? name.equals(client.name) : client.name == null) && (orders != null ? orders.equals(client.orders) : client.orders == null);
     }
 }
