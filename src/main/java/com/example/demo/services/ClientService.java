@@ -122,10 +122,6 @@ public class ClientService {
         order.setClient(
                 client
         );
-        List<OrderItem> list = new ArrayList<>();
-        priceCalculation(list, 0);
-
-
         order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
         client.setOrders(Arrays.asList(order));
