@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.demo.until.Calculator.priceCalculation;
+import static com.example.demo.utils.Calculator.priceCalculation;
 
 @Service
 public class ClientService {
@@ -122,6 +122,10 @@ public class ClientService {
         order.setClient(
                 client
         );
+        List<OrderItem> list = new ArrayList<>();
+        priceCalculation(list, 0);
+
+
         order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
         client.setOrders(Arrays.asList(order));

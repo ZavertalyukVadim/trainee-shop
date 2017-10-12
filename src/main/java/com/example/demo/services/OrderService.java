@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.demo.until.Calculator.priceCalculation;
+import static com.example.demo.utils.Calculator.priceCalculation;
 
 @Service
 @Transactional
