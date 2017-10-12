@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.demo.until.Calculator.priceCalculation;
+
 @Service
 public class ClientService {
     private final ClientDao clientDao;
@@ -127,21 +129,5 @@ public class ClientService {
         logger.info("completed insert test data");
     }
 
-    private BigDecimal priceCalculation(List<OrderItem> orderItems, Integer discount) {
-        System.out.println(discount);
-        BigDecimal sum = BigDecimal.valueOf(0);
-        BigDecimal totalPrice = null;
-        for (OrderItem orderItem : orderItems) {
-            if (orderItem.getGoods() != null) {
-                BigDecimal underSum = orderItem.getGoods().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount()));
-                sum = sum.add(underSum);
-            }
-        }
-        if (sum != null && discount != 0) {
-            BigDecimal sale = BigDecimal.valueOf( discount).divide(BigDecimal.valueOf(100));
-            totalPrice = sum.subtract(sum.multiply(sale));
-        }
-        System.out.println(totalPrice);
-        return totalPrice;
-    }
+
 }
