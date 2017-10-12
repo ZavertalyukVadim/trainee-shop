@@ -3,6 +3,7 @@ package com.example.demo.until;
 import com.example.demo.entities.OrderItem;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class Calculator {
@@ -17,10 +18,9 @@ public class Calculator {
             }
         }
         if (sum != null && discount != 0) {
-            BigDecimal sale = BigDecimal.valueOf( discount).divide(BigDecimal.valueOf(100));
+            BigDecimal sale = BigDecimal.valueOf( discount).divide(BigDecimal.valueOf(100),3, RoundingMode.CEILING);
             totalPrice = sum.subtract(sum.multiply(sale));
         }
-        System.out.println(totalPrice);
         return totalPrice;
     }
 }
