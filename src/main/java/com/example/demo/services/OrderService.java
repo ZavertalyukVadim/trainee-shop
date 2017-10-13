@@ -1,7 +1,10 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.ClientDao;
 import com.example.demo.dao.OrderDao;
+import com.example.demo.entities.Client;
 import com.example.demo.entities.Order;
+import com.example.demo.entities.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +19,14 @@ import static com.example.demo.utils.Calculator.priceCalculation;
 @Transactional
 public class OrderService {
     private final OrderDao orderDao;
+    private final ClientDao clientDao;
+
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public OrderService(OrderDao orderDao) {
+    public OrderService(OrderDao orderDao, ClientDao clientDao) {
         this.orderDao = orderDao;
+        this.clientDao = clientDao;
     }
 
     public List<Order> getAllOrders() {
@@ -68,6 +74,15 @@ public class OrderService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public List<Order> searchOrder(Integer id, List<Status> statuses) {
+        Client client = clientDao.findOne(id);
+        if (client!=null){
+            return orderDao.findAllByClientAndStatusIn(client,statuses);
+        }else {
+            return orderDao.findAllByStatusIn(statuses);
         }
     }
 }
