@@ -17,7 +17,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableJpaRepositories
 @ComponentScan(basePackages = "com.example.demo")
 @EnableSpringDataWebSupport
-//@EnableWebMvc
 public class TraineeShopApplication {
 
     public static void main(String[] args) {

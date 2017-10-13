@@ -62,14 +62,24 @@ public class Client {
         this.discount = discount;
     }
 
+//    @Override
+//    public String toString() {
+//        return "{ " +
+//                "'id':" + id +
+//                ", 'name':'" + name + '\'' +
+//                ", 'orders':" + orders +
+//                ",'discount' :" +discount+
+//                " }";
+//    }
+
     @Override
     public String toString() {
-        return "{ " +
-                "'id':" + id +
-                ", 'name':'" + name + '\'' +
-                ", 'orders':" + orders +
-                ",'discount' :" +discount+
-                " }";
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", orders=" + orders +
+                ", discount=" + discount +
+                '}';
     }
 
     @Override
