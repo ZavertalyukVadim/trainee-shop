@@ -46,6 +46,7 @@ public class ClientServiceTest {
     public void getAllClientsIfOnePresent() throws Exception {
         testData();
         Client client = new Client();
+        client.setId(1);
         client.setName("Name");
         service.createClient(client);
 
@@ -104,7 +105,7 @@ public class ClientServiceTest {
         first = new Client();
         first.setName("client");
         second = new Client();
-        second.setId(1);
+        second.setId(6);
         second.setName("second");
 
         service.createClient(first);
