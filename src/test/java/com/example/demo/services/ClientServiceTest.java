@@ -22,16 +22,15 @@ public class ClientServiceTest {
     @SuppressWarnings("SpringJavaAutowiredMembersInspection")
     private ClientService service;
 
-
     private Client first, second, third;
     private Integer id;
     private List<Client> clientList = new ArrayList<>();
 
-    //    @Test(expected = RuntimeException.class)
+//    @Test(expected = RuntimeException.class)
     public ClientServiceTest() {
     }
 
-    public void testData() {
+    public void testData(){
         first = new Client();
         first.setId(1);
         first.setName("Name");
@@ -54,7 +53,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void addOneClientAndReadHim() {
+    public void addOneClientAndReadHim(){
         first = new Client();
         first.setName("client");
 
@@ -64,7 +63,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void addTwoClientAndSeeCount() {
+    public void addTwoClientAndSeeCount(){
         first = new Client();
         first.setName("client");
         second = new Client();
@@ -73,11 +72,11 @@ public class ClientServiceTest {
         service.createClient(first);
         service.createClient(second);
 
-        assertThat(service.getAllClients().stream().count(), is(2L));
+        assertThat(service.getAllClients().stream().count(),is(2L));
     }
 
     @Test
-    public void addClientInDbAndDeleteHim() {
+    public void addClientInDbAndDeleteHim(){
         first = new Client();
         first.setName("client");
 
@@ -87,7 +86,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void addTwoClientInDbAndDeleteTheir() {
+    public void addTwoClientInDbAndDeleteTheir(){
         first = new Client();
         first.setName("client");
         second = new Client();
@@ -101,11 +100,11 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void addClientInDbAndUpdateHim() {
+    public void addClientInDbAndUpdateHim(){
         first = new Client();
         first.setName("client");
         second = new Client();
-        second.setId(3);
+        second.setId(1);
         second.setName("second");
 
         service.createClient(first);

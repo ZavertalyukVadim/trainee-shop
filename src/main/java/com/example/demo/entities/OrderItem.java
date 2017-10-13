@@ -31,6 +31,12 @@ public class OrderItem {
         this.goods = goods;
         this.count = count;
     }
+    public OrderItem(Integer id,Goods goods, Integer count) {
+        this.id = id;
+        this.goods = goods;
+        this.count = count;
+    }
+
 
     public Integer getId() {
         return id;
