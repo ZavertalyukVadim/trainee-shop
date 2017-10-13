@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.demo.utils.Calculator.priceCalculation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -94,7 +93,6 @@ public class ClientControllerTest {
         order2.setClient(
                 client
         );
-        order2.setTotalPrice(priceCalculation(order2.getOrderItems(), order2.getClient().getDiscount()));
         order2.setId(1);
 
         Order order1 = new Order();
@@ -108,7 +106,6 @@ public class ClientControllerTest {
         order1.setClient(
                 client
         );
-        order1.setTotalPrice(priceCalculation(order1.getOrderItems(), order1.getClient().getDiscount()));
         order1.setId(2);
 
         Order order = new Order();
@@ -122,8 +119,7 @@ public class ClientControllerTest {
         order.setClient(
                 client
         );
-        order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
-        order.setId(3);
+         order.setId(3);
         client.setOrders(Arrays.asList(order2, order1, order));
         return client;
 
