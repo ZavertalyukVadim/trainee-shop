@@ -112,6 +112,35 @@ public class ClientService {
         goodsList.add(goods2);
         vendor.setGoods(goodsList);
         logger.debug("saved object vendor with goods: " + vendorDao.save(vendor));
+
+        Order order2 = new Order();
+        order2.setName("order2");
+        order2.setStatus(Status.DELIVERED);
+        order2.setOrderItems(Arrays.asList(
+                new OrderItem(goods, 5),
+                new OrderItem(goods1, 5),
+                new OrderItem(goods2,10)
+        ));
+        order2.setClient(
+                client
+        );
+        order2.setTotalPrice(priceCalculation(order2.getOrderItems(), order2.getClient().getDiscount()));
+        orderDao.save(order2);
+
+        Order order1 = new Order();
+        order1.setName("order1");
+        order1.setStatus(Status.NEW);
+        order1.setOrderItems(Arrays.asList(
+                new OrderItem(goods, 5),
+                new OrderItem(goods1, 5),
+                new OrderItem(goods2,10)
+        ));
+        order1.setClient(
+                client
+        );
+        order1.setTotalPrice(priceCalculation(order1.getOrderItems(), order1.getClient().getDiscount()));
+        orderDao.save(order1);
+
         Order order = new Order();
         order.setName("order");
         order.setStatus(Status.ACCEPTED);
@@ -125,7 +154,7 @@ public class ClientService {
         );
         order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
-        client.setOrders(Arrays.asList(order));
+        client.setOrders(Arrays.asList(order,order1,order2));
         logger.debug("saved object client with order: " + clientDao.save(client));
         logger.info("completed insert test data");
     }
