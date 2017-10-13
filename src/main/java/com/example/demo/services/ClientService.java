@@ -35,6 +35,12 @@ public class ClientService {
         test1();
     }
 
+    private void test2() {
+        Client client = new Client();
+        client.setName("name");
+        clientDao.save(client);
+    }
+
     public List<Client> getAllClients() {
         logger.info("attempt to get all clients");
         return clientDao.findAll();

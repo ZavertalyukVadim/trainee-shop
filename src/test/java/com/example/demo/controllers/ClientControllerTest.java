@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
@@ -26,8 +27,7 @@ import java.util.List;
 import static com.example.demo.utils.Calculator.priceCalculation;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -87,9 +87,9 @@ public class ClientControllerTest {
         order2.setName("order2");
         order2.setStatus(Status.DELIVERED);
         order2.setOrderItems(Arrays.asList(
-                new OrderItem(1,goods, 5),
-                new OrderItem(2,goods1, 5),
-                new OrderItem(3,goods2, 10)
+                new OrderItem(1, goods, 5),
+                new OrderItem(2, goods1, 5),
+                new OrderItem(3, goods2, 10)
         ));
         order2.setClient(
                 client
@@ -101,9 +101,9 @@ public class ClientControllerTest {
         order1.setName("order1");
         order1.setStatus(Status.NEW);
         order1.setOrderItems(Arrays.asList(
-                new OrderItem(4,goods, 5),
-                new OrderItem(5,goods1, 5),
-                new OrderItem(6,goods2, 10)
+                new OrderItem(4, goods, 5),
+                new OrderItem(5, goods1, 5),
+                new OrderItem(6, goods2, 10)
         ));
         order1.setClient(
                 client
@@ -115,9 +115,9 @@ public class ClientControllerTest {
         order.setName("order");
         order.setStatus(Status.ACCEPTED);
         order.setOrderItems(Arrays.asList(
-                new OrderItem(7,goods, 5),
-                new OrderItem(8,goods1, 5),
-                new OrderItem(9,goods2, 10)
+                new OrderItem(7, goods, 5),
+                new OrderItem(8, goods1, 5),
+                new OrderItem(9, goods2, 10)
         ));
         order.setClient(
                 client
@@ -177,6 +177,17 @@ public class ClientControllerTest {
 
     }
 
+    @Test
+    public void updateClient() throws Exception {
+        Json json = new Json("[ " + clientService.getClientById(1).toString() + " ]");
+        MvcResult mvcResult = this.mockMvc.perform(put("/client/1")
+                .accept(MediaType.parseMediaType("application/json;charset=UTF-8"))
+                .content(json.toString())
+                .content("application/json;charset=UTF-8"))
+                .andReturn();
+
+        assertThat(mvcResult.getResponse().getStatus(), is(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE));
+    }
 
 }
 
