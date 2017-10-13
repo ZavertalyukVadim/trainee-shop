@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.demo.utils.Calculator.priceCalculation;
-
 @Service
 public class ClientService {
     private final ClientDao clientDao;
@@ -130,7 +128,6 @@ public class ClientService {
         order2.setClient(
                 client
         );
-        order2.setTotalPrice(priceCalculation(order2.getOrderItems(), order2.getClient().getDiscount()));
         orderDao.save(order2);
 
         Order order1 = new Order();
@@ -144,7 +141,6 @@ public class ClientService {
         order1.setClient(
                 client
         );
-        order1.setTotalPrice(priceCalculation(order1.getOrderItems(), order1.getClient().getDiscount()));
         orderDao.save(order1);
 
         Order order = new Order();
@@ -158,7 +154,6 @@ public class ClientService {
         order.setClient(
                 client
         );
-        order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
         logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
         client.setOrders(Arrays.asList(order,order1,order2));
         logger.debug("saved object client with order: " + clientDao.save(client));

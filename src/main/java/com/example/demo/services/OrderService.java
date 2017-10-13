@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.example.demo.utils.Calculator.priceCalculation;
-
 @Service
 @Transactional
 public class OrderService {
@@ -56,7 +54,6 @@ public class OrderService {
         if (order1 != null) {
             logger.debug("Update order with input id = " + id);
             order.setId(id);
-            order.setTotalPrice(priceCalculation(order.getOrderItems(), order.getClient().getDiscount()));
             orderDao.save(order);
             return true;
         } else {

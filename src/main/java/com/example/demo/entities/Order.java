@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.demo.utils.Calculator.priceCalculation;
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -26,7 +28,7 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //общяя цена
-    private BigDecimal totalPrice;
+//    private BigDecimal totalPrice;
 
     private Status status;
 
@@ -77,12 +79,12 @@ public class Order {
     }
 
     public BigDecimal getTotalPrice() {
-        return totalPrice;
+        return priceCalculation(this.orderItems, this.client.getDiscount());
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+//    public void setTotalPrice(BigDecimal totalPrice) {
+//        this.totalPrice = totalPrice;
+//    }
 
     public Status getStatus() {
         return status;
