@@ -28,6 +28,8 @@ public class Order {
     //общяя цена
     private BigDecimal totalPrice;
 
+    private Status status;
+
     @OneToOne
     @JoinColumn(name = "client_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
@@ -80,6 +82,14 @@ public class Order {
 
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override

@@ -114,6 +114,7 @@ public class ClientService {
         logger.debug("saved object vendor with goods: " + vendorDao.save(vendor));
         Order order = new Order();
         order.setName("order");
+        order.setStatus(Status.ACCEPTED);
         order.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
                 new OrderItem(goods1, 5),
