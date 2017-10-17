@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.OrderDaoHibernate;
 import com.example.demo.entities.Order;
 import com.example.demo.entities.Status;
 import org.slf4j.Logger;
@@ -15,20 +16,20 @@ import java.util.List;
 public class OrderService {
 //    private final OrderDao orderDao;
 //    private final ClientDao clientDao;
-//    private final OrderDaoHibernate orderDaoHibernate;
+    private final OrderDaoHibernate orderDaoHibernate;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public OrderService() {
+    public OrderService(OrderDaoHibernate orderDaoHibernate) {
 
+        this.orderDaoHibernate = orderDaoHibernate;
     }
 
     public List<Order> getAllOrders() {
         logger.info("attempt to get all orders");
 //        return orderDao.findAll();
-//        return orderDaoHibernate.getAllOrders();
-        return null;
+        return orderDaoHibernate.getAllOrders();
     }
 
     public Order getOrderById(Integer id) {
