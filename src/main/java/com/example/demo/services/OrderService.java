@@ -59,9 +59,7 @@ public class OrderService {
     public boolean deleteOrderById(Integer id) {
         logger.info("attempt to delete order with id = " + id);
 
-//        return orderDaoHibernate.delete(id);
-
-        return false;
+        return orderDaoHibernate.delete(id);
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {

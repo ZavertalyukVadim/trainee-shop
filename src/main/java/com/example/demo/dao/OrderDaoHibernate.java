@@ -37,6 +37,18 @@ public class OrderDaoHibernate {
         return ((Integer) session.save(order));
     }
 
+    @Transactional
+    public boolean delete(Integer id) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.createQuery("delete from Order where id = :id").setParameter("id", id).executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
 //    public boolean delete(Integer id) {
 //        Session session = sessionFactory.openSession();
 //        try {
