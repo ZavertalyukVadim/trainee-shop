@@ -43,6 +43,7 @@ public class OrderService {
         logger.info("attempt to update order with id = " + id);
 //        Order order1 = orderDao.findOne(id);
         logger.debug("check if order with id " + id + " exists in database");
+        return orderDaoHibernate.updateOrder(id, order);
 //        if (order1 != null) {
 //            logger.debug("Update order with input id = " + id);
 //            order.setId(id);
@@ -52,14 +53,14 @@ public class OrderService {
 //            logger.debug("attempt to update order with nonexistent id = " + id);
 //            return false;
 //        }
-        return false;
+//        return false;
 
     }
 
     public boolean deleteOrderById(Integer id) {
-        logger.info("attempt to delete order with id = " + id);
+        logger.info("attempt to deleteOrder order with id = " + id);
 
-        return orderDaoHibernate.delete(id);
+        return orderDaoHibernate.deleteOrder(id);
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {

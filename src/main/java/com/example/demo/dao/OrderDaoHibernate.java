@@ -38,10 +38,12 @@ public class OrderDaoHibernate {
     }
 
     @Transactional
-    public boolean delete(Integer id) {
+    public boolean deleteOrder(Integer id) {
         Session session = sessionFactory.openSession();
         try {
-            session.createQuery("delete from Order where id = :id").setParameter("id", id).executeUpdate();
+            session.createQuery("delete from Order where id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             return true;
         } catch (Exception e) {
             return false;
@@ -49,25 +51,20 @@ public class OrderDaoHibernate {
 
     }
 
-//    public boolean delete(Integer id) {
-//        Session session = sessionFactory.openSession();
-//        try {
-//            session.getTransaction().begin();
-////            id  =  session.createQuery("insert into Order (:name,:status,:client_id,:order_id) select o.id from Order o").executeUpdate());
-//            session.save(order);
-//            session.delete();
-//            session.flush();
-//            session.getTransaction().commit();
-//            return true;
-//        } catch (Exception e) {
-//            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-//                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-//                session.getTransaction().rollback();
-//            }
-//            return false;
-//        } finally {
-//            session.close();
-//        }
-//    }
-
+    @Transactional
+    public boolean updateOrder(Integer id, Order order) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.createQuery("update Order set name = :name, status = :status, client = :client  where id = :id")
+                    .setParameter("id", id)
+                    .setParameter("name", order.getName())
+                    .setParameter("status", order.getStatus())
+                    .setParameter("client",order.getClient())
+//                    .setParameter("orderItems", order.getOrderItems())
+                    .executeUpdate();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
