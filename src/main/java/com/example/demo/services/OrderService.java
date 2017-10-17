@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @Transactional
 public class OrderService {
-//    private final OrderDao orderDao;
+    //    private final OrderDao orderDao;
 //    private final ClientDao clientDao;
     private final OrderDaoHibernate orderDaoHibernate;
 
@@ -26,6 +26,7 @@ public class OrderService {
         this.orderDaoHibernate = orderDaoHibernate;
     }
 
+    @Transactional
     public List<Order> getAllOrders() {
         logger.info("attempt to get all orders");
 //        return orderDao.findAll();
@@ -33,9 +34,9 @@ public class OrderService {
     }
 
     public Order getOrderById(Integer id) {
-        logger.info("attempt to get order with id = "+ id);
+        logger.info("attempt to get order with id = " + id);
 //        return orderDao.findOne(id);
-    return null;
+        return null;
     }
 
     public Integer createOrder(Order order) {
@@ -45,11 +46,11 @@ public class OrderService {
 //        } catch (Exception e) {
 //            return 0;
 //        }
-return null;
+        return null;
     }
 
     public boolean updateOrder(Integer id, Order order) {
-        logger.info("attempt to update order with id = "+ id);
+        logger.info("attempt to update order with id = " + id);
 //        Order order1 = orderDao.findOne(id);
         logger.debug("check if order with id " + id + " exists in database");
 //        if (order1 != null) {
@@ -61,12 +62,12 @@ return null;
 //            logger.debug("attempt to update order with nonexistent id = " + id);
 //            return false;
 //        }
-return false;
+        return false;
 
     }
 
     public boolean deleteOrderById(Integer id) {
-        logger.info("attempt to delete order with id = "+ id);
+        logger.info("attempt to delete order with id = " + id);
 //        try {
 //            orderDao.delete(id);
 //            return true;
