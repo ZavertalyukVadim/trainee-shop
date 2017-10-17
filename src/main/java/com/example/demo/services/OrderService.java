@@ -29,14 +29,12 @@ public class OrderService {
     @Transactional
     public List<Order> getAllOrders() {
         logger.info("attempt to get all orders");
-//        return orderDao.findAll();
         return orderDaoHibernate.getAllOrders();
     }
 
     public Order getOrderById(Integer id) {
         logger.info("attempt to get order with id = " + id);
-//        return orderDao.findOne(id);
-        return null;
+        return orderDaoHibernate.getOneById(id);
     }
 
     public Integer createOrder(Order order) {

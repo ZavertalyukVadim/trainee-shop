@@ -27,11 +27,11 @@ public class OrderDaoHibernate {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-           orders = session.createQuery("SELECT o from Order o").list();
+            orders = session.createQuery("SELECT o from Order o").list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            if ( session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK ) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
                 session.getTransaction().rollback();
             }
         } finally {
@@ -40,5 +40,23 @@ public class OrderDaoHibernate {
         return orders;
 //        session.
 //        return criteria.list();
+    }
+
+    public Order getOneById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Order order = null;
+        try {
+            session.getTransaction().begin();
+            order = ((Order) session.createQuery("SELECT o from Order o").uniqueResult());
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return order;
     }
 }
