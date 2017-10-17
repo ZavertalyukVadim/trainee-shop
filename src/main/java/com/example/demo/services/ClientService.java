@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.ClientDaoHibernate;
 import com.example.demo.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +14,15 @@ import java.util.List;
 
 @Service
 public class ClientService {
-
+    private final ClientDaoHibernate clientDaoHibernate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
-    public ClientService() {
+    public ClientService(ClientDaoHibernate clientDaoHibernate) {
 
 //        test1();
+        this.clientDaoHibernate = clientDaoHibernate;
     }
 
     private void test2() {
@@ -32,7 +34,7 @@ public class ClientService {
     public List<Client> getAllClients() {
         logger.info("attempt to get all clients");
 //        return clientDao.findAll();
-        return null;
+        return clientDaoHibernate.getAllClients();
     }
 
     public Client getClientById(Integer id) {
