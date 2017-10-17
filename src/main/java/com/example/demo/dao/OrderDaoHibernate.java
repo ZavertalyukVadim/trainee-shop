@@ -27,7 +27,7 @@ public class OrderDaoHibernate {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-           orders = session.createQuery("from Order").list();
+           orders = session.createQuery("SELECT o from Order o").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             if ( session.getTransaction().getStatus() == TransactionStatus.ACTIVE
