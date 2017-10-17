@@ -47,7 +47,8 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Integer> createOrder(@RequestBody Order order) {
-        return (orderService.createOrder(order) >= 1) ? new ResponseEntity<>(orderService.createOrder(order),HttpStatus.CREATED) :
+        Integer id = orderService.createOrder(order);
+        return (id >= 1) ? new ResponseEntity<>(id,HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

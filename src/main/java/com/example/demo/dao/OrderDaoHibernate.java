@@ -3,7 +3,6 @@ package com.example.demo.dao;
 import com.example.demo.entities.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class OrderDaoHibernate {
     private final SessionFactory sessionFactory;
 
@@ -23,61 +21,41 @@ public class OrderDaoHibernate {
 
     @Transactional
     public List<Order> getAllOrders() {
-        List<Order> orders = null;
         Session session = sessionFactory.openSession();
-        try {
-            session.getTransaction().begin();
-            orders = session.createQuery("SELECT o from Order o").list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return orders;
-//        session.
-//        return criteria.list();
+        return session.createQuery("SELECT o from Order o").list();
     }
 
+    @Transactional
     public Order getOneById(Integer id) {
         Session session = sessionFactory.openSession();
-        Order order = null;
-        try {
-            session.getTransaction().begin();
-            order = ((Order) session.createQuery("SELECT o from Order o").uniqueResult());
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return order;
+        return session.byId(Order.class).load(id);
     }
 
+    @Transactional(noRollbackFor = Exception.class)
     public Integer createOrder(Order order) {
         Session session = sessionFactory.openSession();
-        Integer id=null;
-        try {
-            session.getTransaction().begin();
-//            id  =  session.createQuery("insert into Order (:name,:status,:client_id,:order_id) select o.id from Order o").executeUpdate());
-            session.save(order);
-            session.flush();
-            id=order.getId();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
-                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
-                session.getTransaction().rollback();
-            }
-        } finally {
-            session.close();
-        }
-        return id;
+        return ((Integer) session.save(order));
     }
+
+//    public boolean delete(Integer id) {
+//        Session session = sessionFactory.openSession();
+//        try {
+//            session.getTransaction().begin();
+////            id  =  session.createQuery("insert into Order (:name,:status,:client_id,:order_id) select o.id from Order o").executeUpdate());
+//            session.save(order);
+//            session.delete();
+//            session.flush();
+//            session.getTransaction().commit();
+//            return true;
+//        } catch (Exception e) {
+//            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+//                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+//                session.getTransaction().rollback();
+//            }
+//            return false;
+//        } finally {
+//            session.close();
+//        }
+//    }
+
 }

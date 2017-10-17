@@ -19,7 +19,7 @@ public class Order {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "orderItem_id")
     private List<OrderItem> orderItems = new ArrayList<>();

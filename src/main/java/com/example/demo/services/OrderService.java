@@ -7,12 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class OrderService {
     //    private final OrderDao orderDao;
 //    private final ClientDao clientDao;
@@ -26,7 +24,6 @@ public class OrderService {
         this.orderDaoHibernate = orderDaoHibernate;
     }
 
-    @Transactional
     public List<Order> getAllOrders() {
         logger.info("attempt to get all orders");
         return orderDaoHibernate.getAllOrders();
@@ -39,12 +36,7 @@ public class OrderService {
 
     public Integer createOrder(Order order) {
         logger.info("attempt to create order");
-        try {
-            return orderDaoHibernate.createOrder(order);
-        } catch (Exception e) {
-            return 0;
-        }
-//        return null;
+        return orderDaoHibernate.createOrder(order);
     }
 
     public boolean updateOrder(Integer id, Order order) {
@@ -66,12 +58,9 @@ public class OrderService {
 
     public boolean deleteOrderById(Integer id) {
         logger.info("attempt to delete order with id = " + id);
-//        try {
-//            orderDao.delete(id);
-//            return true;
-//        } catch (Exception e) {
-//            return false;
-//        }
+
+//        return orderDaoHibernate.delete(id);
+
         return false;
     }
 
