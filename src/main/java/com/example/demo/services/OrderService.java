@@ -39,12 +39,12 @@ public class OrderService {
 
     public Integer createOrder(Order order) {
         logger.info("attempt to create order");
-//        try {
-//            return orderDao.save(order).getId();
-//        } catch (Exception e) {
-//            return 0;
-//        }
-        return null;
+        try {
+            return orderDaoHibernate.createOrder(order);
+        } catch (Exception e) {
+            return 0;
+        }
+//        return null;
     }
 
     public boolean updateOrder(Integer id, Order order) {

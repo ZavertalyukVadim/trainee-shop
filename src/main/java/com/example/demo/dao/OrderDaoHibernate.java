@@ -59,4 +59,25 @@ public class OrderDaoHibernate {
         }
         return order;
     }
+
+    public Integer createOrder(Order order) {
+        Session session = sessionFactory.openSession();
+        Integer id=null;
+        try {
+            session.getTransaction().begin();
+//            id  =  session.createQuery("insert into Order (:name,:status,:client_id,:order_id) select o.id from Order o").executeUpdate());
+            session.save(order);
+            session.flush();
+            id=order.getId();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return id;
+    }
 }
