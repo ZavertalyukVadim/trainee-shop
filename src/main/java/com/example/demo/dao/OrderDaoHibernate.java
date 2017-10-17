@@ -55,12 +55,12 @@ public class OrderDaoHibernate {
     public boolean updateOrder(Integer id, Order order) {
         Session session = sessionFactory.openSession();
         try {
-            session.createQuery("update Order set name = :name, status = :status, client = :client  where id = :id")
+            session.createQuery("update Order set name = :name, status = :status, client = :client, orderItems = :orderItems where id = :id")
                     .setParameter("id", id)
                     .setParameter("name", order.getName())
                     .setParameter("status", order.getStatus())
                     .setParameter("client",order.getClient())
-//                    .setParameter("orderItems", order.getOrderItems())
+                    .setParameterList("orderItems",order.getOrderItems())
                     .executeUpdate();
             return true;
         } catch (Exception e) {
