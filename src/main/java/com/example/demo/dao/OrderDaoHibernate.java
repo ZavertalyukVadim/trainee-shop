@@ -1,8 +1,9 @@
 package com.example.demo.dao;
 
 import com.example.demo.entities.Order;
-import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,22 @@ public class OrderDaoHibernate {
 
     @Transactional
     public List<Order> getAllOrders() {
-        Criteria criteria = sessionFactory.openSession().createCriteria(Order.class);
-        return criteria.list();
+        List<Order> orders = null;
+        Session session = sessionFactory.openSession();
+        try {
+            session.getTransaction().begin();
+           orders = session.createQuery("from Order").list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if ( session.getTransaction().getStatus() == TransactionStatus.ACTIVE
+                    || session.getTransaction().getStatus() == TransactionStatus.MARKED_ROLLBACK ) {
+                session.getTransaction().rollback();
+            }
+        } finally {
+            session.close();
+        }
+        return orders;
+//        session.
+//        return criteria.list();
     }
 }
