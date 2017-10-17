@@ -16,7 +16,7 @@ public class Vendor {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     private List<Goods> goods;
 

@@ -21,7 +21,7 @@ public class Order {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "orderItem_id")
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //общяя цена
