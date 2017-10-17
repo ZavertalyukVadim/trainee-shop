@@ -64,12 +64,13 @@ public class OrderService {
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {
+        return orderDaoHibernate.searchOrder(id, statuses);
 //        Client client = clientDao.findOne(id);
 //        if (client!=null){
 //            return orderDao.findAllByClientAndStatusIn(client,statuses);
 //        }else {
 //            return orderDao.findAllByStatusIn(statuses);
 //        }
-        return null;
+//        return null;
     }
 }

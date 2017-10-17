@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entities.Order;
+import com.example.demo.entities.Status;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,14 @@ public class OrderDaoHibernate {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Transactional
+    public List<Order> searchOrder(Integer id, List<Status> statuses){
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT o from Order o where o.id = :id and o.status in :statuses ")
+                .setParameter("id",id)
+                .setParameterList("statuses",statuses)
+                .list();
     }
 }
