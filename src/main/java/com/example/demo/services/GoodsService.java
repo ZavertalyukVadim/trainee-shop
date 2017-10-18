@@ -28,8 +28,12 @@ public class GoodsService {
 
     public Goods getGoodsById(Integer id) {
         logger.info("attempt to get goods with id = " + id);
-        return null;
-//        return goodsDao.findOne(id);
+        try {
+            return goodsDao.getGoodsById(id);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return null;
+        }
     }
 
     public Integer createGoods(Goods goods) {

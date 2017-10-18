@@ -29,4 +29,13 @@ public class GoodsDaoHibernate {
         criteria.select(root);
         return entityManager.createQuery(criteria).getResultList();
     }
+
+    public Goods getGoodsById(Integer id) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Goods> criteria = builder.createQuery( Goods.class );
+        Root<Goods> root = criteria.from(Goods.class);
+        criteria.select(root);
+        criteria.where(builder.equal(root.get("id"), id));
+        return entityManager.createQuery(criteria).getSingleResult();
+    }
 }

@@ -27,8 +27,9 @@ public class GoodsController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Goods> getGoodsById(@PathVariable("id") Integer id) {
-        if (goodsService.getGoodsById(id) != null) {
-            return new ResponseEntity<>(goodsService.getGoodsById(id), HttpStatus.OK);
+        Goods goods = goodsService.getGoodsById(id);
+        if ( goods!= null) {
+            return new ResponseEntity<>(goods, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
