@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.VendorDao;
 import com.example.demo.entities.Vendor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,23 +11,24 @@ import java.util.List;
 
 @Service
 public class VendorService {
-    //    private final VendorDao vendorDao;
+    private final VendorDao vendorDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public VendorService() {
+    public VendorService(VendorDao vendorDao) {
+        this.vendorDao = vendorDao;
     }
 
     public List<Vendor> getAllVendors() {
         logger.info("attempt to get all vendors");
-//        return vendorDao.findAll();
-        return null;
+        return vendorDao.findAll();
+//        return null;
     }
 
     public Vendor getVendorById(Integer id) {
         logger.info("attempt to get vendor with id = " + id);
-//        return vendorDao.findOne(id);
-        return null;
+        return vendorDao.findOne(id);
+//        return null;
     }
 
     public Integer createVendor(Vendor vendor) {

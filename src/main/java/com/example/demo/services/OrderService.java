@@ -52,6 +52,6 @@ public class OrderService {
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {
-        return orderDaoHibernate.searchOrder(id, statuses);
+        return orderDaoHibernate.searchOrderByStatuses(id, statuses);
     }
 }

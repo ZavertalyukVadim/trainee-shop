@@ -20,7 +20,6 @@ public class Goods {
     private Type type;
 
     private BigDecimal price;
-    //посмотреть тип данных дял цены
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @ManyToOne(cascade = CascadeType.ALL)
