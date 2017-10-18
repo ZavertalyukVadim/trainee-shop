@@ -60,8 +60,8 @@ public class OrderDaoHibernate {
                     .setParameter("id", id)
                     .setParameter("name", order.getName())
                     .setParameter("status", order.getStatus())
-                    .setParameter("client",order.getClient())
-                    .setParameterList("orderItems",order.getOrderItems())
+                    .setParameter("client", order.getClient())
+                    .setParameterList("orderItems", order.getOrderItems())
                     .executeUpdate();
             return true;
         } catch (Exception e) {
@@ -70,11 +70,11 @@ public class OrderDaoHibernate {
     }
 
     @Transactional
-    public List<Order> searchOrder(Integer id, List<Status> statuses){
+    public List<Order> searchOrder(Integer id, List<Status> statuses) {
         Session session = sessionFactory.openSession();
         return session.createQuery("SELECT o from Order o where o.id = :id and o.status in :statuses ")
-                .setParameter("id",id)
-                .setParameterList("statuses",statuses)
+                .setParameter("id", id)
+                .setParameterList("statuses", statuses)
                 .list();
     }
 }
