@@ -43,8 +43,7 @@ public class ClientService {
     public Integer createClient(Client client) {
         logger.info("attempt to create client");
         try {
-            clientDaoHibernate.createClient(client);
-            return 2;
+            return clientDaoHibernate.createClient(client);
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -53,7 +52,7 @@ public class ClientService {
 
     public boolean updateClient(Integer id, Client client) {
         logger.info("attempt to update client with id = " + id);
-        return clientDaoHibernate.updateClient(id,client);
+        return clientDaoHibernate.updateClient(id, client);
     }
 
     public boolean deleteClientById(Integer id) {
@@ -101,7 +100,7 @@ public class ClientService {
         order2.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
                 new OrderItem(goods1, 5),
-                new OrderItem(goods2,10)
+                new OrderItem(goods2, 10)
         ));
         order2.setClient(
                 client
@@ -114,7 +113,7 @@ public class ClientService {
         order1.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
                 new OrderItem(goods1, 5),
-                new OrderItem(goods2,10)
+                new OrderItem(goods2, 10)
         ));
         order1.setClient(
                 client
@@ -127,13 +126,13 @@ public class ClientService {
         order.setOrderItems(Arrays.asList(
                 new OrderItem(goods, 5),
                 new OrderItem(goods1, 5),
-                new OrderItem(goods2,10)
+                new OrderItem(goods2, 10)
         ));
         order.setClient(
                 client
         );
 //        logger.debug("saved object order with orderItem and client: " + orderDao.save(order));
-        client.setOrders(Arrays.asList(order,order1,order2));
+        client.setOrders(Arrays.asList(order, order1, order2));
 //        logger.debug("saved object client with order: " + clientDao.save(client));
         logger.info("completed insert test data");
     }

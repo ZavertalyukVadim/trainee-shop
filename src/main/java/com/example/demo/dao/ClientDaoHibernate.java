@@ -45,10 +45,12 @@ public class ClientDaoHibernate {
     }
 
     @Transactional
-    public void createClient(Client client) {
+    public Integer createClient(Client client) {
         client.setId(null);
         logger.debug("try to save client =" + client);
+        entityManager.flush();
         entityManager.persist(client);
+        return client.getId();
     }
 
     @Transactional
