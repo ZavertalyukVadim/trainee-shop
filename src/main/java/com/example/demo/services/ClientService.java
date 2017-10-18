@@ -28,19 +28,16 @@ public class ClientService {
     private void test2() {
         Client client = new Client();
         client.setName("name");
-//        clientDao.save(client);
     }
 
     public List<Client> getAllClients() {
         logger.info("attempt to get all clients");
-//        return clientDao.findAll();
         return clientDaoHibernate.getAllClients();
     }
 
     public Client getClientById(Integer id) {
         logger.info("attempt to get client with id = " + id);
         return clientDaoHibernate.getClientById(id);
-//        return clientDao.findOne(id);
     }
 
     public Integer createClient(Client client) {
@@ -48,8 +45,6 @@ public class ClientService {
         try {
             clientDaoHibernate.createClient(client);
             return 2;
-//            return clientDao.save(client).getId();
-//            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -58,18 +53,7 @@ public class ClientService {
 
     public boolean updateClient(Integer id, Client client) {
         logger.info("attempt to update client with id = " + id);
-//        Client newClient = clientDao.findOne(id);
-        logger.debug("check if client with id " + id + " exists in database");
-//        if (newClient != null) {
-//            logger.debug("Update Client with input id = " + id);
-//            client.setId(id);
-//            clientDao.save(client);
-//            return true;
-//        } else {
-//            logger.debug("attempt to update client with nonexistent id = " + id);
-//            return false;
-//        }
-        return false;
+        return clientDaoHibernate.updateClient(id,client);
     }
 
     public boolean deleteClientById(Integer id) {

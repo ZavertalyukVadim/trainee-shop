@@ -47,7 +47,25 @@ public class ClientDaoHibernate {
     @Transactional
     public void createClient(Client client) {
         client.setId(null);
-        logger.debug("try to save client ="+client);
+        logger.debug("try to save client =" + client);
         entityManager.persist(client);
+    }
+
+    @Transactional
+    public boolean updateClient(Integer id, Client client) {
+        logger.debug("check if client with id " + id + " exists in database");
+        Client newClient = entityManager.find(Client.class, id);
+        if (newClient==null){
+            return false;
+
+        }
+
+        entityManager.clear();
+        newClient.setId(id);
+        newClient.setName(client.getName());
+        newClient.setDiscount(client.getDiscount());
+        newClient.setOrders(client.getOrders());
+        entityManager.merge(newClient);
+        return true;
     }
 }
