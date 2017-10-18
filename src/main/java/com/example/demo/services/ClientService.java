@@ -42,12 +42,7 @@ public class ClientService {
 
     public Integer createClient(Client client) {
         logger.info("attempt to create client");
-        try {
-            return clientDaoHibernate.createClient(client);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
+        return clientDaoHibernate.createClient(client);
     }
 
     public boolean updateClient(Integer id, Client client) {

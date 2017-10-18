@@ -48,16 +48,22 @@ public class ClientDaoHibernate {
     public Integer createClient(Client client) {
         client.setId(null);
         logger.debug("try to save client =" + client);
-        entityManager.flush();
-        entityManager.persist(client);
-        return client.getId();
+        try {
+            entityManager.flush();
+            entityManager.persist(client);
+            return client.getId();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     @Transactional
     public boolean updateClient(Integer id, Client client) {
         logger.debug("check if client with id " + id + " exists in database");
         Client newClient = entityManager.find(Client.class, id);
-        if (newClient==null){
+        if (newClient == null) {
             return false;
 
         }
