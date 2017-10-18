@@ -28,8 +28,9 @@ public class OrderItemController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<OrderItem> getOrderItemById(@PathVariable("id") Integer id) {
-        if (orderItemService.getOrderItemById(id) != null) {
-            return new ResponseEntity<>(orderItemService.getOrderItemById(id), HttpStatus.OK);
+        OrderItem orderItem = orderItemService.getOrderItemById(id);
+        if (orderItem != null) {
+            return new ResponseEntity<>(orderItem, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -37,7 +38,8 @@ public class OrderItemController {
 
     @PostMapping
     public ResponseEntity<Integer> createOrderItem(@RequestBody OrderItem orderItem) {
-        return (orderItemService.createOrderItem(orderItem) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED) :
+        Integer id  = orderItemService.createOrderItem(orderItem);
+        return (id >= 1) ? new ResponseEntity<>(id,HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

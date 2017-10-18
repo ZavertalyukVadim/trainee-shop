@@ -27,10 +27,11 @@ public class ClientController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Client> getClientById(@PathVariable("id") Integer id) {
-        if (clientService.getClientById(id) != null) {
-            return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.OK);
+        Client client = clientService.getClientById(id);
+        if (client != null) {
+            return new ResponseEntity<>(client, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(clientService.getClientById(id), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

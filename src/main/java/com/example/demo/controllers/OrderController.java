@@ -27,19 +27,19 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> orderList = orderService.getAllOrders();
-
         return new ResponseEntity<>(orderList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/status")
-    public List<Status> getStatuses(){
+    public List<Status> getStatuses() {
         return Arrays.asList(Status.ACCEPTED, Status.NEW);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
-        if (orderService.getOrderById(id) != null) {
-            return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
+        Order order = orderService.getOrderById(id);
+        if (order != null) {
+            return new ResponseEntity<>(order, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -48,13 +48,13 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Integer> createOrder(@RequestBody Order order) {
         Integer id = orderService.createOrder(order);
-        return (id >= 1) ? new ResponseEntity<>(id,HttpStatus.CREATED) :
+        return (id >= 1) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/search/{id}")
     public ResponseEntity<List<Order>> searchOrder(@PathVariable("id") Integer id, @RequestBody List<Status> statuses) {
-        return new ResponseEntity<>(orderService.searchOrder(id, statuses),HttpStatus.OK);
+        return new ResponseEntity<>(orderService.searchOrder(id, statuses), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")

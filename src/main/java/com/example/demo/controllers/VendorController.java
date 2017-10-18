@@ -27,8 +27,9 @@ public class VendorController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Vendor> getVendorById(@PathVariable("id") Integer id) {
-        if (vendorService.getVendorById(id) != null) {
-            return new ResponseEntity<>(vendorService.getVendorById(id), HttpStatus.OK);
+        Vendor vendor = vendorService.getVendorById(id);
+        if (vendor!= null) {
+            return new ResponseEntity<>(vendor, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -36,7 +37,8 @@ public class VendorController {
 
     @PostMapping
     public ResponseEntity<Integer> createVendor(@RequestBody Vendor vendor) {
-        return (vendorService.createVendor(vendor) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED)
+        Integer id = vendorService.createVendor(vendor);
+        return (id >= 1) ? new ResponseEntity<>(id,HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
