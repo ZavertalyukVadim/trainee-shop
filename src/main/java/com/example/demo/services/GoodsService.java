@@ -16,7 +16,6 @@ public class GoodsService {
 
     @Autowired
     public GoodsService(GoodsDaoHibernate goodsDao) {
-//        this.goodsDao = goodsDao;
         this.goodsDao = goodsDao;
     }
 
@@ -39,11 +38,10 @@ public class GoodsService {
     public Integer createGoods(Goods goods) {
         logger.info("attempt to create goods");
         try {
-//            return goodsDao.save(goods).getId();
+            return goodsDao.createGoods(goods);
         } catch (Exception e) {
             return 0;
         }
-        return 0;
     }
 
     public boolean updateGoods(Integer id, Goods goods) {

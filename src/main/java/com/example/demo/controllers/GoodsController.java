@@ -28,7 +28,7 @@ public class GoodsController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Goods> getGoodsById(@PathVariable("id") Integer id) {
         Goods goods = goodsService.getGoodsById(id);
-        if ( goods!= null) {
+        if (goods != null) {
             return new ResponseEntity<>(goods, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -37,7 +37,8 @@ public class GoodsController {
 
     @PostMapping
     public ResponseEntity<Integer> createGoods(@RequestBody Goods goods) {
-        return (goodsService.createGoods(goods) >= 1) ? new ResponseEntity<>(HttpStatus.CREATED) :
+        Integer id = goodsService.createGoods(goods);
+        return (id >= 1) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
