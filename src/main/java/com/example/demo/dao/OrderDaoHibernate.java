@@ -70,11 +70,31 @@ public class OrderDaoHibernate {
     }
 
     @Transactional
-    public List<Order> searchOrder(Integer id, List<Status> statuses) {
+    public List<Order> searchOrderByStatuses(List<Status> statuses) {
         Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT o from Order o where o.id = :id and o.status in :statuses ")
+        return session.createQuery("SELECT o from Order o where o.status in :statuses ")
+                .setParameterList("statuses", statuses)
+                .list();
+    }
+
+    @Transactional
+    public List<Order> searchOrderById(Integer id) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT o from Order o where o.id = :id")
+                .setParameter("id", id)
+                .list();
+    }
+
+    @Transactional
+    public List<Order> searchOrderByIdAndStatuses(Integer id, List<Status> statuses) {
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT o from Order o  inner join o.client client where client.id = :id and o.status in :statuses ")
                 .setParameter("id", id)
                 .setParameterList("statuses", statuses)
                 .list();
     }
+
+//    id - все order независимо от статусов
+//    cтатус(ы) все order независимо у всех
+//        id,statuses - order клиента со статусами передаными
 }

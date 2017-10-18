@@ -12,8 +12,6 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    //    private final OrderDao orderDao;
-//    private final ClientDao clientDao;
     private final OrderDaoHibernate orderDaoHibernate;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -52,6 +50,6 @@ public class OrderService {
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {
-        return orderDaoHibernate.searchOrderByStatuses(id, statuses);
+        return orderDaoHibernate.searchOrderByIdAndStatuses(id, statuses);
     }
 }
