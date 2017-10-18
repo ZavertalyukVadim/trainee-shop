@@ -50,6 +50,17 @@ public class OrderService {
     }
 
     public List<Order> searchOrder(Integer id, List<Status> statuses) {
+        if (id == null) {
+            return orderDaoHibernate.searchOrderByStatuses(statuses);
+        }
+        if (statuses == null || statuses.isEmpty()) {
+            return orderDaoHibernate.searchOrderById(id);
+        }
         return orderDaoHibernate.searchOrderByIdAndStatuses(id, statuses);
     }
 }
+
+
+//    id - все order независимо от статусов
+//    cтатус(ы) все order независимо у всех
+//        id,statuses - order клиента со статусами передаными

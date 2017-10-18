@@ -52,13 +52,16 @@ public class OrderController {
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(value = "/search/{id}")
-    public ResponseEntity<List<Order>> searchOrder(@PathVariable("id") Integer id, @RequestBody List<Status> statuses) {
+    @GetMapping(value = "/search")
+    public ResponseEntity<List<Order>> searchOrder(@RequestParam(value = "id", required = false) Integer id, @RequestParam(required = false) List<Status> statuses) {
+        if (id != null && id < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(orderService.searchOrder(id, statuses), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public void updateOrder(@PathVariable("id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response, BindingResult result) {
+    public void updateOrder(@PathVariable(value = "id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response, BindingResult result) {
         if (result.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }

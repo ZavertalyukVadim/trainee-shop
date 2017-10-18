@@ -93,8 +93,4 @@ public class OrderDaoHibernate {
                 .setParameterList("statuses", statuses)
                 .list();
     }
-
-//    id - все order независимо от статусов
-//    cтатус(ы) все order независимо у всех
-//        id,statuses - order клиента со статусами передаными
 }
