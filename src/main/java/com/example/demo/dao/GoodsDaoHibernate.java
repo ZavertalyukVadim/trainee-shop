@@ -40,16 +40,29 @@ public class GoodsDaoHibernate {
         Root<Goods> root = criteria.from(Goods.class);
         criteria.select(root);
         criteria.where(builder.equal(root.get("id"), id));
-        return this.entityManager.createQuery(criteria).getSingleResult();
+        try {
+            return entityManager.createQuery(criteria).getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return null;
+        }
     }
 
     @Transactional
     public Integer createGoods(Goods goods) {
         goods.setId(null);
         logger.debug("try to save goods =" + goods);
+        try {
+
         entityManager.flush();
         entityManager.persist(goods);
         return goods.getId();
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return 0;
+        }
     }
 
     @Transactional

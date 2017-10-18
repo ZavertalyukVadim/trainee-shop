@@ -27,21 +27,12 @@ public class GoodsService {
 
     public Goods getGoodsById(Integer id) {
         logger.info("attempt to get goods with id = " + id);
-        try {
-            return goodsDao.getGoodsById(id);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return null;
-        }
+        return goodsDao.getGoodsById(id);
     }
 
     public Integer createGoods(Goods goods) {
         logger.info("attempt to create goods");
-        try {
-            return goodsDao.createGoods(goods);
-        } catch (Exception e) {
-            return 0;
-        }
+        return goodsDao.createGoods(goods);
     }
 
     public boolean updateGoods(Integer id, Goods goods) {
