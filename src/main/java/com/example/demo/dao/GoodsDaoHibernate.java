@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class GoodsDaoHibernate {
         CriteriaQuery<Goods> criteria = builder.createQuery(Goods.class);
         Root<Goods> root = criteria.from(Goods.class);
         criteria.select(root);
-        return entityManager.createQuery(criteria).getResultList();
+        return this.entityManager.createQuery(criteria).getResultList();
     }
 
     @Transactional
@@ -42,7 +43,7 @@ public class GoodsDaoHibernate {
         Root<Goods> root = criteria.from(Goods.class);
         criteria.select(root);
         criteria.where(builder.equal(root.get("id"), id));
-        return entityManager.createQuery(criteria).getSingleResult();
+        return this.entityManager.createQuery(criteria).getSingleResult();
     }
 
     @Transactional
@@ -52,5 +53,26 @@ public class GoodsDaoHibernate {
         entityManager.flush();
         entityManager.persist(goods);
         return goods.getId();
+    }
+
+    @Transactional
+    public boolean updateGoods(Integer id, Goods goods) {
+        try {
+
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaUpdate<Goods> criteria = builder.createCriteriaUpdate(Goods.class);
+            Root root = criteria.from(Goods.class);
+            criteria.set("name", goods.getName());
+            criteria.set("price", goods.getPrice());
+            criteria.set("type", goods.getType());
+//        criteria.set("vendor", goods.getVendor());
+            criteria.where(builder.greaterThanOrEqualTo(root.get("id"), id));
+            entityManager.createQuery(criteria).executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
+            return false;
+        }
     }
 }

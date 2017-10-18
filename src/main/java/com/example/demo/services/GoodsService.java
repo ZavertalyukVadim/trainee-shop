@@ -49,7 +49,9 @@ public class GoodsService {
 //        Goods newGoods = goodsDao.findOne(id);
         logger.debug("check if goods with id " + id + " exists in database");
 //        if (newGoods != null) {
-//            logger.debug("Update goods with input id = " + id);
+        logger.debug("Update goods with input id = " + id);
+        return goodsDao.updateGoods(id, goods);
+
 //            goods.setId(id);
 //            goodsDao.save(goods);
 //            return true;
@@ -57,7 +59,6 @@ public class GoodsService {
 //            logger.debug("attempt to update goods with nonexistent id = " + id);
 //            return false;
 //        }
-        return false;
 
     }
 
