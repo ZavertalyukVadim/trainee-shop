@@ -58,16 +58,19 @@ public class GoodsDaoHibernate {
     @Transactional
     public boolean updateGoods(Integer id, Goods goods) {
         try {
-
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaUpdate<Goods> criteria = builder.createCriteriaUpdate(Goods.class);
             Root root = criteria.from(Goods.class);
+
             criteria.set("name", goods.getName());
             criteria.set("price", goods.getPrice());
             criteria.set("type", goods.getType());
-//        criteria.set("vendor", goods.getVendor());
+            criteria.set("vendor", goods.getVendor());
+
             criteria.where(builder.greaterThanOrEqualTo(root.get("id"), id));
+
             entityManager.createQuery(criteria).executeUpdate();
+            logger.debug("Update goods with input id = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

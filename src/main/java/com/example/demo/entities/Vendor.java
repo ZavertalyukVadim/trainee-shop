@@ -16,8 +16,8 @@ public class Vendor {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vendor")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private List<Goods> goods;
 
     public Integer getId() {
@@ -43,7 +43,6 @@ public class Vendor {
     public void setGoods(List<Goods> goods) {
         this.goods = goods;
     }
-
 
 
     @Override

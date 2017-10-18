@@ -22,12 +22,9 @@ public class Goods {
     private BigDecimal price;
     //посмотреть тип данных дял цены
 
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "goods_vendors", joinColumns = {
-            @JoinColumn(name = "goods_id", nullable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "vendor_id",
-                    nullable = false)})
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
     public Integer getId() {
@@ -72,14 +69,14 @@ public class Goods {
 
     @Override
     public String toString() {
-        if (this.vendor != null){
-        return "Goods{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type=" + type +
-                ", vendor= {...}" +
-                '}';}
-        else return "Goods{" +
+        if (this.vendor != null) {
+            return "Goods{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    ", type=" + type +
+                    ", vendor= {...}" +
+                    '}';
+        } else return "Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type=" + type +

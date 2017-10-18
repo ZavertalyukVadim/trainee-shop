@@ -47,9 +47,7 @@ public class GoodsService {
     public boolean updateGoods(Integer id, Goods goods) {
         logger.info("attempt to update goods with id = " + id);
 //        Goods newGoods = goodsDao.findOne(id);
-        logger.debug("check if goods with id " + id + " exists in database");
-//        if (newGoods != null) {
-        logger.debug("Update goods with input id = " + id);
+
         return goodsDao.updateGoods(id, goods);
 
 //            goods.setId(id);
