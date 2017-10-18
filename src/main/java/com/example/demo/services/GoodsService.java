@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.GoodsDaoHibernate;
 import com.example.demo.entities.Goods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,23 +11,24 @@ import java.util.List;
 
 @Service
 public class GoodsService {
-//    private final GoodsDao goodsDao;
+    private final GoodsDaoHibernate goodsDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public GoodsService( ) {
+    public GoodsService(GoodsDaoHibernate goodsDao) {
 //        this.goodsDao = goodsDao;
+        this.goodsDao = goodsDao;
     }
 
 
     public List<Goods> getAllGoods() {
         logger.info("attempt to get all goods");
-//        return goodsDao.findAll();
-        return null;
+        return goodsDao.getAllGoods();
     }
 
     public Goods getGoodsById(Integer id) {
-        logger.info("attempt to get goods with id = " + id);return null;
+        logger.info("attempt to get goods with id = " + id);
+        return null;
 //        return goodsDao.findOne(id);
     }
 
