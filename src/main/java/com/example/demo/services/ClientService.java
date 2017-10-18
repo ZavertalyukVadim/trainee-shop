@@ -39,16 +39,19 @@ public class ClientService {
 
     public Client getClientById(Integer id) {
         logger.info("attempt to get client with id = " + id);
-        return null;
+        return clientDaoHibernate.getClientById(id);
 //        return clientDao.findOne(id);
     }
 
     public Integer createClient(Client client) {
         logger.info("attempt to create client");
         try {
-            return null;
+            clientDaoHibernate.createClient(client);
+            return 2;
 //            return clientDao.save(client).getId();
+//            return null;
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         }
     }
@@ -71,12 +74,7 @@ public class ClientService {
 
     public boolean deleteClientById(Integer id) {
         logger.info("attempt to delete client with id = " + id);
-        try {
-//            clientDao.delete(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return clientDaoHibernate.deleteClientById(id);
     }
 
     private void test1() {

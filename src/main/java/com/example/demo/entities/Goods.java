@@ -23,7 +23,7 @@ public class Goods {
     //посмотреть тип данных дял цены
 
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinTable(name = "goods_vendors", joinColumns = {
             @JoinColumn(name = "goods_id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "vendor_id",
