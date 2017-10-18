@@ -9,10 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
@@ -57,7 +54,6 @@ public class GoodsDaoHibernate {
 
     @Transactional
     public boolean updateGoods(Integer id, Goods goods) {
-        try {
             CriteriaBuilder builder = entityManager.getCriteriaBuilder();
             CriteriaUpdate<Goods> criteria = builder.createCriteriaUpdate(Goods.class);
             Root root = criteria.from(Goods.class);
@@ -69,12 +65,37 @@ public class GoodsDaoHibernate {
 
             criteria.where(builder.greaterThanOrEqualTo(root.get("id"), id));
 
+        try {
             entityManager.createQuery(criteria).executeUpdate();
             logger.debug("Update goods with input id = " + id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e.getMessage());
+            logger.debug("attempt to update goods with nonexistent id = " + id);
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean delete(Integer id) {
+
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+
+        CriteriaDelete<Goods> criteria = builder.
+                createCriteriaDelete(Goods.class);
+
+        Root e = criteria.from(Goods.class);
+
+        criteria.where(builder.lessThanOrEqualTo(e.get("id"), id));
+        try {
+
+            this.entityManager.createQuery(criteria).executeUpdate();
+            return true;
+        } catch (Exception e1) {
+            e1.printStackTrace();
+
+            logger.debug("attempt to delete goods with nonexistent id = " + id);
             return false;
         }
     }

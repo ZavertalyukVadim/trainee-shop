@@ -46,27 +46,11 @@ public class GoodsService {
 
     public boolean updateGoods(Integer id, Goods goods) {
         logger.info("attempt to update goods with id = " + id);
-//        Goods newGoods = goodsDao.findOne(id);
-
         return goodsDao.updateGoods(id, goods);
-
-//            goods.setId(id);
-//            goodsDao.save(goods);
-//            return true;
-//        } else {
-//            logger.debug("attempt to update goods with nonexistent id = " + id);
-//            return false;
-//        }
-
     }
 
     public boolean deleteGoodsById(Integer id) {
         logger.info("attempt to delete goods with id = " + id);
-        try {
-//            goodsDao.delete(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return goodsDao.delete(id);
     }
 }
