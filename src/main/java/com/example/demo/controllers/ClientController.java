@@ -38,7 +38,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<Integer> createClient(@RequestBody Client client) {
         Integer id = clientService.createClient(client);
-        return (id >= 1) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
+        return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
@@ -59,5 +59,4 @@ public class ClientController {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-
 }

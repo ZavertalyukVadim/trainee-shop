@@ -38,7 +38,7 @@ public class GoodsController {
     @PostMapping
     public ResponseEntity<Integer> createGoods(@RequestBody Goods goods) {
         Integer id = goodsService.createGoods(goods);
-        return (id >= 1) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
+        return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
