@@ -36,7 +36,7 @@ public class VendorController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> createVendor(@RequestBody Vendor vendor) {
+    public ResponseEntity<?> createVendor(@RequestBody Vendor vendor) {
         Integer id = vendorService.createVendor(vendor);
         return (id != null) ? new ResponseEntity<>(id,HttpStatus.CREATED)
                 : new ResponseEntity<>(HttpStatus.BAD_REQUEST);

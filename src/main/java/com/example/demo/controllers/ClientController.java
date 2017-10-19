@@ -36,7 +36,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> createClient(@RequestBody Client client) {
+    public ResponseEntity<?> createClient(@RequestBody Client client) {
         Integer id = clientService.createClient(client);
         return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);

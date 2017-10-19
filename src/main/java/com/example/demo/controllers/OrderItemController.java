@@ -37,7 +37,7 @@ public class OrderItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> createOrderItem(@RequestBody OrderItem orderItem) {
+    public ResponseEntity<?> createOrderItem(@RequestBody OrderItem orderItem) {
         Integer id  = orderItemService.createOrderItem(orderItem);
         return (id != null) ? new ResponseEntity<>(id,HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);

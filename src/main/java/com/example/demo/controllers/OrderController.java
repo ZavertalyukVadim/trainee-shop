@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> createOrder(@RequestBody Order order) {
+    public ResponseEntity<?> createOrder(@RequestBody Order order) {
         Integer id = orderService.createOrder(order);
         return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -61,7 +60,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateOrder(@PathVariable(value = "id") Integer id, @RequestBody @Valid Order order, HttpServletResponse response, BindingResult result) {
+    public void updateOrder(@PathVariable(value = "id") Integer id, @RequestBody Order order, HttpServletResponse response, BindingResult result) {
         if (result.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
