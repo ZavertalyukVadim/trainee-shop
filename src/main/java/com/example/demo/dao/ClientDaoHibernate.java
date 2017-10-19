@@ -20,7 +20,6 @@ public class ClientDaoHibernate {
 
     @Autowired
     public ClientDaoHibernate(EntityManager entityManager) {
-
         this.entityManager = entityManager;
     }
 
@@ -37,6 +36,7 @@ public class ClientDaoHibernate {
     @Transactional
     public boolean deleteClientById(Integer id) {
         try {
+            logger.debug("try to delete client with id =" + id);
             entityManager.remove(entityManager.find(Client.class, id));
             return true;
         } catch (Exception e) {

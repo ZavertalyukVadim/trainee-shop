@@ -41,8 +41,11 @@ public class GoodsDaoHibernate {
         criteria.select(root);
         criteria.where(builder.equal(root.get("id"), id));
         try {
+            logger.debug("try to get goods with id=" + id);
             return entityManager.createQuery(criteria).getSingleResult();
         }catch (Exception e){
+
+            logger.debug("attempt to get goods with nonexistent id = " + id);
             e.printStackTrace();
             logger.error(e.getMessage());
             return null;
@@ -92,7 +95,7 @@ public class GoodsDaoHibernate {
 
     @Transactional
     public boolean delete(Integer id) {
-
+        logger.debug("try to delete goods with id=" + id);
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 
         CriteriaDelete<Goods> criteria = builder.
