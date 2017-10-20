@@ -40,7 +40,7 @@ public class OrderService {
     public boolean updateOrder(Integer id, Order order) {
         logger.info("attempt to update order with id = " + id);
         logger.debug("check if order with id " + id + " exists in database");
-        return orderDaoHibernate.updateOrder(id, order);
+        return orderDaoHibernate.persistOrder(id, order);
     }
 
     public boolean deleteOrderById(Integer id) {

@@ -15,10 +15,14 @@ import java.util.List;
 @Repository
 public class OrderDaoHibernate {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public OrderDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Transactional
     public List<Order> getAllOrders() {
@@ -52,10 +56,10 @@ public class OrderDaoHibernate {
 
     @Transactional
     public boolean deleteOrder(Integer id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         logger.debug("try to delete order with id=" + id);
         try {
-            session.createQuery("delete from Order where id = :id")
+            session.createQuery("delete from Order o where o.id = :id")
                     .setParameter("id", id)
                     .executeUpdate();
             return true;
@@ -67,6 +71,23 @@ public class OrderDaoHibernate {
     }
 
     @Transactional
+    public boolean persistOrder(Integer id, Order order) {
+        Session session = sessionFactory.getCurrentSession();
+        Order persistedOrder = session.get(Order.class, id);
+        persistedOrder.setId(id);
+        persistedOrder.setName(order.getName());
+        persistedOrder.setStatus(order.getStatus());
+        persistedOrder.setClient(order.getClient());
+        persistedOrder.setOrderItems(order.getOrderItems());
+        try {
+            session.persist(persistedOrder);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Transactional
     public boolean updateOrder(Integer id, Order order) {
         Session session = sessionFactory.openSession();
         try {
@@ -75,7 +96,7 @@ public class OrderDaoHibernate {
                     .setParameter("name", order.getName())
                     .setParameter("status", order.getStatus())
                     .setParameter("client", order.getClient())
-                    .setParameterList("orderItems", order.getOrderItems())
+//                    .setParameterList("orderItems", order.getOrderItems())
                     .executeUpdate();
 
             logger.debug("Update order with input id = " + id);
