@@ -1,4 +1,7 @@
 package com.example.demo.dao;
 
-public interface VendorDao {
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class VendorDao {
 }

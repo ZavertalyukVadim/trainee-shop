@@ -2,7 +2,6 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Goods;
 import com.example.demo.services.GoodsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = "/goods")
+//@RestController
+//@RequestMapping(value = "/goods")
 public class GoodsController {
     private final GoodsService goodsService;
 
-    @Autowired
+//    @Autowired
     public GoodsController(GoodsService goodsService) {
         this.goodsService = goodsService;
     }

@@ -14,15 +14,11 @@ import java.util.List;
 
 @Repository
 public class OrderDaoHibernate {
-    private final SessionFactory sessionFactory;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     @Autowired
-    public OrderDaoHibernate(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private SessionFactory sessionFactory;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Transactional
     public List<Order> getAllOrders() {

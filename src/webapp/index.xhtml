@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Employee manager</title>
+</h:head>
+<h:body>
+	<h1>Employee manager</h1>
+	<fieldset>
+		<legend>Employees</legend>
+		<h:panelGroup id="allEmployees">
+			<ui:repeat value="#{employeeDataController.employees}" var="employee">
+				<h:outputText value="#{employee}" />
+				<br />
+			</ui:repeat>
+		</h:panelGroup>
+	</fieldset>
+
+	<fieldset>
+		<legend>Add new employee</legend>
+		<h:form>
+			<h:inputText id="firstName" value="#{newEmployeeController.firstName}"
+				a:placeholder="Enter first name" />
+			<br />
+			<br />
+			<h:inputText id="lastName" value="#{newEmployeeController.lastName}"
+				a:placeholder="Enter last name" />
+			<br />
+			<br />
+			
+			<h:selectOneMenu value="#{newEmployeeController.departmentId}">
+				<f:selectItems value="#{newEmployeeController.departments}" />
+			</h:selectOneMenu>
+			<br />
+			<br />
+			
+			<h:commandButton value="Add employee" type="submit" action="#{newEmployeeController.addNewEmployee}">
+				<f:ajax execute="@form" render="addEmployeeMessage allEmployees emptyDeps" />
+			</h:commandButton>
+		</h:form>
+		<h:outputText id="addEmployeeMessage" value="#{newEmployeeController.message}" />
+	</fieldset>
+	
+	<fieldset>
+		<legend>Remove employee</legend>
+		<h:form>
+			<h:inputText id="id"
+				value="#{employeeRemoveController.id}"
+				a:placeholder="Enter employee ID" />
+			<br />
+			<br />
+			<h:commandButton value="Remove employee" type="submit" action="#{employeeRemoveController.removeEmployee}">
+				<f:ajax execute="@form" render="removeEmployeeMessage allEmployees emptyDeps" />
+			</h:commandButton>
+		</h:form>
+		<h:outputText id="removeEmployeeMessage" value="#{employeeRemoveController.message}" />
+	</fieldset>
+	
+	<fieldset>
+		<legend>Empty departments</legend>
+		<h:panelGroup id="emptyDeps">
+			<ui:repeat value="#{departmentDataController.emptyDepartments}" var="emptyDepartment">
+				<h:outputText value="#{emptyDepartment}" />
+				<br />
+			</ui:repeat>
+		</h:panelGroup>
+	</fieldset>
+</h:body>
+</html>
+
