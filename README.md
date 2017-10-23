@@ -16,12 +16,12 @@ SELECT avg(salary) FROM employees WHERE dep_id =4;
 
 3. Получить департаменты в которых средняя зп выше определенного уровня (см. having).
 
-SELECT departments.name, max(salary)
+SELECT departments.id,departments.name, avg(salary)
 FROM departments,employees
-  WHERE employees.dep_id = departments.id
-GROUP BY departments.name
+WHERE employees.dep_id = departments.id
+GROUP BY departments.id
 
-HAVING max(salary) > 50;
+HAVING avg(salary) >= 1000;
 
 4. Получить перечень пустых департаментов (без подзапроса).
 
