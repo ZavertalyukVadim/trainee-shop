@@ -1,5 +1,5 @@
 
-CREATE TABLE departments (
+CREATE TABLE IF NOT EXISTS departments (
   id integer PRIMARY KEY DEFAULT nextval('departments'::regclass),
   name varchar(40)
 );
@@ -10,7 +10,7 @@ INSERT INTO departments (id, name) VALUES
   (3, 'HR'),
   (4, 'Security');
 
-CREATE TABLE positions (
+CREATE TABLE IF NOT EXISTS positions (
   id integer PRIMARY KEY DEFAULT nextval('positions'::regclass),
   name varchar(40)
 );
@@ -23,7 +23,7 @@ INSERT INTO positions (id, name) VALUES
   (5, 'HR Manager'),
   (6, 'Sequrity Guard');
 
-CREATE TABLE employees (
+CREATE TABLE IF NOT EXISTS employees (
   id integer PRIMARY KEY DEFAULT nextval('employees'::regclass),
   name varchar(40),
   gender varchar(1),

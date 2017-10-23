@@ -23,6 +23,19 @@ GROUP BY departments.id
 
 HAVING avg(salary) >= 1000;
 
+OR
+
+SELECT
+  departments.id,
+  departments.name,
+  avg(salary)
+FROM departments
+  JOIN
+  employees ON employees.dep_id = departments.id
+GROUP BY departments.id
+
+HAVING avg(salary) >= 1000;
+
 4. Получить перечень пустых департаментов (без подзапроса).
 (з подзапросом)
 SELECT departments.name
