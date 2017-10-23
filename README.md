@@ -81,9 +81,9 @@ SELECT employees.name,
   employees.year_of_birth,
   employees.salary,
   employees.dep_id,
-  avg(salary) OVER (PARTITION BY employees.dep_id) avgsalary,
-  avg(salary) OVER (PARTITION BY employees.gender) avgOnGenderInAllCompany,
-  avg(salary) OVER (PARTITION BY employees.gender,employees.dep_id) avgOnGenderInDepartmantCompany,
+  round(avg(salary) OVER (PARTITION BY employees.dep_id),2) avgsalary,
+  round(avg(salary) OVER (PARTITION BY employees.gender),2) avgOnGenderInAllCompany,
+  round(avg(salary) OVER (PARTITION BY employees.gender,employees.dep_id),2 )avgOnGenderInDepartmantCompany,
   count(employees.id) OVER (PARTITION BY employees.gender ) countEmployeesOnCompany,
   count(employees.id) OVER (PARTITION BY employees.dep_id,employees.gender) countEmployeesOnCompanyPerDep
 FROM employees;
