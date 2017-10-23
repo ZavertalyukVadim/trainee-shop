@@ -78,5 +78,19 @@ FROM employees;
 
 6.Получить для определенного работника цепочку его начальников
     и перечень его подчиенных. (см. рекурсивный запрос)
-    
-    
+6.1
+(считает всех подчиненных для  id = 10)
+WITH RECURSIVE fucn AS (
+  SELECT id, chief_id, name
+  FROM employees
+  WHERE chief_id = 10
+
+  UNION
+
+  SELECT employees.id, employees.chief_id, employees.name
+  FROM employees
+    JOIN fucn
+      ON employees.chief_id = fucn.id
+)
+
+SELECT * FROM fucn;
