@@ -43,6 +43,7 @@ public class GoodsDaoHibernate {
     @Transactional
     public Integer createGoods(Goods goods) {
         Session session = sessionFactory.openSession();
+        goods.setId(null);
         try {
             logger.trace("try to create goods");
             return ((Integer) session.save(goods));
