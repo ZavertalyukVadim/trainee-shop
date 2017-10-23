@@ -1,92 +1,71 @@
 package com.example.demo.dao;
 
 import com.example.demo.entities.Goods;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.*;
 import java.util.List;
 
-//@Repository
+@Repository
 public class GoodsDaoHibernate {
-    @PersistenceContext
-    private final EntityManager entityManager;
+    private final SessionFactory sessionFactory;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public GoodsDaoHibernate(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public GoodsDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Transactional
     public List<Goods> getAllGoods() {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Goods> criteria = builder.createQuery(Goods.class);
-        Root<Goods> root = criteria.from(Goods.class);
-        criteria.select(root);
-        return this.entityManager.createQuery(criteria).getResultList();
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT g from Goods g").list();
     }
 
     @Transactional
     public Goods getGoodsById(Integer id) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Goods> criteria = builder.createQuery(Goods.class);
-        Root<Goods> root = criteria.from(Goods.class);
-        criteria.select(root);
-        criteria.where(builder.equal(root.get("id"), id));
+        Session session = sessionFactory.openSession();
         try {
             logger.debug("try to get goods with id=" + id);
-            return entityManager.createQuery(criteria).getSingleResult();
-        }catch (Exception e){
-
-            logger.debug("attempt to get goods with nonexistent id = " + id);
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            return session.byId(Goods.class).load(id);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
             return null;
         }
     }
 
     @Transactional
     public Integer createGoods(Goods goods) {
-        goods.setId(null);
-        logger.debug("try to save goods =" + goods);
+        Session session = sessionFactory.openSession();
         try {
-
-        entityManager.flush();
-        entityManager.persist(goods);
-        return goods.getId();
-        }catch (Exception e){
-            e.printStackTrace();
-            logger.error(e.getMessage());
+            logger.debug("try to create goods");
+            return ((Integer) session.save(goods));
+        } catch (Exception e) {
+            logger.info(e.getMessage());
             return 0;
         }
     }
 
     @Transactional
     public boolean updateGoods(Integer id, Goods goods) {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            CriteriaUpdate<Goods> criteria = builder.createCriteriaUpdate(Goods.class);
-            Root root = criteria.from(Goods.class);
-
-            criteria.set("name", goods.getName());
-            criteria.set("price", goods.getPrice());
-            criteria.set("type", goods.getType());
-            criteria.set("vendor", goods.getVendor());
-
-            criteria.where(builder.greaterThanOrEqualTo(root.get("id"), id));
-
+        logger.trace("try to update goods with id=" + id);
+        Session session = sessionFactory.getCurrentSession();
+        Goods persistedGoods = session.get(Goods.class, id);
+        persistedGoods.setId(id);
+        persistedGoods.setName(goods.getName());
+        persistedGoods.setType(goods.getType());
+        persistedGoods.setVendor(goods.getVendor());
+        persistedGoods.setPrice(goods.getPrice());
         try {
-            entityManager.createQuery(criteria).executeUpdate();
-            logger.debug("Update goods with input id = " + id);
+            session.persist(persistedGoods);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
             logger.debug("attempt to update goods with nonexistent id = " + id);
             return false;
         }
@@ -94,22 +73,14 @@ public class GoodsDaoHibernate {
 
     @Transactional
     public boolean delete(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
         logger.debug("try to delete goods with id=" + id);
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-
-        CriteriaDelete<Goods> criteria = builder.
-                createCriteriaDelete(Goods.class);
-
-        Root e = criteria.from(Goods.class);
-
-        criteria.where(builder.lessThanOrEqualTo(e.get("id"), id));
         try {
-
-            this.entityManager.createQuery(criteria).executeUpdate();
+            session.createQuery("delete from Goods g where g.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             return true;
-        } catch (Exception e1) {
-            e1.printStackTrace();
-
+        } catch (Exception e) {
             logger.debug("attempt to delete goods with nonexistent id = " + id);
             return false;
         }

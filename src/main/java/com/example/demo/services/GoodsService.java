@@ -4,15 +4,17 @@ import com.example.demo.dao.GoodsDaoHibernate;
 import com.example.demo.entities.Goods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//@Service
+@Service
 public class GoodsService {
     private final GoodsDaoHibernate goodsDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    @Autowired
+    @Autowired
     public GoodsService(GoodsDaoHibernate goodsDao) {
         this.goodsDao = goodsDao;
     }
