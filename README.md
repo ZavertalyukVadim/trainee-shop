@@ -24,7 +24,7 @@ GROUP BY departments.id
 HAVING avg(salary) >= 1000;
 
 4. Получить перечень пустых департаментов (без подзапроса).
-
+(з подзапросом)
 SELECT departments.name
 FROM departments,employees
 WHERE departments.id NOT IN (SELECT departments.id
@@ -33,12 +33,50 @@ WHERE departments.id NOT IN (SELECT departments.id
                              GROUP BY departments.id)
 GROUP BY departments.name
 
-(без позапроса)
+(без подзапроса)
 SELECT d.id, d.name
 FROM employees e  RIGHT JOIN  departments d ON d.id = e.dep_id
-WHERE e.dep_id IS NULL;__
+WHERE e.dep_id IS NULL;
 
 5. Получить по всем работникам среднюю зп по его департаменту
 , среднюю зп среди коллег того же пола по всей компании и по его департаменту
 , количество работников того же пола в компании и в департаменте. 
 (все это одним запросом. см. оконные функции)
+
+5.1 SELECT employees.name,
+      employees.gender,
+      employees.year_of_birth,
+      employees.salary,
+      employees.dep_id,
+      avg(salary) OVER (PARTITION BY employees.dep_id) avgsalary
+    FROM employees;
+5.2
+SELECT employees.name,
+  employees.gender,
+  employees.year_of_birth,
+  employees.salary,
+  employees.dep_id,
+  avg(salary) OVER (PARTITION BY employees.dep_id) avgsalary,
+  avg(salary) OVER (PARTITION BY employees.gender) avgOnGenderInAllCompany,
+  avg(salary) OVER (PARTITION BY employees.gender,employees.dep_id) avgOnGenderInDepartmantCompany
+  
+FROM employees;
+
+5.3
+SELECT employees.name,
+  employees.gender,
+  employees.year_of_birth,
+  employees.salary,
+  employees.dep_id,
+  avg(salary) OVER (PARTITION BY employees.dep_id) avgsalary,
+  avg(salary) OVER (PARTITION BY employees.gender) avgOnGenderInAllCompany,
+  avg(salary) OVER (PARTITION BY employees.gender,employees.dep_id) avgOnGenderInDepartmantCompany,
+  count(employees.id) OVER (PARTITION BY employees.gender ) countEmployeesOnCompany,
+  count(employees.id) OVER (PARTITION BY employees.dep_id,employees.gender) countEmployeesOnCompanyPerDep
+FROM employees;
+
+
+6.Получить для определенного работника цепочку его начальников
+    и перечень его подчиенных. (см. рекурсивный запрос)
+    
+    
