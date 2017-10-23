@@ -32,7 +32,7 @@ public class GoodsDaoHibernate {
     public Goods getGoodsById(Integer id) {
         Session session = sessionFactory.openSession();
         try {
-            logger.debug("try to get goods with id=" + id);
+            logger.trace("try to get goods with id=" + id);
             return session.byId(Goods.class).load(id);
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -44,7 +44,7 @@ public class GoodsDaoHibernate {
     public Integer createGoods(Goods goods) {
         Session session = sessionFactory.openSession();
         try {
-            logger.debug("try to create goods");
+            logger.trace("try to create goods");
             return ((Integer) session.save(goods));
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -74,7 +74,7 @@ public class GoodsDaoHibernate {
     @Transactional
     public boolean delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        logger.debug("try to delete goods with id=" + id);
+        logger.trace("try to delete goods with id=" + id);
         try {
             session.createQuery("delete from Goods g where g.id = :id")
                     .setParameter("id", id)

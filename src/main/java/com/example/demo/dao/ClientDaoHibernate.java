@@ -33,7 +33,7 @@ public class ClientDaoHibernate {
     public Client getClientById(Integer id) {
         Session session = sessionFactory.openSession();
         try {
-            logger.debug("try to get client with id=" + id);
+            logger.trace("try to get client with id=" + id);
             return session.byId(Client.class).load(id);
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -44,7 +44,7 @@ public class ClientDaoHibernate {
     @Transactional
     public boolean deleteClientById(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        logger.debug("try to delete client with id=" + id);
+        logger.trace("try to delete client with id=" + id);
         try {
             session.createQuery("delete from Client c where c.id = :id")
                     .setParameter("id", id)
@@ -61,10 +61,10 @@ public class ClientDaoHibernate {
         Session session = sessionFactory.openSession();
         client.setId(null);
         try {
-            logger.debug("try to create client");
+            logger.trace("try to create client");
             return ((Integer) session.save(client));
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            logger.debug(e.getMessage());
             return 0;
         }
     }

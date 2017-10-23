@@ -34,7 +34,7 @@ public class OrderDaoHibernate {
     public Order getOneById(Integer id) {
         Session session = sessionFactory.openSession();
         try {
-            logger.debug("try to get order with id=" + id);
+            logger.trace("try to get order with id=" + id);
             return session.byId(Order.class).load(id);
         } catch (Exception e) {
             logger.info(e.getMessage());
@@ -47,10 +47,10 @@ public class OrderDaoHibernate {
         Session session = sessionFactory.openSession();
         order.setId(null);
         try {
-            logger.debug("try to create order");
+            logger.trace("try to create order");
             return ((Integer) session.save(order));
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            logger.debug(e.getMessage());
             return 0;
         }
     }
@@ -58,7 +58,7 @@ public class OrderDaoHibernate {
     @Transactional
     public boolean deleteOrder(Integer id) {
         Session session = sessionFactory.getCurrentSession();
-        logger.debug("try to delete order with id=" + id);
+        logger.trace("try to delete order with id=" + id);
         try {
             session.createQuery("delete from Order o where o.id = :id")
                     .setParameter("id", id)
@@ -102,7 +102,7 @@ public class OrderDaoHibernate {
 //                    .setParameterList("orderItems", order.getOrderItems())
                     .executeUpdate();
 
-            logger.debug("Update order with input id = " + id);
+            logger.trace("Update order with input id = " + id);
             return true;
         } catch (Exception e) {
             logger.error(e.getMessage());
