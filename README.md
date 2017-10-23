@@ -25,3 +25,20 @@ HAVING avg(salary) >= 1000;
 
 4. Получить перечень пустых департаментов (без подзапроса).
 
+SELECT departments.name
+FROM departments,employees
+WHERE departments.id NOT IN (SELECT departments.id
+                             FROM departments,employees
+                             WHERE employees.dep_id = departments.id
+                             GROUP BY departments.id)
+GROUP BY departments.name
+
+(без позапроса)
+SELECT d.id, d.name
+FROM employees e  RIGHT JOIN  departments d ON d.id = e.dep_id
+WHERE e.dep_id IS NULL;__
+
+5. Получить по всем работникам среднюю зп по его департаменту
+, среднюю зп среди коллег того же пола по всей компании и по его департаменту
+, количество работников того же пола в компании и в департаменте. 
+(все это одним запросом. см. оконные функции)
