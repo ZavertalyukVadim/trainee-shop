@@ -83,7 +83,7 @@ FROM employees;
 WITH RECURSIVE fucn AS (
   SELECT id, chief_id, name
   FROM employees
-  WHERE chief_id = 10
+  WHERE id = 10
 
   UNION
 
@@ -107,6 +107,22 @@ WITH RECURSIVE fucn AS (
   FROM employees
     JOIN fucn
       ON employees.chief_id = fucn.id
+)
+
+SELECT * FROM fucn;
+
+(все начальники)
+WITH RECURSIVE fucn AS (
+  SELECT id, chief_id, name
+  FROM employees
+  WHERE id = 2
+
+  UNION
+
+  SELECT employees.id, employees.chief_id, employees.name
+  FROM employees
+   JOIN fucn
+      ON employees.id = fucn.chief_id
 )
 
 SELECT * FROM fucn;
