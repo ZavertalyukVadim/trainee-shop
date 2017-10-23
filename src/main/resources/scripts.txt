@@ -139,3 +139,11 @@ WITH RECURSIVE fucn AS (
 )
 
 SELECT * FROM fucn;
+
+
+create view
+
+CREATE VIEW vad AS
+  SELECT *
+  FROM employees
+  WHERE name = 'Vadimka';
