@@ -1,78 +1,89 @@
 package com.example.demo.dao;
 
 import com.example.demo.entities.Client;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-//@Repository
+@Repository
 public class ClientDaoHibernate {
-    @PersistenceContext
-    private final EntityManager entityManager;
+
+    private final SessionFactory sessionFactory;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
-    public ClientDaoHibernate(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public ClientDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Transactional
     public List<Client> getAllClients() {
-        return entityManager.createQuery("SELECT c from Client c").getResultList();
+        Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT c from Client c").list();
     }
 
     @Transactional
     public Client getClientById(Integer id) {
-        return entityManager.find(Client.class, id);
+        Session session = sessionFactory.openSession();
+        try {
+            logger.debug("try to get client with id=" + id);
+            return session.byId(Client.class).load(id);
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            return null;
+        }
     }
 
     @Transactional
     public boolean deleteClientById(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        logger.debug("try to delete client with id=" + id);
         try {
-            logger.debug("try to delete client with id =" + id);
-            entityManager.remove(entityManager.find(Client.class, id));
+            session.createQuery("delete from Client c where c.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
             return true;
         } catch (Exception e) {
+            logger.debug("attempt to delete client with nonexistent id = " + id);
             return false;
         }
     }
 
     @Transactional
     public Integer createClient(Client client) {
+        Session session = sessionFactory.openSession();
         client.setId(null);
-        logger.debug("try to save client =" + client);
         try {
-            entityManager.flush();
-            entityManager.persist(client);
-            return client.getId();
+            logger.debug("try to create client");
+            return ((Integer) session.save(client));
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
+            logger.info(e.getMessage());
             return 0;
         }
     }
 
     @Transactional
     public boolean updateClient(Integer id, Client client) {
-        logger.debug("check if client with id " + id + " exists in database");
-        Client newClient = entityManager.find(Client.class, id);
-        if (newClient == null) {
+        logger.trace("try to update client with id=" + id);
+        Session session = sessionFactory.getCurrentSession();
+        Client persistedClient = session.get(Client.class, id);
+        persistedClient.setId(id);
+        persistedClient.setName(client.getName());
+        persistedClient.setOrders(client.getOrders());
+        persistedClient.setDiscount(client.getDiscount());
+        try {
+            session.persist(persistedClient);
+            return true;
+        } catch (Exception e) {
+            logger.debug("attempt to update client with nonexistent id = " + id);
             return false;
-
         }
-
-        entityManager.clear();
-        newClient.setId(id);
-        newClient.setName(client.getName());
-        newClient.setDiscount(client.getDiscount());
-        newClient.setOrders(client.getOrders());
-        entityManager.merge(newClient);
-        return true;
     }
 }

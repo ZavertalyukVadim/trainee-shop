@@ -4,19 +4,21 @@ import com.example.demo.dao.ClientDaoHibernate;
 import com.example.demo.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//@Service
+@Service
 public class ClientService {
     private final ClientDaoHibernate clientDaoHibernate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
-//    @Autowired
+    @Autowired
     public ClientService(ClientDaoHibernate clientDaoHibernate) {
 
 //        test1();
