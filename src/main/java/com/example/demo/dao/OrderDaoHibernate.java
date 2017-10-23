@@ -72,6 +72,7 @@ public class OrderDaoHibernate {
 
     @Transactional
     public boolean persistOrder(Integer id, Order order) {
+        logger.trace("try to update order with id=" + id);
         Session session = sessionFactory.getCurrentSession();
         Order persistedOrder = session.get(Order.class, id);
         persistedOrder.setId(id);
@@ -83,6 +84,7 @@ public class OrderDaoHibernate {
             session.persist(persistedOrder);
             return true;
         } catch (Exception e) {
+            logger.debug("attempt to update order with nonexistent id = " + id);
             return false;
         }
     }
