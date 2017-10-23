@@ -15,7 +15,6 @@ import java.util.List;
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
-
     @Autowired
     public OrderItemController(OrderItemService orderItemService) {
         this.orderItemService = orderItemService;
@@ -38,8 +37,8 @@ public class OrderItemController {
 
     @PostMapping
     public ResponseEntity<?> createOrderItem(@RequestBody OrderItem orderItem) {
-        Integer id  = orderItemService.createOrderItem(orderItem);
-        return (id != null) ? new ResponseEntity<>(id,HttpStatus.CREATED) :
+        Integer id = orderItemService.createOrderItem(orderItem);
+        return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
