@@ -1,6 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS departments (
-  id integer PRIMARY KEY DEFAULT nextval('departments'::regclass),
+  id SERIAL,
   name varchar(40)
 );
 
@@ -9,10 +9,10 @@ INSERT INTO departments (id, name) VALUES
   (2, 'IT'),
   (3, 'HR'),
   (4, 'Security')
-ON CONFLICT DO NOTHING ;
+ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS positions (
-  id integer PRIMARY KEY DEFAULT nextval('positions'::regclass),
+  id SERIAL,
   name varchar(40)
 );
 
@@ -26,7 +26,7 @@ INSERT INTO positions (id, name) VALUES
 ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS employees (
-  id integer PRIMARY KEY DEFAULT nextval('employees'::regclass),
+  id SERIAL,
   name varchar(40),
   gender varchar(1),
   year_of_birth date,
