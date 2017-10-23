@@ -45,6 +45,7 @@ public class OrderDaoHibernate {
     @Transactional(noRollbackFor = Exception.class)
     public Integer createOrder(Order order) {
         Session session = sessionFactory.openSession();
+        order.setId(null);
         try {
             logger.debug("try to create order");
             return ((Integer) session.save(order));
