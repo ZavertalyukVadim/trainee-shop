@@ -94,3 +94,19 @@ WITH RECURSIVE fucn AS (
 )
 
 SELECT * FROM fucn;
+
+(добавление уровня вложености)
+WITH RECURSIVE fucn AS (
+  SELECT id, chief_id, name, 1 AS level
+  FROM employees
+  WHERE chief_id = 9
+
+  UNION ALL
+
+  SELECT employees.id, employees.chief_id, employees.name,fucn.level + 1 AS level
+  FROM employees
+    JOIN fucn
+      ON employees.chief_id = fucn.id
+)
+
+SELECT * FROM fucn;
