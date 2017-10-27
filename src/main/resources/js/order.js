@@ -2,7 +2,7 @@ $(function () {
 
     $.getJSON('http://localhost:8080/order/' + getUrlVars()['id'], function (order) {
         console.log(order);
-        $('#order_id').append('<tr>'+'<td>' + order.id + '</td>');
+        $('#order_id').append(  order.id );
         $('#order_name').append('<td>' + order.name + '</td>');
         // $('#order_status_name').append('<option>' + order.status + '</option>');
         getOtherStatuses(order);
