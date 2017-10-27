@@ -3,12 +3,12 @@ $(function(){
     	console.log(order);
         $('#order_id').append('<td>' + order.id + '</td>');
         $('#order_name').append('<td>' + order.name + '</td>');
+        $('#order_status').append('<td>' + order.status + '</td>');
+        $('#order_date').append('<td>' + new Date(order.date) + '</td>');
         // $('#client_discount').append('<td>' + client.discount + '</td>');
         // $.each(client.orders, function (i, order) {
         //     $('#order_id').append('<td>' + order.id + '</td>');
-        //     $('#order_date').append('<td>' + new Date(order.date) + '</td>');
         //     $('#order_name').append('<td>' + order.name + '</td>');
-        //     $('#order_status').append('<td>' + order.status + '</td>');
         // });
 
     });
