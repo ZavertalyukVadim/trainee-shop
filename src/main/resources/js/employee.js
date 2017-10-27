@@ -1,9 +1,9 @@
 $(function(){
-    $.getJSON('http://localhost:8080/client/' + getUrlVars()['id'], function(employee){
-    	console.log(employee);
-        $('#employee_id').append('<td>' + employee.id + '</td>');
-        $('#employee_name').append('<td>' + employee.name + '</td>');
-        $('#employee_discount').append('<td>' + employee.discount + '</td>');
+    $.getJSON('http://localhost:8080/client/' + getUrlVars()['id'], function(client){
+    	console.log(client);
+        $('#client_id').append('<td>' + client.id + '</td>');
+        $('#client_name').append('<td>' + client.name + '</td>');
+        $('#client_discount').append('<td>' + client.discount + '</td>');
 
     });
 
