@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Goods {
 
     private BigDecimal price;
 
+    @JsonIgnore
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vendor_id")
