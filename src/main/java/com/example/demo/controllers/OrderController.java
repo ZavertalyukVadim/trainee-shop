@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/order")
 public class OrderController {
