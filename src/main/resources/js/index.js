@@ -1,21 +1,13 @@
-$(function(){
-    $.getJSON('http://localhost:8080/client', function(clients){
-    	console.log(clients);
+$(function () {
+    $.getJSON('http://localhost:8080/client', function (clients) {
+        console.log(clients);
         var $clientTable = $('#clients');
-    	$.each(clients, function(i, client){
+        $.each(clients, function (i, client) {
             $clientTable.append('<tr>',
                 '<td>' + client.id + '</td>',
-    			'<td>' + client.name + '</td>',
-                '<td>' + client.discount + '</td>',
-                '</tr>');
-            // $employeeTable.append('<tr>');
-            // $employeeTable.append('<tr><td>' + employee.id + '</td>');
-            // $employeeTable.append('<td>' + employee.firstName + '</td>');
-            // $employeeTable.append('<td>' + employee.lastName + '</td>');
-            // $employeeTable.append('<td>' + employee.department.name + '</td>');
-            // $employeeTable.append('<td>' + employee.status + '</td>');
-            $clientTable.append('<td><a href="client.html?id=' + client.id + '"><button>Details</button></a></td></tr>');
-    	});
+                '<td><a href="client.html?id=\' + client.id ">' + client.name + '</a></td>',
+                '<td>' + client.discount + '</td>');
+        });
     });
 
     // //fill department selector with departments
@@ -91,7 +83,7 @@ $(function(){
 
     function arrayToJson(array) {
         var object = {};
-        $.map(array, function(n, i) {
+        $.map(array, function (n, i) {
             object[n['name']] = n['value'];
         });
         return JSON.stringify(object);
