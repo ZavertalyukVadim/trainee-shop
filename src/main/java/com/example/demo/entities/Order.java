@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ public class Order {
 
     private Status status;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "client_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)

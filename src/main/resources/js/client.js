@@ -4,7 +4,11 @@ $(function(){
         $('#client_id').append('<td>' + client.id + '</td>');
         $('#client_name').append('<td>' + client.name + '</td>');
         $('#client_discount').append('<td>' + client.discount + '</td>');
-
+        $.each(client.orders, function (i, order) {
+            $('#order_id').append('<td>' + order.id + '</td>');
+            $('#order_date').append('<td>' + new Date(order.date) + '</td>');
+            $('#order_name').append('<td>' + order.name + '</td>');
+        });
     });
 
     function getUrlVars() {
