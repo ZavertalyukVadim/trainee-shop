@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //общяя цена
-//    private BigDecimal totalPrice;
+    private Date date;
 
     private Status status;
 
@@ -103,16 +104,13 @@ public class Order {
         this.status = status;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Order{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", orderItems=" + orderItems +
-//                ", client=" + client.getId() +
-//                '}';
-//    }
+    public Date getDate() {
+        return date;
+    }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {
