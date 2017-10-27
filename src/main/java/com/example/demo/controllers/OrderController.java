@@ -37,7 +37,7 @@ public class OrderController {
     }
 
     @PutMapping(value = "/{id}/updateStatus")
-    public void getStatuses(@PathVariable("id") Integer id,@RequestParam(name = "status") String status,HttpServletResponse response) {
+    public void updateStatus(@PathVariable("id") Integer id,@RequestBody String status,HttpServletResponse response) {
         if ((orderService.updateStatusInOrder(id,status))) {
             response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
         } else {

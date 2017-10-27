@@ -24,9 +24,9 @@ $(function () {
         $.getJSON('http://localhost:8080/order/status', function (statuses) {
             console.log(statuses);
             $.each(statuses, function (i, status) {
-                if (order.status === status){
+                if (order.status === status) {
                     $('#order_status_name').append('<option selected>' + status + '</option>');
-                }else {
+                } else {
                     $('#order_status_name').append('<option>' + status + '</option>');
                 }
             });
@@ -44,4 +44,25 @@ $(function () {
         return vars;
     }
 
+    // PUT /order/{id}/updateStatus
+
+    $('select').on('change', function (e) {
+        var valueSelected = this.value;
+        console.log(valueSelected);
+        alert(valueSelected);
+        $.ajax({
+            url: "http://localhost:8080/order/" + getUrlVars()['id'] + "/updateStatus",
+            type: "PUT",
+            data: valueSelected,
+            dataType: "json",
+            contentType: "application/json",
+            async: false,
+            success: function () {
+                // var msg = 'Employee ' + data[0]['value'] + ' ' + data[1]['value'] + ' has been hired';
+                alert("LOL");
+            }
+        });
+        console.log("Employee " + valueSelected + " has been posted");
+
+    });
 });
