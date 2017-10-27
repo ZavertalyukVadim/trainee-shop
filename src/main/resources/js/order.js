@@ -6,10 +6,14 @@ $(function(){
         $('#order_status').append('<td>' + order.status + '</td>');
         $('#order_date').append('<td>' + new Date(order.date) + '</td>');
         // $('#client_discount').append('<td>' + client.discount + '</td>');
-        // $.each(client.orders, function (i, order) {
-        //     $('#order_id').append('<td>' + order.id + '</td>');
-        //     $('#order_name').append('<td>' + order.name + '</td>');
-        // });
+        $.each(order.orderItems, function (i, orderItem) {
+            $('#orderItems_count').append('<td>' + orderItem.count + '</td>');
+            $('#goods_id').append('<td>' + orderItem.goods.id + '</td>');
+            $('#goods_name').append('<td>' + orderItem.goods.name + '</td>');
+            $('#goods_price').append('<td>' + orderItem.goods.price + '</td>');
+            $('#goods_type').append('<td>' + orderItem.goods.type + '</td>');
+
+        });
 
     });
 
