@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/order")
@@ -32,7 +33,7 @@ public class OrderController {
 
     @GetMapping(value = "/status")
     public List<Status> getStatuses() {
-        return Arrays.asList(Status.ACCEPTED, Status.NEW);
+        return Arrays.asList(Status.ACCEPTED, Status.NEW, Status.DELIVERED);
     }
 
     @GetMapping(value = "/{id}")

@@ -1,11 +1,13 @@
-$(function(){
-    $.getJSON('http://localhost:8080/order/' + getUrlVars()['id'], function(order){
-    	console.log(order);
+$(function () {
+
+    $.getJSON('http://localhost:8080/order/' + getUrlVars()['id'], function (order) {
+        console.log(order);
         $('#order_id').append('<td>' + order.id + '</td>');
         $('#order_name').append('<td>' + order.name + '</td>');
-        $('#order_status').append('<td>' + order.status + '</td>');
+
+
+        getOtherStatuses(order);
         $('#order_date').append('<td>' + new Date(order.date) + '</td>');
-        // $('#client_discount').append('<td>' + client.discount + '</td>');
         $.each(order.orderItems, function (i, orderItem) {
             $('#orderItems_count').append('<td>' + orderItem.count + '</td>');
             $('#goods_id').append('<td>' + orderItem.goods.id + '</td>');
@@ -16,6 +18,20 @@ $(function(){
         });
 
     });
+
+
+    function getOtherStatuses(order) {
+        $.getJSON('http://localhost:8080/order/status', function (statuses) {
+            console.log(statuses);
+            $.each(statuses, function (i, status) {
+                if (order.status === status){
+                    $('#order_status_name').append('<option selected>' + status + '</option>');
+                }else {
+                    $('#order_status_name').append('<option>' + status + '</option>');
+                }
+            });
+        });
+    }
 
     function getUrlVars() {
         var vars = [], hash;
