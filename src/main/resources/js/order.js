@@ -48,7 +48,6 @@ $(function () {
     $('select').on('change', function (e) {
         var valueSelected = this.value;
         console.log(valueSelected);
-        alert(valueSelected);
         $.ajax({
             url: "http://localhost:8080/order/" + getUrlVars()['id'] + "/updateStatus",
             type: "PUT",
