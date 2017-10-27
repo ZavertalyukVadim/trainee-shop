@@ -36,6 +36,15 @@ public class OrderController {
         return Arrays.asList(Status.ACCEPTED, Status.NEW, Status.DELIVERED);
     }
 
+    @PutMapping(value = "/{id}/updateStatus")
+    public void getStatuses(@PathVariable("id") Integer id,@RequestParam(name = "status") String status,HttpServletResponse response) {
+        if ((orderService.updateStatusInOrder(id,status))) {
+            response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable("id") Integer id) {
         Order order = orderService.getOrderById(id);

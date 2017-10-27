@@ -58,6 +58,11 @@ public class OrderService {
         }
         return orderDaoHibernate.searchOrderByIdAndStatuses(id, statuses);
     }
+
+    public boolean updateStatusInOrder(Integer id, String status) {
+        Status newStatus = Status.valueOf(status);
+        return orderDaoHibernate.updateStatusInOrder(id, newStatus);
+    }
 }
 
 

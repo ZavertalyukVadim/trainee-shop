@@ -117,4 +117,19 @@ public class OrderDaoHibernate {
                 .setParameterList("statuses", statuses)
                 .list();
     }
+
+    @Transactional
+    public boolean updateStatusInOrder(Integer id, Status status) {
+        Session session = sessionFactory.openSession();
+        try {
+            session.createQuery("update Order set status = :status where id = :id")
+                    .setParameter("id", id)
+                    .setParameter("status", status)
+                    .executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
