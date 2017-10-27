@@ -4,10 +4,10 @@ $(function () {
         console.log(order);
         $('#order_id').append('<td>' + order.id + '</td>');
         $('#order_name').append('<td>' + order.name + '</td>');
-
-
         getOtherStatuses(order);
         $('#order_date').append('<td>' + new Date(order.date) + '</td>');
+
+
         $.each(order.orderItems, function (i, orderItem) {
             $('#orderItems_count').append('<td>' + orderItem.count + '</td>');
             $('#goods_id').append('<td>' + orderItem.goods.id + '</td>');
@@ -44,8 +44,6 @@ $(function () {
         return vars;
     }
 
-    // PUT /order/{id}/updateStatus
-
     $('select').on('change', function (e) {
         var valueSelected = this.value;
         console.log(valueSelected);
@@ -58,7 +56,6 @@ $(function () {
             contentType: "application/json",
             async: false,
             success: function () {
-                // var msg = 'Employee ' + data[0]['value'] + ' ' + data[1]['value'] + ' has been hired';
                 alert("LOL");
             }
         });
