@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -26,6 +27,7 @@ public class Order {
 
     //общяя цена
 //    private BigDecimal totalPrice;
+    private Date date;
 
     private Status status;
 
@@ -94,6 +96,14 @@ public class Order {
 //        }
 //        return totalPrice;
 //    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Status getStatus() {
         return status;
