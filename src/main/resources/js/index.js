@@ -5,10 +5,13 @@ $(function () {
         $.each(clients, function (i, client) {
             $clientTable.append('<tr>',
                 '<td>' + client.id + '</td>',
-                '<td><a href="client.html?id=\' + client.id ">' + client.name + '</a></td>',
-                '<td>' + client.discount + '</td>');
+                '<td><a href="client.html?id=' + client.id + '">' + client.name + '</a></td>',
+                '<td>' + client.discount + '</td>'
+            )
+            ;
         });
     });
+
 
     // //fill department selector with departments
     // $.getJSON('http://localhost:8080/SimpleProject/webapi/departments', function(departments){
