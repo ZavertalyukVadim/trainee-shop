@@ -146,7 +146,7 @@ function submit() {
     }
 
     var myJsonString = JSON.stringify(arr);
-    alert(myJsonString);
+    console.log(myJsonString);
     $.ajax({
         url: "http://localhost:8080/goods/byFilters",
         type: "POST",
