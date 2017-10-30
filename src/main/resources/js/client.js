@@ -1,22 +1,27 @@
 $(function () {
     $.getJSON('http://localhost:8080/client/' + getUrlVars()['id'], function (client) {
         console.log(client);
+
         $('#client_id').append(client.id + '<br>');
         $('#client_name').append(client.name + '<br>');
         $('#client_discount').append(client.discount + '<br>');
+        var table = document.getElementById("table");
         $.each(client.orders, function (i, order) {
-            $('#tr_id').find('>tbody:last-child')
-                .append('<tr><td>' + order.id + '</td>'
-                    +'<td>' + '<a href="order.html?id=' + order.id + '">' + '' + order.name + '</a>' + '</td>'
+            var row = table.insertRow();
 
-                    + '<td>' + new Date(order.date) + +'</td>'
-                    + '<td>' + order.status + '</td></tr>');
-            // $('#tr_id').append();
-            // $('#order_id').append('');
-            // $('#order_date').append('');
-            // $('#order_name').append(+'');
-            // $('#order_status').append('');
+            var id = row.insertCell(0);
 
+            var name = row.insertCell(1);
+
+            var date = row.insertCell(2);
+
+            var status = row.insertCell(3);
+
+            id.innerHTML = order.id;
+            name.innerHTML = '<a href="order.html?id=' + order.id + '">' + '' + order.name + '</a>';
+
+            date.innerHTML = new Date(order.date);
+            status.innerHTML = order.status;
         });
 
     });
