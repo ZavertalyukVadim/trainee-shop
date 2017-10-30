@@ -14,10 +14,13 @@ $(function () {
 
             var price = row.insertCell(3);
 
+            var something = row.insertCell(4);
+
             id.innerHTML = goods.id;
             name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
             type.innerHTML = goods.type;
             price.innerHTML = goods.price;
+            something.innerHTML = '<a onclick="return basket('+goods.id+');" >' + goods.name + '</a>';
         });
         getOtherStatuses();
 
@@ -135,6 +138,30 @@ function getGoodsByFilter(checkbox) {
     if (checkbox.checked) {
         alert(checkbox.value);
     }
+}
+
+var arr = [];
+
+function basket(goods) {
+    arr.push(goods);
+    alert(goods);
+    // $('#basket').empty();
+    // $.each(arr, function (i, goods) {
+    //     var row = table.insertRow();
+    //
+    //     var id = row.insertCell(0);
+    //
+    //     var name = row.insertCell(1);
+    //
+    //     var type = row.insertCell(2);
+    //
+    //     var price = row.insertCell(3);
+    //
+    //     id.innerHTML = goods.id;
+    //     name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
+    //     type.innerHTML = goods.type;
+    //     price.innerHTML = goods.price;
+    // });
 }
 
 function submit() {
