@@ -10,7 +10,7 @@ $(function () {
 
             var name = row.insertCell(1);
 
-            var type  = row.insertCell(2);
+            var type = row.insertCell(2);
 
             var price = row.insertCell(3);
 
@@ -19,9 +19,18 @@ $(function () {
             type.innerHTML = goods.type;
             price.innerHTML = goods.price;
         });
+        getOtherStatuses();
 
     });
 
+    function getOtherStatuses() {
+        $.getJSON('http://localhost:8080/types', function (types) {
+            console.log(types);
+            $.each(types, function (i, type) {
+                $('#filters').append('<input type="checkbox" name="action"  value=' + type + '>'+ type+'</option><br>');
+            });
+        });
+    }
 
     // //fill department selector with departments
     // $.getJSON('http://localhost:8080/SimpleProject/webapi/departments', function(departments){
