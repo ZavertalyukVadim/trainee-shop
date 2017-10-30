@@ -27,10 +27,30 @@ $(function () {
         $.getJSON('http://localhost:8080/types', function (types) {
             console.log(types);
             $.each(types, function (i, type) {
-                $('#filters').append('<input type="checkbox" name="action"  value=' + type + '>'+ type+'</option><br>');
+                $('#filters').append('<input type="checkbox" id="chckBox" name="action"  value=' + type + '>' + type + '</option><br>');
             });
         });
     }
+
+
+
+    // $('select').on('change', function (e) {
+    //     var valueSelected = this.value;
+    //     console.log(valueSelected);
+    //     $.ajax({
+    //         url: "http://localhost:8080/order/" + getUrlVars()['id'] + "/updateStatus",
+    //         type: "PUT",
+    //         data: valueSelected,
+    //         dataType: "json",
+    //         contentType: "application/json",
+    //         async: false,
+    //         success: function () {
+    //             alert("LOL");/////посмотреть почему не работает.
+    //         }
+    //     });
+    //     console.log("Employee " + valueSelected + " has been posted");
+    //
+    // });
 
     // //fill department selector with departments
     // $.getJSON('http://localhost:8080/SimpleProject/webapi/departments', function(departments){
@@ -111,3 +131,51 @@ $(function () {
         return JSON.stringify(object);
     }
 });
+
+function getGoodsByFilter(checkbox) {
+    if (checkbox.checked) {
+        alert(checkbox.value);
+    }
+}
+
+function submit() {
+    var coffee = document.forms[0];
+    var arr = [];
+    for (var i = 0; i < coffee.length; i++) {
+        if (coffee[i].checked)
+            arr.push(coffee[i].value);
+    }
+
+    var myJsonString = JSON.stringify(arr);
+    alert(myJsonString);
+    $.ajax({
+        url: "http://localhost:8080/goods/byFilters",
+        type: "POST",
+        data: myJsonString,
+        dataType: "json",
+        contentType: "application/json",
+        async: false,
+        success: function (response) {
+            var table = document.getElementById("goods");
+            while(table.rows.length > 0) {
+                table.deleteRow(0);
+            }
+            $.each(response, function (i, goods) {
+                var row = table.insertRow();
+
+                var id = row.insertCell(0);
+
+                var name = row.insertCell(1);
+
+                var type = row.insertCell(2);
+
+                var price = row.insertCell(3);
+
+                id.innerHTML = goods.id;
+                name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
+                type.innerHTML = goods.type;
+                price.innerHTML = goods.price;
+            });
+        }
+    });
+}

@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.dao.GoodsDaoHibernate;
 import com.example.demo.entities.Goods;
+import com.example.demo.entities.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,9 @@ public class GoodsService {
     public boolean deleteGoodsById(Integer id) {
         logger.info("attempt to delete goods with id = " + id);
         return goodsDao.delete(id);
+    }
+
+    public List<Goods> getGoodsByTypes(List<Type> types) {
+        return goodsDao.getGoodsByTypes(types);
     }
 }

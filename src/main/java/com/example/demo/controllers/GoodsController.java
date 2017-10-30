@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.entities.Goods;
+import com.example.demo.entities.Type;
 import com.example.demo.services.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,13 @@ public class GoodsController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+
+    @PostMapping(value = "/byFilters")
+    public List<Goods> getAllOrdersByType(@RequestBody List<Type> types) {
+        System.out.println(types);
+        return goodsService.getGoodsByTypes(types);
     }
 
     @PostMapping
