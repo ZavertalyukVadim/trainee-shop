@@ -41,7 +41,6 @@ var arr = [];
 
 function basket(goods) {
     arr.push(goods);
-    alert(goods);
     $.getJSON('http://localhost:8080/goods/' + goods, function (goods) {
         console.log(goods);
         var table = document.getElementById("basket");
@@ -55,10 +54,13 @@ function basket(goods) {
 
         var price = row.insertCell(3);
 
+        var count = row.insertCell(4);
+
         id.innerHTML = goods.id;
         name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
         type.innerHTML = goods.type;
         price.innerHTML = goods.price;
+        count.innerHTML = ''+1;
 
     });
 }
