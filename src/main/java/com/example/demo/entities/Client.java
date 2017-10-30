@@ -16,7 +16,7 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "order_id")
     private List<Order > orders;

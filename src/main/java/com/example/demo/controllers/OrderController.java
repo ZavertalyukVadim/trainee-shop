@@ -62,6 +62,13 @@ public class OrderController {
                 new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @PostMapping(value = "/fromBasket")
+    public ResponseEntity<Integer> createOrderFromBasket(@RequestBody List<Integer> listId) {
+        Integer id = orderService.createOrderFromBasket(listId);
+        return (id != null) ? new ResponseEntity<>(id, HttpStatus.CREATED) :
+                new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping(value = "/search")
     public ResponseEntity<List<Order>> searchOrder(@RequestParam(value = "id", required = false) Integer id, @RequestParam(required = false) List<Status> statuses) {
         if (id != null && id < 1) {

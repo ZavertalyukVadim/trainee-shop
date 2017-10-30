@@ -20,7 +20,7 @@ $(function () {
             name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
             type.innerHTML = goods.type;
             price.innerHTML = goods.price;
-            something.innerHTML = '<a onclick="return basket(' + goods.id + ');" >' + goods.name + '</a>';
+            something.innerHTML = '<a onclick="return basket(' + goods.id + ');" > add to the basket</a>';
         });
         getOtherStatuses();
 
@@ -62,6 +62,22 @@ function basket(goods) {
         price.innerHTML = goods.price;
         count.innerHTML = ''+1;
 
+    });
+}
+
+function createOrder() {
+    var myJsonString = JSON.stringify(arr);
+    alert(myJsonString);
+    $.ajax({
+        url: "http://localhost:8080/order/fromBasket",
+        type: "POST",
+        data: myJsonString,
+        dataType: "json",
+        contentType: "application/json",
+        async: false,
+        success: function () {
+            $('#basket').empty();
+        }
     });
 }
 

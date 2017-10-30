@@ -1,25 +1,36 @@
 package com.example.demo.services;
 
+import com.example.demo.dao.ClientDaoHibernate;
+import com.example.demo.dao.GoodsDaoHibernate;
 import com.example.demo.dao.OrderDaoHibernate;
-import com.example.demo.entities.Order;
-import com.example.demo.entities.Status;
+import com.example.demo.dao.OrderItemDao;
+import com.example.demo.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class OrderService {
     private final OrderDaoHibernate orderDaoHibernate;
+    private final OrderItemDao orderItemDao;
+    private final GoodsDaoHibernate goodsDao;
+    private final ClientDaoHibernate clientDao;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public OrderService(OrderDaoHibernate orderDaoHibernate) {
+    public OrderService(OrderDaoHibernate orderDaoHibernate, OrderItemDao orderItemDao, GoodsDaoHibernate goodsDao, ClientDaoHibernate clientDao) {
 
         this.orderDaoHibernate = orderDaoHibernate;
+        this.orderItemDao = orderItemDao;
+
+        this.goodsDao = goodsDao;
+        this.clientDao = clientDao;
     }
 
     public List<Order> getAllOrders() {
@@ -62,6 +73,31 @@ public class OrderService {
     public boolean updateStatusInOrder(Integer id, String status) {
         Status newStatus = Status.valueOf(status);
         return orderDaoHibernate.updateStatusInOrder(id, newStatus);
+    }
+
+    public Integer createOrderFromBasket(List<Integer> listId) {
+        List<Goods> goodsList = new ArrayList<>();
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (Integer id :listId){
+            goodsList.add(goodsDao.getGoodsById(id));
+
+        }
+        for (Goods goods:goodsList){
+            OrderItem orderItem = new OrderItem();
+            orderItem.setCount(1);
+            orderItem.setGoods(goods);
+            orderItemDao.save(orderItem);
+            orderItems.add(orderItem);
+        }
+        Client client =clientDao.getClientById(1);
+        Order order = new Order();
+        order.setOrderItems(orderItems);
+        order.setDate(new Date());
+        order.setStatus(Status.NEW);
+        order.setName("custom");
+        order.setClient(client);
+        return orderDaoHibernate.createOrder(order);
+
     }
 }
 
