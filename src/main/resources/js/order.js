@@ -33,9 +33,9 @@ $(function () {
             goodsName.innerHTML = orderItem.goods.name;
             goodsPrice.innerHTML = orderItem.goods.price;
             goodsType.innerHTML = orderItem.goods.type;
-            // return false;
 
         });
+        getOtherStatuses(order);
 
     });
 
