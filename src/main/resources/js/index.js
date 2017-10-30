@@ -1,23 +1,26 @@
 $(function () {
-    // $.getJSON('http://localhost:8080/client', function (clients) {
-    //     console.log(clients);
-    //
-    //     var table = document.getElementById("clients");
-    //     $.each(clients, function (i, client) {
-    //         var row = table.insertRow();
-    //
-    //         var id = row.insertCell(0);
-    //
-    //         var name = row.insertCell(1);
-    //
-    //         var discount = row.insertCell(2);
-    //
-    //         id.innerHTML = client.id;
-    //         name.innerHTML = '<a href="client.html?id=' + client.id + '">' + client.name + '</a>';
-    //         discount.innerHTML = client.discount;
-    //     });
-    //
-    // });
+    $.getJSON('http://localhost:8080/goods', function (goodses) {
+        console.log(goodses);
+
+        var table = document.getElementById("goods");
+        $.each(goodses, function (i, goods) {
+            var row = table.insertRow();
+
+            var id = row.insertCell(0);
+
+            var name = row.insertCell(1);
+
+            var type  = row.insertCell(2);
+
+            var price = row.insertCell(3);
+
+            id.innerHTML = goods.id;
+            name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
+            type.innerHTML = goods.type;
+            price.innerHTML = goods.price;
+        });
+
+    });
 
 
     // //fill department selector with departments
