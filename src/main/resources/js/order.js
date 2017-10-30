@@ -1,20 +1,39 @@
 $(function () {
 
     $.getJSON('http://localhost:8080/order/' + getUrlVars()['id'], function (order) {
-        console.log(order);
-        $('#order_id').append(  order.id );
-        $('#order_name').append('<td>' + order.name + '</td>');
-        // $('#order_status_name').append('<option>' + order.status + '</option>');
-        getOtherStatuses(order);
-        $('#order_date').append('<td>' + new Date(order.date) + '</td>');
+        var table = document.getElementById("myTable");
+        var row = table.insertRow();
+        var id = row.insertCell(0);
+
+        var name = row.insertCell(1);
+
+        var date = row.insertCell(2);
+
+        var status = row.insertCell(3);
+
+        id.innerHTML = order.id;
+        name.innerHTML = order.name;
+        date.innerHTML = new Date(order.date);
+        status.innerHTML = order.status;
 
 
+        var table1 = document.getElementById("suppTable");
         $.each(order.orderItems, function (i, orderItem) {
-            $('#orderItems_count').append('<td>' + orderItem.count + '</td>');
-            $('#goods_id').append('<td>' + orderItem.goods.id + '</td>');
-            $('#goods_name').append('<td>' + orderItem.goods.name + '</td>');
-            $('#goods_price').append('<td>' + orderItem.goods.price + '</td>');
-            $('#goods_type').append('<td>' + orderItem.goods.type + '</td>'+'</tr>');
+            var row1 = table1.insertRow();
+
+            var count = row1.insertCell(0);
+
+            var goodsName = row1.insertCell(1);
+
+            var goodsPrice = row1.insertCell(2);
+
+            var goodsType = row1.insertCell(3);
+
+            count.innerHTML = orderItem.count;
+            goodsName.innerHTML = orderItem.goods.name;
+            goodsPrice.innerHTML = orderItem.goods.price;
+            goodsType.innerHTML = orderItem.goods.type;
+            // return false;
 
         });
 
