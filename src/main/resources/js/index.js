@@ -13,7 +13,7 @@ $(function () {
             var discount = row.insertCell(2);
 
             id.innerHTML = client.id;
-            name.innerHTML = '<a href="client.html?id=\' + client.id + \'">' + client.name + '</a>';
+            name.innerHTML = '<a href="client.html?id=' + client.id + '">' + client.name + '</a>';
             discount.innerHTML = client.discount;
         });
 
