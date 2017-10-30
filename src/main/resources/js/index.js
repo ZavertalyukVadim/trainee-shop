@@ -1,15 +1,22 @@
 $(function () {
     $.getJSON('http://localhost:8080/client', function (clients) {
         console.log(clients);
-        var $clientTable = $('#clients');
+
+        var table = document.getElementById("clients");
         $.each(clients, function (i, client) {
-            $clientTable.append('<tr>',
-                '<td>' + client.id + '</td>',
-                '<td><a href="client.html?id=' + client.id + '">' + client.name + '</a></td>',
-                '<td>' + client.discount + '</td>'
-            )
-            ;
+            var row = table.insertRow();
+
+            var id = row.insertCell(0);
+
+            var name = row.insertCell(1);
+
+            var discount = row.insertCell(2);
+
+            id.innerHTML = client.id;
+            name.innerHTML = '<a href="client.html?id=\' + client.id + \'">' + client.name + '</a>';
+            discount.innerHTML = client.discount;
         });
+
     });
 
 
