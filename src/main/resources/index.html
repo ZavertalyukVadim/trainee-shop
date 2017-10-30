@@ -8,25 +8,30 @@
 </head>
 <body>
 <h2>Clients Manager</h2>
-<a href="managerPage.html"><button>Go to manager page</button></a>
+<a href="managerPage.html">
+    <button>Go to manager page</button>
+</a>
 <article>
     <h2>All goods</h2>
     <fieldset>
         <legend>Goods</legend>
-        <table id="goods">
+        <table>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Type</th>
                 <th>Price</th>
             </tr>
+            <tbody id="goods">
+
+            </tbody>
         </table>
     </fieldset>
 
     <form id="filters">
 
     </form>
-    <input type="button" onclick="submit()" value="OK" />
+    <input type="button" onclick="submit()" value="OK"/>
 </article>
 </body>
 </html>

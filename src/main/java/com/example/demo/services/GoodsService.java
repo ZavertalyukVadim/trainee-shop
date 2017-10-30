@@ -47,6 +47,9 @@ public class GoodsService {
     }
 
     public List<Goods> getGoodsByTypes(List<Type> types) {
+        if (types.isEmpty()){
+            return goodsDao.getAllGoods();
+        }
         return goodsDao.getGoodsByTypes(types);
     }
 }

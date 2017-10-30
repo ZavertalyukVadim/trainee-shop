@@ -33,7 +33,6 @@ $(function () {
     }
 
 
-
     // $('select').on('change', function (e) {
     //     var valueSelected = this.value;
     //     console.log(valueSelected);
@@ -157,9 +156,7 @@ function submit() {
         async: false,
         success: function (response) {
             var table = document.getElementById("goods");
-            while(table.rows.length > 0) {
-                table.deleteRow(0);
-            }
+            $('#goods').empty();
             $.each(response, function (i, goods) {
                 var row = table.insertRow();
 

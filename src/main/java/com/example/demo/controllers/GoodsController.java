@@ -40,7 +40,6 @@ public class GoodsController {
 
     @PostMapping(value = "/byFilters")
     public List<Goods> getAllOrdersByType(@RequestBody List<Type> types) {
-        System.out.println(types);
         return goodsService.getGoodsByTypes(types);
     }
 
