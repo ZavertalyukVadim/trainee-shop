@@ -65,16 +65,21 @@ function basket(goods) {
     });
 }
 
+function Item(goods, count) {
+    this.goods = goods;
+    this.count = count;
+}
+
+
 function createOrder() {
-    var orderItems = [{
+    var orderItems = [];
+    for (var i = 0; i < arr.length; i++) {
+        var table = document.getElementById("basket").rows[i].cells;
+        orderItems.push(new Item(arr[i], table[4].innerHTML));
+    }
 
-        goods: arr[0],
-        count: 1
-    }, {
+    console.log(orderItems);
 
-        goods: arr[1],
-        count: 1
-    }];
     var order = {
         id: 0,
         name: 'hm',
@@ -83,7 +88,7 @@ function createOrder() {
         orderItems: orderItems,
         client: {"id": 1, "name": "client", "discount": 10}
     };
-
+    console.log(order);
 
     var myJsonString = JSON.stringify(order);
     console.log(myJsonString);
