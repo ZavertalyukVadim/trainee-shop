@@ -78,26 +78,30 @@ public class OrderService {
     public Integer createOrderFromBasket(List<Integer> listId) {
         List<Goods> goodsList = new ArrayList<>();
         List<OrderItem> orderItems = new ArrayList<>();
-        for (Integer id :listId){
+        for (Integer id : listId) {
             goodsList.add(goodsDao.getGoodsById(id));
 
         }
-        for (Goods goods:goodsList){
+        for (Goods goods : goodsList) {
             OrderItem orderItem = new OrderItem();
             orderItem.setCount(1);
             orderItem.setGoods(goods);
             orderItemDao.save(orderItem);
             orderItems.add(orderItem);
         }
-        Client client =clientDao.getClientById(1);
+        Client client = clientDao.getClientById(1);
         Order order = new Order();
         order.setOrderItems(orderItems);
         order.setDate(new Date());
         order.setStatus(Status.NEW);
-        order.setName("custom");
+        order.setName("my");
         order.setClient(client);
-        return orderDaoHibernate.createOrder(order);
-
+        orderDaoHibernate.createOrder(order);
+        for (OrderItem orderItem:orderItems){
+            orderItem.setOrder(order);
+            orderItemDao.save(orderItem);
+        }
+        return order.getId();
     }
 }
 

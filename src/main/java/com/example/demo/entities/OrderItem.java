@@ -17,6 +17,11 @@ public class OrderItem {
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+    private Order order;
+
     @Column(name = "count")
     private Integer count;
 
@@ -60,6 +65,14 @@ public class OrderItem {
 
     public void setGoods(Goods goods) {
         this.goods = goods;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override

@@ -21,9 +21,8 @@ public class Order {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "order")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-    @JoinColumn(name = "orderItem_id")
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //общяя цена
@@ -34,7 +33,7 @@ public class Order {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "order_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private Client client;
 
@@ -78,6 +77,7 @@ public class Order {
     public void setClient(Client client) {
         this.client = client;
     }
+    
 
 //    public BigDecimal getTotalPrice() {
 //        return calculateTotalPrice();
