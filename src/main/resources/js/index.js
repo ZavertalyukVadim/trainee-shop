@@ -60,9 +60,13 @@ function basket(goods) {
         name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
         type.innerHTML = goods.type;
         price.innerHTML = goods.price;
-        count.innerHTML = '' + 1;
+        count.innerHTML = '<input class="counter" type="number" name="name" min =1 value="1">';
 
     });
+}
+
+function addCount() {
+
 }
 
 function Item(goods, count) {
@@ -74,11 +78,10 @@ function Item(goods, count) {
 function createOrder() {
     var orderItems = [];
     for (var i = 0; i < arr.length; i++) {
-        var table = document.getElementById("basket").rows[i].cells;
-        orderItems.push(new Item(arr[i], table[4].innerHTML));
+        var table = document.getElementsByClassName("counter");
+        orderItems.push(new Item(arr[i], table[i].value));
     }
 
-    console.log(orderItems);
 
     var order = {
         id: 0,
