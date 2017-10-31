@@ -1,3 +1,4 @@
+var mainClient = null;
 $(function () {
     $.getJSON('http://localhost:8080/goods', function (goodses) {
         console.log(goodses);
@@ -23,6 +24,16 @@ $(function () {
             something.innerHTML = '<a onclick="return basket(' + goods.id + ');" > add to the basket</a>';
         });
         getOtherStatuses();
+        getAllClients();
+
+        $('select').on('change', function (e) {
+            var id = this.value;
+            $.getJSON('http://localhost:8080/client/'+id, function (client) {
+                console.log(client);
+               mainClient=client;
+               alert(mainClient.name);
+            });
+        });
 
     });
 
@@ -31,6 +42,16 @@ $(function () {
             console.log(types);
             $.each(types, function (i, type) {
                 $('#filters').append('<input type="checkbox" id="chckBox" name="action"  value=' + type + '>' + type + '</option><br>');
+            });
+        });
+    }
+
+    function getAllClients() {
+        $.getJSON('http://localhost:8080/client', function (clients) {
+            console.log(clients);
+            $.each(clients, function (i, client) {
+                $('#client_name').append('<option value="' +client.id +'">' + client.name + '</option>');
+                mainClient = client;
             });
         });
     }
@@ -65,10 +86,6 @@ function basket(goods) {
     });
 }
 
-function addCount() {
-
-}
-
 function Item(goods, count) {
     this.goods = goods;
     this.count = count;
@@ -76,12 +93,13 @@ function Item(goods, count) {
 
 
 function createOrder() {
+
+    console.log(mainClient);
     var orderItems = [];
     for (var i = 0; i < arr.length; i++) {
         var table = document.getElementsByClassName("counter");
         orderItems.push(new Item(arr[i], table[i].value));
     }
-
 
     var order = {
         id: 0,
@@ -89,7 +107,7 @@ function createOrder() {
         date: new Date(),
         status: "NEW",
         orderItems: orderItems,
-        client: {"id": 1, "name": "client", "discount": 10}
+        client: mainClient
     };
     console.log(order);
 
