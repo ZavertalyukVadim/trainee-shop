@@ -1,7 +1,7 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -33,9 +33,10 @@ public class Order {
 
     private Status status;
 
-    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "order_id")
+//    @JsonManagedReference
+    @JsonBackReference
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private Client client;
 

@@ -87,10 +87,11 @@ var orderItems1 = [{
 }];
 var order = {
     id: 0,
-    name: 'MY',
+    name: 'hm',
     date: 1509441700933,
     status: "NEW",
-    orderItems: orderItems1
+    orderItems: orderItems1,
+    client: {"id": 1, "name": "client", "discount": 10}
 };
 
 var lol = {

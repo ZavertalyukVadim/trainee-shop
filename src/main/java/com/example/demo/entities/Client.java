@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Client {
     @Column(name = "name")
     private String name;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "order_id")
