@@ -69,38 +69,29 @@ var goods = {
     id: 1,
     name: "goods", type: "TV", price: 100.00
 };
-var orderItem = {
-    // id:5,
-    id: 1,
-    goods: goods,
-    count: 1
+var goods1 = {
+    id: 2,
+    name: "goods2", type: "COMPUTER", price: 1000.00
 };
 
-var orderItems1 = [{
+var orderItems = [{
 
-    "goods": {"@id": 2, "id": 1, "name": "goods", "type": "TV", "price": 100.00},
-    "count": 1
+    goods: goods,
+    count: 1
 }, {
 
-    "goods": {"@id": 4, "id": 2, "name": "goods2", "type": "COMPUTER", "price": 1000.00},
-    "count": 1
+    goods: goods1,
+    count: 1
 }];
 var order = {
     id: 0,
     name: 'hm',
-    date: 1509441700933,
+    date: new Date(),
     status: "NEW",
-    orderItems: orderItems1,
+    orderItems: orderItems,
     client: {"id": 1, "name": "client", "discount": 10}
 };
 
-var lol = {
-    "id": 0,
-    "name": "my",
-
-    "date": 1509441700933,
-    "status": "NEW"
-};
 
 function createOrder() {
     var myJsonString = JSON.stringify(order);
