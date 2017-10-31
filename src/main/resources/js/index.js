@@ -60,16 +60,52 @@ function basket(goods) {
         name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
         type.innerHTML = goods.type;
         price.innerHTML = goods.price;
-        count.innerHTML = ''+1;
+        count.innerHTML = '' + 1;
 
     });
 }
 
+var goods = {
+    id: 1,
+    name: "goods", type: "TV", price: 100.00
+};
+var orderItem = {
+    // id:5,
+    id: 1,
+    goods: goods,
+    count: 1
+};
+
+var orderItems1 = [{
+
+    "goods": {"@id": 2, "id": 1, "name": "goods", "type": "TV", "price": 100.00},
+    "count": 1
+}, {
+
+    "goods": {"@id": 4, "id": 2, "name": "goods2", "type": "COMPUTER", "price": 1000.00},
+    "count": 1
+}];
+var order = {
+    id: 0,
+    name: 'MY',
+    date: 1509441700933,
+    status: "NEW",
+    orderItems: orderItems1
+};
+
+var lol = {
+    "id": 0,
+    "name": "my",
+
+    "date": 1509441700933,
+    "status": "NEW"
+};
+
 function createOrder() {
-    var myJsonString = JSON.stringify(arr);
-    alert(myJsonString);
+    var myJsonString = JSON.stringify(order);
+    console.log(myJsonString);
     $.ajax({
-        url: "http://localhost:8080/order/fromBasket",
+        url: "http://localhost:8080/order",
         type: "POST",
         data: myJsonString,
         dataType: "json",
