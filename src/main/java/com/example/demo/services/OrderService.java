@@ -86,7 +86,7 @@ public class OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setCount(1);
             orderItem.setGoods(goods);
-            orderItemDao.save(orderItem);
+//            orderItemDao.save(orderItem);
             orderItems.add(orderItem);
         }
         Client client = clientDao.getClientById(1);
@@ -96,11 +96,11 @@ public class OrderService {
         order.setStatus(Status.NEW);
         order.setName("my");
         order.setClient(client);
-        orderDaoHibernate.createOrder(order);
         for (OrderItem orderItem:orderItems){
             orderItem.setOrder(order);
-            orderItemDao.save(orderItem);
+//            orderItemDao.save(orderItem);
         }
+        orderDaoHibernate.createOrder(order);
         return order.getId();
     }
 }
