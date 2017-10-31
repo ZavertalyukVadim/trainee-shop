@@ -40,9 +40,9 @@ $(function () {
 var arr = [];
 
 function basket(goods) {
-    arr.push(goods);
     $.getJSON('http://localhost:8080/goods/' + goods, function (goods) {
         console.log(goods);
+        arr.push(goods);
         var table = document.getElementById("basket");
         var row = table.insertRow();
 
@@ -65,35 +65,26 @@ function basket(goods) {
     });
 }
 
-var goods = {
-    id: 1,
-    name: "goods", type: "TV", price: 100.00
-};
-var goods1 = {
-    id: 2,
-    name: "goods2", type: "COMPUTER", price: 1000.00
-};
-
-var orderItems = [{
-
-    goods: goods,
-    count: 1
-}, {
-
-    goods: goods1,
-    count: 1
-}];
-var order = {
-    id: 0,
-    name: 'hm',
-    date: new Date(),
-    status: "NEW",
-    orderItems: orderItems,
-    client: {"id": 1, "name": "client", "discount": 10}
-};
-
-
 function createOrder() {
+    var orderItems = [{
+
+        goods: arr[0],
+        count: 1
+    }, {
+
+        goods: arr[1],
+        count: 1
+    }];
+    var order = {
+        id: 0,
+        name: 'hm',
+        date: new Date(),
+        status: "NEW",
+        orderItems: orderItems,
+        client: {"id": 1, "name": "client", "discount": 10}
+    };
+
+
     var myJsonString = JSON.stringify(order);
     console.log(myJsonString);
     $.ajax({
