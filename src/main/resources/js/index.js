@@ -51,13 +51,11 @@ $(function () {
             $.each(clients, function (i, client) {
                 $('#client_name').append('<option selected value="' +client.id +'">' + client.name + '</option>');
                 mainClient = client;
-                alert(mainClient.name);
             });
         });
     }
 
 });
-
 var arr = [];
 
 function basket(goods) {
@@ -99,7 +97,7 @@ function createOrder() {
         var table = document.getElementsByClassName("counter");
         orderItems.push(new Item(arr[i], table[i].value));
     }
-
+    arr = [];
     var order = {
         id: 0,
         name: 'hm',
