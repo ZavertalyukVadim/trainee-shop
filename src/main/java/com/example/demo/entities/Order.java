@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -82,25 +84,25 @@ public class Order {
     }
     
 
-//    public BigDecimal getTotalPrice() {
-//        return calculateTotalPrice();
-//    }
-//
-//    private BigDecimal calculateTotalPrice() {
-//        BigDecimal sum = BigDecimal.valueOf(0);
-//        BigDecimal totalPrice = null;
-//        for (OrderItem orderItem : this.orderItems) {
-//            if (orderItem.getGoods() != null) {
-//                BigDecimal underSum = orderItem.getGoods().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount()));
-//                sum = sum.add(underSum);
-//            }
-//        }
-//        if (sum != null) {
-//            BigDecimal sale = BigDecimal.valueOf(this.client.getDiscount()).divide(BigDecimal.valueOf(100), 3, RoundingMode.CEILING);
-//            totalPrice = sum.subtract(sum.multiply(sale));
-//        }
-//        return totalPrice;
-//    }
+    public BigDecimal getTotalPrice() {
+        return calculateTotalPrice();
+    }
+
+    private BigDecimal calculateTotalPrice() {
+        BigDecimal sum = BigDecimal.valueOf(0);
+        BigDecimal totalPrice = null;
+        for (OrderItem orderItem : this.orderItems) {
+            if (orderItem.getGoods() != null) {
+                BigDecimal underSum = orderItem.getGoods().getPrice().multiply(BigDecimal.valueOf(orderItem.getCount()));
+                sum = sum.add(underSum);
+            }
+        }
+        if (sum != null) {
+            BigDecimal sale = BigDecimal.valueOf(this.client.getDiscount()).divide(BigDecimal.valueOf(100), 3, RoundingMode.CEILING);
+            totalPrice = sum.subtract(sum.multiply(sale));
+        }
+        return totalPrice;
+    }
 
     public Date getDate() {
         return date;
