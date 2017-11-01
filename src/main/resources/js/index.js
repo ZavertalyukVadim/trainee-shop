@@ -49,8 +49,9 @@ $(function () {
         $.getJSON('http://localhost:8080/client', function (clients) {
             console.log(clients);
             $.each(clients, function (i, client) {
-                $('#client_name').append('<option value="' +client.id +'">' + client.name + '</option>');
+                $('#client_name').append('<option selected value="' +client.id +'">' + client.name + '</option>');
                 mainClient = client;
+                alert(mainClient.name);
             });
         });
     }
@@ -93,7 +94,6 @@ function Item(goods, count) {
 
 function createOrder() {
 
-    console.log(mainClient);
     var orderItems = [];
     for (var i = 0; i < arr.length; i++) {
         var table = document.getElementsByClassName("counter");
