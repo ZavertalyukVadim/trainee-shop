@@ -11,10 +11,12 @@ $(function () {
 
         var status = row.insertCell(3);
 
+        var totalPrice= row.insertCell(4);
         id.innerHTML = order.id;
         name.innerHTML = order.name;
         date.innerHTML = new Date(order.date);
         status.innerHTML = order.status;
+        totalPrice.innerHTML = order.totalPrice;
 
 
         var table1 = document.getElementById("suppTable");
