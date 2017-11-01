@@ -31,7 +31,6 @@ $(function () {
             $.getJSON('http://localhost:8080/client/'+id, function (client) {
                 console.log(client);
                mainClient=client;
-               alert(mainClient.name);
             });
         });
 
