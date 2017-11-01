@@ -30,7 +30,7 @@ $(function () {
             var id = this.value;
             $.getJSON('http://localhost:8080/client/'+id, function (client) {
                 console.log(client);
-               mainClient=client;
+              mainClient=client;
             });
         });
 
