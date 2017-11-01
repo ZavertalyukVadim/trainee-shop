@@ -157,10 +157,14 @@ function submit() {
 
                 var price = row.insertCell(3);
 
+                var something = row.insertCell(4);
+
                 id.innerHTML = goods.id;
                 name.innerHTML = '<a href="goods.html?id=' + goods.id + '">' + goods.name + '</a>';
                 type.innerHTML = goods.type;
                 price.innerHTML = goods.price;
+                something.innerHTML = '<a onclick="return basket(' + goods.id + ');" > add to the basket</a>';
+
             });
         }
     });
