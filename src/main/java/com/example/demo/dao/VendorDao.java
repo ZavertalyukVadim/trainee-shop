@@ -2,7 +2,9 @@ package com.example.demo.dao;
 
 import com.example.demo.entities.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,11 +23,8 @@ public class VendorDao {
 
     public Integer createVendor(Vendor vendor) {
         jdbcTemplate.update("INSERT INTO vendor(name) VALUES (?)", vendor.getName());
-
         String sql = "SELECT id FROM vendor WHERE name = ?";
-        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, vendor.getName());
-        System.out.println("id=" + id);
-        return id;
+        return jdbcTemplate.queryForObject(sql, Integer.class, vendor.getName());
     }
 
     public List<Vendor> findAll() {
@@ -37,7 +36,9 @@ public class VendorDao {
     }
 
     public Vendor findOne(Integer id) {
-        return null;
+        String sql = "SELECT id, name FROM vendor WHERE id = ?";
+        RowMapper<Vendor> rowMapper = new BeanPropertyRowMapper<>(Vendor.class);
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }
 
     public boolean update(Vendor vendor) {
