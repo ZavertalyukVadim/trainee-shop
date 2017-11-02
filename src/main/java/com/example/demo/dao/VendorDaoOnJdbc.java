@@ -12,12 +12,12 @@ import java.util.List;
 
 @Transactional
 @Repository
-public class VendorDao {
+public class VendorDaoOnJdbc {
     final
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public VendorDao(JdbcTemplate jdbcTemplate) {
+    public VendorDaoOnJdbc(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
