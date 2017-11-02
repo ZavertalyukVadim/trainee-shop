@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -62,19 +63,56 @@ public class OrderItemDaoInJbdc {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException ignored) {
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 
     public List<OrderItem> findAll() {
-        return null;
+
+        String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id";
+
+        Connection conn = null;
+        List<OrderItem> orderItems= new ArrayList<>();
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            Type[] types = Type.values();
+            OrderItem orderItem = null;
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                orderItem = new OrderItem(
+                        rs.getInt(1),
+                        rs.getInt("count"),
+                        new Goods(
+                                rs.getInt(3),
+                                rs.getString("name"),
+                                rs.getBigDecimal("price"),
+                                types[Integer.parseInt(rs.getString("type"))],
+                                new Vendor( rs.getInt(10),
+                                        rs.getString(11))
+                        )
+                );
+                orderItems.add(orderItem);
+            }
+            rs.close();
+            ps.close();
+            return orderItems;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-//    public OrderItem findOne(Integer id) {
-//        return null;
-//    }
 
     public boolean delete(Integer id) {
         return false;
