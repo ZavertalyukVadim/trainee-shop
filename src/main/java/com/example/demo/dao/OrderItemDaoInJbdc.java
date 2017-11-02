@@ -114,7 +114,27 @@ public class OrderItemDaoInJbdc {
 
 
     public boolean delete(Integer id) {
-        return false;
+        String sql  ="DELETE FROM order_items WHERE id = ?";
+        Connection conn = null;
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public boolean update(OrderItem orderItem) {
