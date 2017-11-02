@@ -19,8 +19,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class OrderItemDaoInJbdc {
-    private final
-    DataSource dataSource;
+    private final DataSource dataSource;
 
     @Autowired
     public OrderItemDaoInJbdc(DataSource dataSource) {
@@ -123,6 +122,27 @@ public class OrderItemDaoInJbdc {
     }
 
     public Integer create(OrderItem orderItem) {
-        return null;
+        String sql  ="Insert Into order_items(count,goods_id) VALUES (?,?)";
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderItem.getCount());
+            ps.setInt(2, orderItem.getGoods().getId());
+            int i = ps.executeUpdate();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {}
+            }
+        }
+        return 0;
     }
 }
