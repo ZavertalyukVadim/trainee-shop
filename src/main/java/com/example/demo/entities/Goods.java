@@ -26,6 +26,41 @@ public class Goods {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
+    public Goods() {
+    }
+
+    public Goods(Integer id,String name,  BigDecimal price,Type type) {
+        this.id=id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
+
+    public Goods(String name, BigDecimal price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Goods(String name, Type type, BigDecimal price, Vendor vendor) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.vendor = vendor;
+    }
+
+    public Goods(String name, BigDecimal price, Type type) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+    }
+
+    public Goods(String name, BigDecimal price, Type type, Vendor vendor) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.vendor = vendor;
+    }
+
     public Integer getId() {
         return id;
     }

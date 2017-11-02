@@ -13,7 +13,7 @@ public class OrderItem {
     private Integer id;
 
     @OneToOne
-    @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     @JoinColumn(name = "goods_id")
     private Goods goods;
 
@@ -31,7 +31,14 @@ public class OrderItem {
         this.goods = goods;
         this.count = count;
     }
-    public OrderItem(Integer id,Goods goods, Integer count) {
+
+    public OrderItem(Integer id, Integer count, Goods goods) {
+        this.id = id;
+        this.goods = goods;
+        this.count = count;
+    }
+
+    public OrderItem(Integer id, Goods goods, Integer count) {
         this.id = id;
         this.goods = goods;
         this.count = count;
