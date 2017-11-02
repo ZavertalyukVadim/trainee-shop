@@ -29,8 +29,8 @@ public class Goods {
     public Goods() {
     }
 
-    public Goods(Integer id,String name,  BigDecimal price,Type type) {
-        this.id=id;
+    public Goods(Integer id, String name, BigDecimal price, Type type) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;
@@ -54,7 +54,8 @@ public class Goods {
         this.price = price;
     }
 
-    public Goods(String name, BigDecimal price, Type type, Vendor vendor) {
+    public Goods(Integer id, String name, BigDecimal price, Type type, Vendor vendor) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.price = price;

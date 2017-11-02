@@ -3,6 +3,7 @@ package com.example.demo.dao;
 import com.example.demo.entities.Goods;
 import com.example.demo.entities.OrderItem;
 import com.example.demo.entities.Type;
+import com.example.demo.entities.Vendor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +28,7 @@ public class OrderItemDaoInJbdc {
 
     public OrderItem findOne(int id) {
 
-        String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id WHERE order_items.id = ?";
+        String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id WHERE order_items.id = ?";
 
         Connection conn = null;
 
@@ -46,8 +47,9 @@ public class OrderItemDaoInJbdc {
                                 rs.getInt(3),
                                 rs.getString("name"),
                                 rs.getBigDecimal("price"),
-                                types[Integer.parseInt(rs.getString("type"))]
-//                                rs.getInt("vendor_id")
+                                types[Integer.parseInt(rs.getString("type"))],
+                                new Vendor( rs.getInt(10),
+                                        rs.getString(11))
                         )
                 );
             }
