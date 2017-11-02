@@ -16,6 +16,14 @@ public class Vendor {
     @Column(name = "name")
     private String name;
 
+    public Vendor() {
+    }
+
+    public Vendor(Integer id,String name) {
+        this.id =id;
+        this.name = name;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "vendor")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private List<Goods> goods;

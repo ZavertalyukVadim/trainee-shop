@@ -32,7 +32,7 @@ public class VendorService {
     public Integer createVendor(Vendor vendor) {
         logger.info("attempt to create vendor");
         try {
-            return vendorDao.save(vendor).getId();
+            return vendorDao.createVendor(vendor);
         } catch (Exception e) {
             return 0;
         }
