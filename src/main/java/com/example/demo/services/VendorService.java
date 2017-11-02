@@ -55,11 +55,8 @@ public class VendorService {
 
     public boolean deleteVendorById(Integer id) {
         logger.info("attempt to delete vendor with id = " + id);
-        try {
-            vendorDao.delete(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+
+        return vendorDao.delete(id);
+
     }
 }

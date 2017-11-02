@@ -23,8 +23,8 @@ public class VendorDao {
         jdbcTemplate.update("INSERT INTO vendor(name) VALUES (?)", vendor.getName());
 
         String sql = "SELECT id FROM vendor WHERE name = ?";
-        Integer id = jdbcTemplate.queryForObject(sql,Integer.class, vendor.getName());
-        System.out.println("id="+id);
+        Integer id = jdbcTemplate.queryForObject(sql, Integer.class, vendor.getName());
+        System.out.println("id=" + id);
         return id;
     }
 
@@ -44,7 +44,9 @@ public class VendorDao {
         return null;
     }
 
-    public void delete(Integer id) {
-
+    public boolean delete(Integer id) {
+        String sql = "DELETE FROM vendor WHERE id=?";
+        int update = jdbcTemplate.update(sql, id);
+        return update == 1;
     }
 }
