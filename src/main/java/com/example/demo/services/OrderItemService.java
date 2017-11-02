@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import com.example.demo.dao.OrderItemDao;
+import com.example.demo.dao.OrderItemDaoInJbdc;
 import com.example.demo.entities.OrderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,11 @@ import java.util.List;
 @Service
 public class OrderItemService {
 
-    private final OrderItemDao orderItemDao;
+    private final OrderItemDaoInJbdc orderItemDao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public OrderItemService(OrderItemDao orderItemDao) {
+    public OrderItemService(OrderItemDaoInJbdc orderItemDao) {
         this.orderItemDao = orderItemDao;
     }
 
@@ -33,7 +33,7 @@ public class OrderItemService {
     public Integer createOrderItem(OrderItem orderItem) {
         logger.info("attempt to create orderItem");
         try {
-            return orderItemDao.save(orderItem).getId();
+            return orderItemDao.create(orderItem);
         } catch (Exception e) {
             return 0;
         }
@@ -46,7 +46,7 @@ public class OrderItemService {
         if (newOrderItem != null) {
             logger.debug("Update orderItem with input id = " + id);
             orderItem.setId(id);
-            orderItemDao.save(orderItem);
+            orderItemDao.update(orderItem);
             return true;
         } else {
             logger.debug("attempt to update orderItem with nonexistent id = " + id);
@@ -56,11 +56,7 @@ public class OrderItemService {
 
     public boolean deleteOrderItemById(Integer id) {
         logger.info("attempt to delete orderItem with id = " + id);
-        try {
-            orderItemDao.delete(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+          return   orderItemDao.delete(id);
+
     }
 }
