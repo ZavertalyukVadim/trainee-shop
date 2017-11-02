@@ -118,7 +118,30 @@ public class OrderItemDaoInJbdc {
     }
 
     public boolean update(OrderItem orderItem) {
-        return false;
+        String sql  ="UPDATE order_items SET count =?,goods_id =? WHERE id = ?";
+        Connection conn = null;
+
+        try {
+            conn = dataSource.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderItem.getCount());
+            ps.setInt(2, orderItem.getGoods().getId());
+            ps.setInt(3, orderItem.getId());
+            ps.executeUpdate();
+            ps.close();
+            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public Integer create(OrderItem orderItem) {
@@ -140,7 +163,9 @@ public class OrderItemDaoInJbdc {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException e) {}
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return 0;
