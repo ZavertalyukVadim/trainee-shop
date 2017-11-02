@@ -40,8 +40,10 @@ public class VendorDao {
         return null;
     }
 
-    public Vendor save(Vendor vendor) {
-        return null;
+    public boolean update(Vendor vendor) {
+        String sql = "UPDATE vendor SET name=? WHERE id=?";
+        int update = jdbcTemplate.update(sql, vendor.getName(), vendor.getId());
+        return update == 1;
     }
 
     public boolean delete(Integer id) {

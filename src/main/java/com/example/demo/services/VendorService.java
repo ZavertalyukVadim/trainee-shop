@@ -40,17 +40,10 @@ public class VendorService {
 
     public boolean updateVendor(Integer id, Vendor vendor) {
         logger.info("attempt to update vendor with id = " + id);
-        Vendor newVendor = vendorDao.findOne(id);
-        logger.debug("check if vendor with id " + id + " exists in database");
-        if (newVendor != null) {
-            logger.debug("Update vendor with input id = " + id);
-            vendor.setId(id);
-            vendorDao.save(vendor);
-            return true;
-        } else {
-            logger.debug("attempt to update vendor with nonexistent id = " + id);
-            return false;
-        }
+
+        logger.debug("Update vendor with input id = " + id);
+        vendor.setId(id);
+        return vendorDao.update(vendor);
     }
 
     public boolean deleteVendorById(Integer id) {
