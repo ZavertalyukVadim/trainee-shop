@@ -26,8 +26,8 @@ public class OrderItemDaoInJbdc {
         this.dataSource = dataSource;
     }
 
-    public OrderItem findOne(int id) throws SQLException {
-
+    public OrderItem findOne(int id) {
+//переделать * на имена конкретных полей
         String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id WHERE order_items.id = ?";
 
         try (Connection conn = dataSource.getConnection()) {
@@ -37,6 +37,7 @@ public class OrderItemDaoInJbdc {
                 Type[] types = Type.values();
                 OrderItem orderItem = null;
                 ResultSet rs = ps.executeQuery();
+
                 if (rs.next()) {
                     orderItem = new OrderItem(
                             rs.getInt(1),
@@ -56,6 +57,7 @@ public class OrderItemDaoInJbdc {
                 return orderItem;
             } catch (SQLException e) {
                 conn.rollback();
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,8 +163,8 @@ public class OrderItemDaoInJbdc {
     }
 
     public Integer create(OrderItem orderItem) {
-        String sql = "INSERT INTO order_items(count,goods_id) VALUES (?,?)";
-//        String sqlForGetId ();
+        String sql = "INSERT INTO order_items(count,goods_id) VALUES (?,?) RETURNING id";
+        Integer id = 0;
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -170,9 +172,13 @@ public class OrderItemDaoInJbdc {
             ps.setInt(1, orderItem.getCount());
             ps.setInt(2, orderItem.getGoods().getId());
 
-            int i = ps.executeUpdate();
+            ResultSet resultSet = ps.executeQuery();
+            System.out.println(resultSet);
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
             ps.close();
-            return i;
+            return id;
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
