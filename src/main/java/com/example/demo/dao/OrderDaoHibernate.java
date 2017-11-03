@@ -10,18 +10,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class OrderDaoHibernate {
     private final SessionFactory sessionFactory;
+    private final DataSource dataSource;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @Autowired
-    public OrderDaoHibernate(SessionFactory sessionFactory) {
+    public OrderDaoHibernate(SessionFactory sessionFactory, DataSource dataSource) {
         this.sessionFactory = sessionFactory;
+        this.dataSource = dataSource;
     }
 
     @Transactional
@@ -42,16 +49,37 @@ public class OrderDaoHibernate {
         }
     }
 
-    @Transactional(noRollbackFor = Exception.class)
+    @Transactional
     public Integer createOrder(Order order) {
-        Session session = sessionFactory.openSession();
-        try {
-            logger.debug("try to create order");
-            return ((Integer) session.save(order));
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            return 0;
+        String sql = "INSERT INTO orders(name,status,order_id) VALUES (?,?,?) RETURNING id";
+
+        Integer id = 0;
+        try (Connection conn = dataSource.getConnection()) {
+            try {
+                conn.setAutoCommit(false);
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, order.getName());
+                ps.setInt(2, Status.valueOf(order.getStatus().toString()).ordinal());
+                ps.setInt(3, order.getClient().getId());
+
+                ResultSet resultSet = ps.executeQuery();
+                System.out.println(resultSet);
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+                ps.close();
+                conn.commit();
+                return id;
+            } catch (SQLException e) {
+                conn.rollback();
+                e.printStackTrace();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
+
     }
 
     @Transactional

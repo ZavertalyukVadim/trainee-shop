@@ -30,7 +30,7 @@ public class Order {
     private Status status;
 
     @OneToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "order_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
     private Client client;
 
