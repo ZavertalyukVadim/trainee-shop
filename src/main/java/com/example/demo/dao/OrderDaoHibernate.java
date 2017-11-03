@@ -50,17 +50,17 @@ public class OrderDaoHibernate {
         }
     }
 
-    @Transactional
     public Integer createOrder(Order order) {
         String first = "INSERT INTO orders(name,status,client_id) VALUES (?,?,?) RETURNING id";
         String second = "INSERT INTO order_items(count,goods_id,order_id) VALUES (?,?,?)";
 
         Integer id = 0;
         try (Connection conn = dataSource.getConnection()) {
+            conn.setAutoCommit(false);
             try {
                 try (PreparedStatement ps = conn.prepareStatement(first)) {
                     ps.setString(1, order.getName());
-                    ps.setInt(2, Status.valueOf(order.getStatus().toString()).ordinal());
+                    ps.setInt(2, order.getStatus().ordinal());
                     ps.setInt(3, order.getClient().getId());
                     ResultSet resultSet = ps.executeQuery();
                     if (resultSet.next()) {
@@ -76,6 +76,7 @@ public class OrderDaoHibernate {
                     }
 
                 }
+                conn.commit();
                 return id;
             } catch (SQLException e) {
                 conn.rollback();
