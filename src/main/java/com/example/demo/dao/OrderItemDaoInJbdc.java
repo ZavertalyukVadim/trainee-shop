@@ -26,55 +26,51 @@ public class OrderItemDaoInJbdc {
         this.dataSource = dataSource;
     }
 
-    public OrderItem findOne(int id) {
+    public OrderItem findOne(int id) throws SQLException {
 
         String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id WHERE order_items.id = ?";
 
-        Connection conn = null;
-
-        try {
-            conn = dataSource.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
-            Type[] types = Type.values();
-            OrderItem orderItem = null;
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                orderItem = new OrderItem(
-                        rs.getInt(1),
-                        rs.getInt("count"),
-                        new Goods(
-                                rs.getInt(3),
-                                rs.getString("name"),
-                                rs.getBigDecimal("price"),
-                                types[Integer.parseInt(rs.getString("type"))],
-                                new Vendor( rs.getInt(10),
-                                        rs.getString(11))
-                        )
-                );
-            }
-            rs.close();
-            ps.close();
-            return orderItem;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                conn.setAutoCommit(false);
+                ps.setInt(1, id);
+                Type[] types = Type.values();
+                OrderItem orderItem = null;
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    orderItem = new OrderItem(
+                            rs.getInt(1),
+                            rs.getInt("count"),
+                            new Goods(
+                                    rs.getInt(3),
+                                    rs.getString("name"),
+                                    rs.getBigDecimal("price"),
+                                    types[Integer.parseInt(rs.getString("type"))],
+                                    new Vendor(rs.getInt(10),
+                                            rs.getString(11))
+                            )
+                    );
                 }
+                rs.close();
+                conn.commit();
+                return orderItem;
+            } catch (SQLException e) {
+                conn.rollback();
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
+        return null;
     }
+
 
     public List<OrderItem> findAll() {
 
         String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id";
 
         Connection conn = null;
-        List<OrderItem> orderItems= new ArrayList<>();
+        List<OrderItem> orderItems = new ArrayList<>();
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -90,7 +86,7 @@ public class OrderItemDaoInJbdc {
                                 rs.getString("name"),
                                 rs.getBigDecimal("price"),
                                 types[Integer.parseInt(rs.getString("type"))],
-                                new Vendor( rs.getInt(10),
+                                new Vendor(rs.getInt(10),
                                         rs.getString(11))
                         )
                 );
@@ -114,7 +110,7 @@ public class OrderItemDaoInJbdc {
 
 
     public boolean delete(Integer id) {
-        String sql  ="DELETE FROM order_items WHERE id = ?";
+        String sql = "DELETE FROM order_items WHERE id = ?";
         Connection conn = null;
         try {
             conn = dataSource.getConnection();
@@ -138,7 +134,7 @@ public class OrderItemDaoInJbdc {
     }
 
     public boolean update(OrderItem orderItem) {
-        String sql  ="UPDATE order_items SET count =?,goods_id =? WHERE id = ?";
+        String sql = "UPDATE order_items SET count =?,goods_id =? WHERE id = ?";
         Connection conn = null;
 
         try {
@@ -165,17 +161,18 @@ public class OrderItemDaoInJbdc {
     }
 
     public Integer create(OrderItem orderItem) {
-        String sql  ="Insert Into order_items(count,goods_id) VALUES (?,?)";
+        String sql = "INSERT INTO order_items(count,goods_id) VALUES (?,?)";
+//        String sqlForGetId ();
         Connection conn = null;
-
         try {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, orderItem.getCount());
             ps.setInt(2, orderItem.getGoods().getId());
+
             int i = ps.executeUpdate();
             ps.close();
-
+            return i;
         } catch (SQLException e) {
             throw new RuntimeException(e);
 
@@ -188,6 +185,5 @@ public class OrderItemDaoInJbdc {
                 }
             }
         }
-        return 0;
     }
 }
