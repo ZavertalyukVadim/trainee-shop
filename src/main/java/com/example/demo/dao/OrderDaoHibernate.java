@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entities.Order;
+import com.example.demo.entities.OrderItem;
 import com.example.demo.entities.Status;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -51,24 +52,30 @@ public class OrderDaoHibernate {
 
     @Transactional
     public Integer createOrder(Order order) {
-        String sql = "INSERT INTO orders(name,status,order_id) VALUES (?,?,?) RETURNING id";
+        String first = "INSERT INTO orders(name,status,client_id) VALUES (?,?,?) RETURNING id";
+        String second = "INSERT INTO order_items(count,goods_id,order_id) VALUES (?,?,?)";
 
         Integer id = 0;
         try (Connection conn = dataSource.getConnection()) {
             try {
-                conn.setAutoCommit(false);
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, order.getName());
-                ps.setInt(2, Status.valueOf(order.getStatus().toString()).ordinal());
-                ps.setInt(3, order.getClient().getId());
-
-                ResultSet resultSet = ps.executeQuery();
-                System.out.println(resultSet);
-                if (resultSet.next()) {
-                    id = resultSet.getInt("id");
+                try (PreparedStatement ps = conn.prepareStatement(first)) {
+                    ps.setString(1, order.getName());
+                    ps.setInt(2, Status.valueOf(order.getStatus().toString()).ordinal());
+                    ps.setInt(3, order.getClient().getId());
+                    ResultSet resultSet = ps.executeQuery();
+                    if (resultSet.next()) {
+                        id = resultSet.getInt("id");
+                    }
                 }
-                ps.close();
-                conn.commit();
+                for (OrderItem orderItem : order.getOrderItems()) {
+                    try (PreparedStatement ps = conn.prepareStatement(second)) {
+                        ps.setInt(1, orderItem.getCount());
+                        ps.setInt(2, orderItem.getGoods().getId());
+                        ps.setInt(3, id);
+                        ps.executeUpdate();
+                    }
+
+                }
                 return id;
             } catch (SQLException e) {
                 conn.rollback();
