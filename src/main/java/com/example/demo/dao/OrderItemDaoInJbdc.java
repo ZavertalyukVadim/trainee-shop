@@ -27,8 +27,19 @@ public class OrderItemDaoInJbdc {
     }
 
     public OrderItem findOne(int id) {
-//переделать * на имена конкретных полей
-        String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id WHERE order_items.id = ?";
+        String sql = "SELECT\n" +
+                "  order_items.id AS order_items_id,\n" +
+                "  order_items.count AS order_items_count,\n" +
+                "  goods.id AS goods_id,\n" +
+                "  goods.name AS goods_name,\n" +
+                "  goods.price AS goods_price,\n" +
+                "  goods.type AS  goods_type,\n" +
+                "  vendor.id AS vendor_id,\n" +
+                "  vendor.name AS vendor_name\n" +
+                "FROM order_items\n" +
+                "  JOIN goods ON goods.id = order_items.goods_id\n" +
+                "  JOIN vendor ON vendor.id = goods.vendor_id\n" +
+                "WHERE order_items.id = ?";
 
         try (Connection conn = dataSource.getConnection()) {
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -40,15 +51,15 @@ public class OrderItemDaoInJbdc {
 
                 if (rs.next()) {
                     orderItem = new OrderItem(
-                            rs.getInt(1),
-                            rs.getInt("count"),
+                            rs.getInt("order_items_id"),
+                            rs.getInt("order_items_count"),
                             new Goods(
-                                    rs.getInt(3),
-                                    rs.getString("name"),
-                                    rs.getBigDecimal("price"),
-                                    types[Integer.parseInt(rs.getString("type"))],
-                                    new Vendor(rs.getInt(10),
-                                            rs.getString(11))
+                                    rs.getInt("goods_id"),
+                                    rs.getString("goods_name"),
+                                    rs.getBigDecimal("goods_price"),
+                                    types[Integer.parseInt(rs.getString("goods_type"))],
+                                    new Vendor(rs.getInt("vendor_id"),
+                                            rs.getString("vendor_name"))
                             )
                     );
                 }
@@ -69,7 +80,18 @@ public class OrderItemDaoInJbdc {
 
     public List<OrderItem> findAll() {
 
-        String sql = "SELECT * FROM order_items JOIN goods ON goods.id=order_items.goods_id  JOIN vendor ON vendor.id = goods.vendor_id";
+        String sql = "SELECT\n" +
+                "  order_items.id AS order_items_id,\n" +
+                "  order_items.count AS order_items_count,\n" +
+                "  goods.id AS goods_id,\n" +
+                "  goods.name AS goods_name,\n" +
+                "  goods.price AS goods_price,\n" +
+                "  goods.type AS  goods_type,\n" +
+                "  vendor.id AS vendor_id,\n" +
+                "  vendor.name AS vendor_name\n" +
+                "FROM order_items\n" +
+                "  JOIN goods ON goods.id = order_items.goods_id\n" +
+                "  JOIN vendor ON vendor.id = goods.vendor_id";
 
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -82,15 +104,15 @@ public class OrderItemDaoInJbdc {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     orderItem = new OrderItem(
-                            rs.getInt(1),
-                            rs.getInt("count"),
+                            rs.getInt("order_items_id"),
+                            rs.getInt("order_items_count"),
                             new Goods(
-                                    rs.getInt(3),
-                                    rs.getString("name"),
-                                    rs.getBigDecimal("price"),
-                                    types[Integer.parseInt(rs.getString("type"))],
-                                    new Vendor(rs.getInt(10),
-                                            rs.getString(11))
+                                    rs.getInt("goods_id"),
+                                    rs.getString("goods_name"),
+                                    rs.getBigDecimal("goods_price"),
+                                    types[Integer.parseInt(rs.getString("goods_type"))],
+                                    new Vendor(rs.getInt("vendor_id"),
+                                            rs.getString("vendor_name"))
                             )
                     );
                     orderItems.add(orderItem);
