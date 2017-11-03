@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,10 +17,9 @@ public class Client {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "client")
     @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-    @JoinColumn(name = "order_id")
-    private List<Order > orders;
+    private List<Order > orders =  new ArrayList<>();
 
     private Integer discount;
 

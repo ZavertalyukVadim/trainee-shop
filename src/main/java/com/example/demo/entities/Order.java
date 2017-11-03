@@ -21,7 +21,7 @@ public class Order {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-    @JoinColumn(name = "orderItem_id")
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems = new ArrayList<>();
 
     //общяя цена
@@ -29,9 +29,9 @@ public class Order {
 
     private Status status;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Order() {
