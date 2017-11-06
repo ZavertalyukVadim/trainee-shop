@@ -167,3 +167,12 @@ example
 if email.human_id = human.human_id
 SELECT * FROM human NATURAL JOIN email
 
+example
+создание таблицы и конфигурирование id
+
+CREATE TABLE t1 (a INTEGER,b CHAR(10));
+
+ALTER TABLE t1 ALTER COLUMN a TYPE INTEGER ;
+ALTER TABLE t1 ALTER COLUMN a SET NOT NULL ;
+ALTER TABLE t1 ADD PRIMARY KEY (a);
+ALTER TABLE t1 ADD UNIQUE (a);
